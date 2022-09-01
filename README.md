@@ -61,12 +61,25 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-2-5 sentences describing what the system does
+#### **What?**
+***
+Allow users to search for reviews and leave reviews on any website there is. :writing_hand:
+
+#### **How?**
+***
+By building a web app instead of a desktop app, we allow anyone with an internet connection to read and write reviews of the websites they visit. With constant administration reviews are monitored and kept to website standards. :globe_with_meridians: 
+
+#### **Why?**
+***
+Every person should have the option to voice their opinion on anything and this includes websites. Due to the lack of an undefined site for the review of websites we have decided to step in. :speaking_head: 
 
 ### Pages
 
-* Home: 1-3 sentences describing what the page displays and what a user can do
-* Shopping cart: ...
+* **Login:** the landing page of the website, where a user is prompted to login or sign-up if they don't have an existing account. An admin may login as well, but an admin account may not be created here.
+* **Register:** Here anyone can create a user account by specifying a username and password. Optionally, a user can write a profile description and upload a profile picture.
+* **Home:** Here Users and Admins can browse, search and navigate to many different specific website screens. If logged in, Users/Admins can access their own account screen.
+* **Account:** Here users can see details about their account, such as profile picture, description, and all their reviews along with computed statistics (number of reviews, average rating)
+* **Website:** Information about the website is presented here along with eventual reviews written by users.
 
 ### Entity-Relationship (ER) Diagram
 
