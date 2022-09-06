@@ -14,16 +14,16 @@ const reviewSchema = new mongoose.Schema(
       default: "",
     },
     isPending: {
-      type: boolean,
+      type: Boolean,
       required: false,
       default: true,
     },
     writtenBy: {
-      type: mongoose.schemaTypes.ObjectId,
+      type: mongoose.SchemaTypes.ObjectId,
       required: true,
     },
     monitoredBy: {
-      type: mongoose.schemaTypes.ObjectId,
+      type: mongoose.SchemaTypes.ObjectId,
       required: false,
     },
   },

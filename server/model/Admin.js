@@ -20,6 +20,10 @@ const adminSchema = new mongoose.Schema(
       required: false,
       default: "Hello Earth!",
     },
+    /**
+     * Store reference to the Review object
+     * When going to a relationship endpoint,
+     */
     pendingReviews: {
       type: [mongoose.SchemaTypes.ObjectId],
       required: false,
