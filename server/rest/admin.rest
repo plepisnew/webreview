@@ -1,0 +1,56 @@
+@baseUrl = http://localhost:3000
+
+### Get a list of all admins: 200
+GET {{baseUrl}}/api/admins HTTP/1.1
+
+### Get an admin by its id: 200
+GET {{baseUrl}}/api/admins/63178eff73a9885d248f9b75 HTTP/1.1
+
+### Get an admin by its id which doesn't exist
+GET {{baseUrl}}/api/admins/63178eff73a9885d248f9b76
+
+### Get an admin by its id which isn't a valid id
+GET {{baseUrl}}/api/admins/63178eff73a9885d248f9b7
+
+
+### Create an admin: 200
+POST {{baseUrl}}/api/admins HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "password",
+    "description": "description",
+    "profilePictureSrc": "/images/admin.png"
+}
+
+### Create an admin without a profile picture: 200
+POST {{baseUrl}}/api/admins HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "heisenburger",
+    "password": "password",
+    "description": "jesse i have become south america"
+}
+
+### Create an admin without a description: 200
+POST {{baseUrl}}/api/admins HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "heisenburger",
+    "password": "password",
+    "profilePictureSrc": "/images/burger.png"
+}
+
+### Create an admin without a username: 400
+POST {{baseUrl}}/api/admins HTTP/1.1
+Content-Type: application/json
+
+{
+    "password": "123"
+}
+
+### Delete all admins: 200
+DELETE {{baseUrl}}/api/admins HTTP/1.1
