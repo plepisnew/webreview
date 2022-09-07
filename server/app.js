@@ -7,6 +7,7 @@ var history = require("connect-history-api-fallback");
 
 const adminRouter = require("./routes/adminRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
+const websiteRouter = require("./routes/websiteRoutes")
 
 // Variables
 var mongoURI =
@@ -45,6 +46,7 @@ app.use(cors());
 
 app.use("/api/admins", adminRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/websites", websiteRouter)
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 // app.use("/api/*", function (req, res) {
