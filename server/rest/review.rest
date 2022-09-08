@@ -13,6 +13,9 @@ GET {{baseUrl}}/{{resource}} HTTP/1.1
 ### Get a review by its id: 200
 GET {{baseUrl}}/{{resource}}/{{objectId}} HTTP/1.1
 
+### Get a review by its rating: 200
+GET {{baseUrl}}/{{resource}}?rating=5 HTTP/1.1
+
 ### Get a review by its id which doesn't exist: 400
 GET {{baseUrl}}/{{resource}}/63178eff73a9885d248f9b76 HTTP/1.1
 

@@ -13,7 +13,7 @@ GET {{baseUrl}}/{{resource}} HTTP/1.1
 ### Get an admin by its username: 200
 GET {{baseUrl}}/{{resource}}?username=admin HTTP/1.1
 
-### Get an admin by its username which doesn't exist: 200 or 400?
+### Get an admin by its username which doesn't exist: 204
 GET {{baseUrl}}/{{resource}}?username=this+doesnt+exist HTTP/1.1
 
 ### Get an admin by its id: 200
