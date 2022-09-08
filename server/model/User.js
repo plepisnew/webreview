@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
-const adminSchema = new mongoose.Schema(
+const userschema = new mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -18,14 +19,16 @@ const adminSchema = new mongoose.Schema(
     description: {
       type: String,
       required: false,
-      default: "Hello Earth!",
+      default: "Hello Moon!",
     },
-    /*
-     * Store reference to the Review object
-     * When going to a relationship endpoint,
-     */
-    pendingReviews: {
-      type: [mongoose.SchemaTypes.ObjectId],
+    disabledFor: {
+        type: Number,
+        required: false,
+        default: 0,
+      },
+   
+    writtenReviews: {
+      type: [mongoose.SchemapTypes.ObjectId],
       required: false,
       default: [],
     },
@@ -35,5 +38,5 @@ const adminSchema = new mongoose.Schema(
   }
 );
 
-const Admin = mongoose.model("Admin", adminSchema);
-module.exports = Admin;
+const User = mongoose.model("User", userSchema);
+module.exports = User;
