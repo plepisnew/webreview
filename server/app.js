@@ -1,9 +1,13 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var path = require('path');
-var cors = require('cors');
-var history = require('connect-history-api-fallback');
+var express = require("express");
+var mongoose = require("mongoose");
+var morgan = require("morgan");
+var path = require("path");
+var cors = require("cors");
+var history = require("connect-history-api-fallback");
+
+const adminRouter = require("./routes/adminRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
+const websiteRouter = require("./routes/websiteRoutes")
 
 // Variables
 var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/animalDevelopmentDB';
@@ -31,18 +35,17 @@ app.options('*', cors());
 app.use(cors());
 
 // Import routes
-app.get('/', function(req, res) {
-    res.json({'message': 'take your anime figuers to hell'});
+app.get("/api", function (req, res) {
+  res.json({ message: "Welcome to your DIT342 backend ExpressJS project!" });
 });
 
-
-app.get('/api', function(req, res) {
-    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
-});
+app.use("/api/admins", adminRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/websites", websiteRouter)
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
-app.use('/api/*', function (req, res) {
-    res.status(404).json({ 'message': 'Not found' });
+app.use("/api/*", function (req, res) {
+  res.status(404).json({ message: "Not Found" });
 });
 
 // Configuration for serving frontend in production mode
