@@ -9,7 +9,7 @@ const getAllReviews = async (req, res) => {
 const createReview = async (req, res) => {
   try {
     const review = await Review.create(req.body);
-    res.status(200).json(review);
+    res.status(201).json(review);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

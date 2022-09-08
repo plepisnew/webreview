@@ -10,10 +10,16 @@
 ### Get a list of all admins: 200
 GET {{baseUrl}}/{{resource}} HTTP/1.1
 
+### Get an admin by its username: 200
+GET {{baseUrl}}/{{resource}}?username=admin HTTP/1.1
+
+### Get an admin by its username which doesn't exist: 200 or 400?
+GET {{baseUrl}}/{{resource}}?username=this+doesnt+exist HTTP/1.1
+
 ### Get an admin by its id: 200
 GET {{baseUrl}}/{{resource}}/{{objectId}} HTTP/1.1
 
-### Get an admin by its id which doesn't exist: 400
+### Get an admin by its id which doesn't exist: 404
 GET {{baseUrl}}/{{resource}}/63178eff73a9885d248f9b76 HTTP/1.1
 
 ### Get an admin by its id which isn't a valid ObjectId: 400
@@ -26,6 +32,7 @@ GET {{baseUrl}}/{{resource}}/1337 HTTP/1.1
 ##################################
 
 ### Create an admin: 200
+### Create an admin with an existing username: 400
 POST {{baseUrl}}/{{resource}} HTTP/1.1
 Content-Type: application/json
 
@@ -60,6 +67,9 @@ Content-Type: application/json
 
 ### Delete all admins: 200
 DELETE {{baseUrl}}/{{resource}} HTTP/1.1
+
+### Delete an admin by username: 200
+DELETE {{baseUrl}}/{{resource}}?username=admin HTTP/1.1
 
 ### Delete an admin by id: 200
 DELETE {{baseUrl}}/{{resource}}/{{objectId}} HTTP/1.1
