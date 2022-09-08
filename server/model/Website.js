@@ -12,13 +12,16 @@ const websiteSchema = new mongoose.Schema({
     },
     url: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     launch_date: {
         type: Date,
         required: false,
-        default: Date.now
-    }
-});
+        default: () => Date.now(),
+    },
+},
+    {timestamps: true}
+);
 
 module.exports =  mongoose.model("Website", websiteSchema);

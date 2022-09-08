@@ -35,7 +35,7 @@ const putSpecificWebsite = async (req, res) => {
 const patchSpecificWebsite = async (req, res) => {
     const websiteId = req.params.id;
     try {
-        const website = await Website.findOneAndReplace({ _id: websiteId }, req.body);
+        const website = await Website.findOneAndUpdate({ _id: websiteId }, req.body);
         res.status(200).json(website);
     } catch (err) {
         res.status(400).json({ message: err.message });
