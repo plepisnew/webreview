@@ -15,13 +15,20 @@ const websiteSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    launch_date: {
+    launchDate: {
         type: Date,
         required: false,
         default: () => Date.now(),
     },
+    createdBy: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true,
+    }
 },
-    {timestamps: true}
+    {
+        timestamps: true
+    }
 );
 
-module.exports =  mongoose.model("Website", websiteSchema);
+const Website = mongoose.model("Website", websiteSchema);
+module.exports = Website;

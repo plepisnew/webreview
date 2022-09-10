@@ -42,3 +42,6 @@ DELETE http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
 
 ### DELETE all websites
 DELETE http://localhost:3000/api/websites
+
+### GET website creator
+GET http://localhost:3000/api/websites/{{id}}/createdBy

@@ -1,4 +1,5 @@
 const Website = require("../model/Website");
+const Admin = require("../model/Admin");
 
 const getAllWebsites = async (req, res) => {
     try {
@@ -6,7 +7,7 @@ const getAllWebsites = async (req, res) => {
         if (websites.length < 1){
             res.status(404).json("No websites found");
         } else {
-            res.status(200).json(websites);
+            res.status(201).json(websites);
         }
     } catch (err) {
         res.status(400).json(err);
@@ -16,9 +17,9 @@ const getAllWebsites = async (req, res) => {
 const createWebsite = async (req, res) => {
     try {
         const website = await Website.create(req.body);
-        res.status(200).json(website);
+        res.status(201).json(website);
     } catch (err) {
-        res.status(400).json({ message: err.message }); // 400 Bad Request, what if the website already exists?
+        res.status(400).json({ message: err.message });
     }
 };
 
@@ -73,6 +74,24 @@ const deleteAllWebsites = async (req, res) => {
     }
 }
 
+const getCreator = async (req, res) => {
+    const websiteId = req.params.id;
+    try {
+        const website = await Website.findById(websiteId);
+        if (!website) {
+            return res.status(400).json({ message: `Can't find Website with ObjectId ${websiteId}`})
+        }
+        const adminId = website.createdBy;
+        const admin = await Admin.findById(adminId);
+        if (!admin) {
+            return res.status(400).json({message: `Can't find Admin with ObjectId ${adminId}`});
+        }
+        res.status(200).json(admin);
+    } catch (err) {
+        res.status(400).json( {message: err.message})
+    }
+}
+
 const getSpecificWebsite = async (req, res) => {
     const websiteId = req.params.id;
     try {
@@ -90,6 +109,7 @@ const getSpecificWebsite = async (req, res) => {
 module.exports = {
     getAllWebsites,
     createWebsite,
+    getCreator,
     deleteAllWebsites,
     getSpecificWebsite,
     putSpecificWebsite,
