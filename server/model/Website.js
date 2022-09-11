@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const websiteSchema = new mongoose.Schema({
-    logo_src: {
+    logoSrc: {
         type: String,
-        default: "images/default_website_icon.png"
+        default:"images/default_website_icon.png"
     },
     description: {
         type: String,

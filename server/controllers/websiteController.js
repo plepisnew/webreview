@@ -2,16 +2,12 @@ const Website = require("../model/Website");
 const Admin = require("../model/Admin");
 
 const getAllWebsites = async (req, res) => {
-    try {
-        const websites = await Website.find({});
+        const websites = await Website.find({...req.query});
         if (websites.length < 1){
-            res.status(404).json("No websites found");
+            res.status(204).json("No websites found");
         } else {
-            res.status(201).json(websites);
+            res.status(200).json(websites);
         }
-    } catch (err) {
-        res.status(400).json(err);
-    }
 };
 
 const createWebsite = async (req, res) => {
@@ -48,7 +44,7 @@ const deleteSpecificWebsite = async (req, res) => {
     try {
         const website = await Website.findByIdAndDelete(websiteId);
         if (!website) {
-            res.status(400).json({ message: `Can't find Website with ObjectId ${websiteId}` });
+            res.status(404).json({ message: `Can't find Website with ObjectId ${websiteId}`});
         } else {
             return res.status(200).json(website);
         }
@@ -79,12 +75,12 @@ const getCreator = async (req, res) => {
     try {
         const website = await Website.findById(websiteId);
         if (!website) {
-            return res.status(400).json({ message: `Can't find Website with ObjectId ${websiteId}`})
+            return res.status(404).json({ message: `Can't find Website with ObjectId ${websiteId}`})
         }
         const adminId = website.createdBy;
         const admin = await Admin.findById(adminId);
         if (!admin) {
-            return res.status(400).json({message: `Can't find Admin with ObjectId ${adminId}`});
+            return res.status(404).json({message: `Can't find Admin with ObjectId ${adminId}`});
         }
         res.status(200).json(admin);
     } catch (err) {
@@ -99,7 +95,7 @@ const getSpecificWebsite = async (req, res) => {
         if (website) {
             return res.status(200).json(website);
         } else {
-        res.status(400).json({ message: `Can't find Website with ObjectId ${websiteId}` });
+        res.status(404).json({ message: `Can't find Website with ObjectId ${websiteId}`});
         }
     } catch (err) {
         res.status(400).json({ message: err.message });
