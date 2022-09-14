@@ -3,32 +3,42 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllUsers,
+  getSpecificUser,
   createUser,
   deleteAllUsers,
   deleteSpecificUser,
   patchSpecificUser,
   putSpecificUser,
-  getSpecificUser,
-  getUserReviews,
+  getAllUserReviews,
+  getSpecificUserReview,
   createUserReview,
+  deleteSpecificUserReview,
 } = require("../controllers/userController");
+
+/* User CRUD */
+
+router.get("/", getAllUsers);
 
 router.get("/:id", getSpecificUser);
 
-router.get("/:id/reviews", getUserReviews);
+router.post("/", createUser);
 
 router.put("/:id", putSpecificUser);
 
 router.patch("/:id", patchSpecificUser);
 
-router.post("/:id/reviews", createUserReview);
-
 router.delete("/:id", deleteSpecificUser);
 
-router.get("/", getAllUsers);
-
-router.post("/", createUser);
-
 router.delete("/", deleteAllUsers);
+
+/* User relationships */
+
+router.get("/:id/reviews", getAllUserReviews);
+
+router.post("/:id/reviews", createUserReview);
+
+router.get("/:id/reviews/:review_id", getSpecificUserReview);
+
+router.delete("/:id/reviews/:review_id", deleteSpecificUserReview);
 
 module.exports = router;

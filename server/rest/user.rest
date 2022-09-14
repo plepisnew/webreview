@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000
 @resource = api/users
 //what shoud Id be?
-@objectId = 6321bfa951e1a05d943f546f
+@objectId = 63220494b7205b67482fe160
 
 
 #################################
@@ -23,6 +23,8 @@ GET {{baseUrl}}/{{resource}}/1337 HTTP/1.1
 ### Get all reviews written by the user
 GET {{baseUrl}}/{{resource}}/{{objectId}}/reviews HTTP/1.1
 
+### Get a specific review written by the user
+GET {{baseUrl}}/{{resource}}/{{objectId}}/reviews/632206e9bf67c22058665666 HTTP/1.1
 
 ### (!) Same ObjectId error handling applies to all other HTTP methods
 
