@@ -10,7 +10,10 @@ const {
   patchSpecificUser,
   putSpecificUser,
   getSpecificUser,
+  getUserReview,
+  getUserReviews,
 } = require("../controllers/usercontroller");
+const { getAllReviews } = require("../controllers/reviewController");
 
 router.get("/:id", getSpecificUser);
 
@@ -20,10 +23,14 @@ router.patch("/:id", patchSpecificUser);
 
 router.delete("/:id", deleteSpecificUser);
 
+router.get("/id", getUserReview)
+
 router.get("/", getAllUsers);
 
 router.post("/", createUser);
 
 router.delete("/", deleteAllUsers);
+
+router.get("/", getUserReviews)
 
 module.exports = router;

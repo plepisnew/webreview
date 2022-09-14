@@ -1,4 +1,5 @@
 const User = require("../model/Admin");
+const Review = require("../model/Review");
 
 // TODO: add filtering with query params
 
@@ -71,6 +72,47 @@ const deleteSpecificUser = async (req, res) => {
   }
 };
 
+const getUserReviews = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId); 
+    if (!user)
+      return res
+        .status(404)
+        .json({ message: `Can't find User with ObjectId ${userId}` }); 
+    const reviews = await user.writtenReviews;
+    if (!reviews){
+      return res
+        .status(404)
+        .json({ message: `Can't find Reviews by User with ObjectId ${userId}` }); 
+    res.status(200).json(user); 
+    }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+const getUserReview = async (req, res) => {
+  const reviewId = req.params.id;
+  try {
+    const review = await User.findById(reviewId); 
+    if (!review)
+      return res
+        .status(404)
+        .json({ message: `Can't find Review with ObjectId ${reviewId}` });
+    const userId = review.publishedBy; 
+    const user = await User.findById(userId); 
+    if (!user)
+      return res
+        .status(404)
+        .json({ message: `Can't find User with ObjectId ${userId}` }); 
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -79,4 +121,6 @@ module.exports = {
   putSpecificUser,
   patchSpecificUser,
   deleteSpecificUser,
+  getUserReviews,
+  getUserReview,
 };
