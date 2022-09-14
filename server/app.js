@@ -10,6 +10,8 @@ const reviewRouter = require("./routes/reviewRoutes");
 const websiteRouter = require("./routes/websiteRoutes");
 const userRouter = require("./routes/userRoutes");
 
+const addBaseData = require("./utils/addBaseData");
+
 // Variables
 var mongoURI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/animalDevelopmentDB";
@@ -26,6 +28,7 @@ mongoose.connect(
       process.exit(1);
     }
     console.log(`Connected to MongoDB with URI: ${mongoURI}`);
+    // addBaseData();
   }
 );
 
