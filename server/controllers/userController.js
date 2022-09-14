@@ -1,4 +1,5 @@
-const User = require("../model/Admin");
+const User = require("../model/User");
+const Review = require("../model/Review");
 
 // TODO: add filtering with query params
 
@@ -19,9 +20,7 @@ const createUser = async (req, res) => {
 const deleteAllUsers = async (req, res) => {
   const { deletedCount } = await User.deleteMany({});
   res.status(200).json({
-    message: `Deleted ${deletedCount} ${
-      deletedCount === 1 ? "user" : "users"
-    }`,
+    message: `Deleted ${deletedCount} ${deletedCount === 1 ? "user" : "users"}`,
   });
 };
 
@@ -71,6 +70,40 @@ const deleteSpecificUser = async (req, res) => {
   }
 };
 
+const getUserReviews = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId).populate("writtenReviews");
+    if (user) {
+      return res.status(200).json(user.writtenReviews);
+    }
+    res
+      .status(400)
+      .json({ message: `Can't find User with ObjectId ${adminId}` });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+const createUserReview = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId);
+    if (user) {
+      const review = await Review.create({ writtenBy: userId, ...req.body });
+      const updatedUser = await User.findByIdAndUpdate(userId, {
+        writtenReviews: [...user.writtenReviews, review._id],
+      });
+      return res.status(200).json(updatedUser);
+    }
+    res
+      .status(400)
+      .json({ message: `Can't find User with ObjectId ${adminId}` });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -79,4 +112,6 @@ module.exports = {
   putSpecificUser,
   patchSpecificUser,
   deleteSpecificUser,
+  getUserReviews,
+  createUserReview,
 };
