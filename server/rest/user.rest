@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000
 @resource = api/users
 //what shoud Id be?
-@objectId = 6317bb727589b131e438fa32
+@objectId = 63220494b7205b67482fe160
 
 
 #################################
@@ -19,6 +19,12 @@ GET {{baseUrl}}/{{resource}}/63178eff73a9885d248f9b76 HTTP/1.1
 
 ### Get a user by its id which isn't a valid ObjectId: 400
 GET {{baseUrl}}/{{resource}}/1337 HTTP/1.1
+
+### Get all reviews written by the user
+GET {{baseUrl}}/{{resource}}/{{objectId}}/reviews HTTP/1.1
+
+### Get a specific review written by the user
+GET {{baseUrl}}/{{resource}}/{{objectId}}/reviews/632206e9bf67c22058665666 HTTP/1.1
 
 ### (!) Same ObjectId error handling applies to all other HTTP methods
 
@@ -53,6 +59,16 @@ Content-Type: application/json
 
 {
     "password": "123"
+}
+
+### Create a post for a user: 200
+POST {{baseUrl}}/{{resource}}/{{objectId}}/reviews
+Content-Type: application/json
+
+{
+    "url": "http://youtube.com",
+    "rating": 5,
+    "content": "Its dope"
 }
 
 ###################################

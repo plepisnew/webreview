@@ -1,4 +1,4 @@
-const User = require("../model/Admin");
+const User = require("../model/User");
 const Review = require("../model/Review");
 
 // TODO: add filtering with query params
@@ -6,24 +6,6 @@ const Review = require("../model/Review");
 const getAllUsers = async (req, res) => {
   const users = await User.find({});
   res.status(200).json(users);
-};
-
-const createUser = async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
-const deleteAllUsers = async (req, res) => {
-  const { deletedCount } = await User.deleteMany({});
-  res.status(200).json({
-    message: `Deleted ${deletedCount} ${
-      deletedCount === 1 ? "user" : "users"
-    }`,
-  });
 };
 
 const getSpecificUser = async (req, res) => {
@@ -36,6 +18,15 @@ const getSpecificUser = async (req, res) => {
       .json({ message: `Can't find User with ObjectId ${userId}` }); // Valid and non-existent id
   } catch (err) {
     res.status(400).json({ message: err.message }); // Invalid id
+  }
+};
+
+const createUser = async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };
 
@@ -59,6 +50,13 @@ const patchSpecificUser = async (req, res) => {
   }
 };
 
+const deleteAllUsers = async (req, res) => {
+  const { deletedCount } = await User.deleteMany({});
+  res.status(200).json({
+    message: `Deleted ${deletedCount} ${deletedCount === 1 ? "user" : "users"}`,
+  });
+};
+
 const deleteSpecificUser = async (req, res) => {
   const userId = req.params.id;
   try {
@@ -66,52 +64,69 @@ const deleteSpecificUser = async (req, res) => {
     if (user) return res.status(200).json(user);
     res
       .status(400)
-      .json({ message: `Can't find User with ObjectId ${adminId}` });
+      .json({ message: `Can't find User with ObjectId ${userId}` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
-const getUserReviews = async (req, res) => {
+const getAllUserReviews = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await User.findById(userId); 
-    if (!user)
-      return res
-        .status(404)
-        .json({ message: `Can't find User with ObjectId ${userId}` }); 
-    const reviews = await user.writtenReviews;
-    if (!reviews){
-      return res
-        .status(404)
-        .json({ message: `Can't find Reviews by User with ObjectId ${userId}` }); 
-    res.status(200).json(user); 
+    const user = await User.findById(userId).populate("writtenReviews");
+    if (user) {
+      return res.status(200).json(user.writtenReviews);
     }
+    res
+      .status(400)
+      .json({ message: `Can't find User with ObjectId ${userId}` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
-const getUserReview = async (req, res) => {
-  const reviewId = req.params.id;
+const createUserReview = async (req, res) => {
+  const userId = req.params.id;
   try {
-    const review = await User.findById(reviewId); 
-    if (!review)
-      return res
-        .status(404)
-        .json({ message: `Can't find Review with ObjectId ${reviewId}` });
-    const userId = review.publishedBy; 
-    const user = await User.findById(userId); 
-    if (!user)
-      return res
-        .status(404)
-        .json({ message: `Can't find User with ObjectId ${userId}` }); 
-    res.status(200).json(user);
+    const user = await User.findById(userId);
+    if (user) {
+      const review = await Review.create({ writtenBy: userId, ...req.body });
+      const updatedUser = await User.findByIdAndUpdate(userId, {
+        writtenReviews: [...user.writtenReviews, review._id],
+      });
+      return res.status(200).json(updatedUser);
+    }
+    res
+      .status(400)
+      .json({ message: `Can't find User with ObjectId ${userId}` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
+const getSpecificUserReview = async (req, res) => {
+  const userId = req.params.id;
+  const reviewId = req.params.review_id;
+
+  try {
+    const user = await User.find({
+      _id: userId,
+      writtenReviews: { $in: [reviewId] },
+    });
+    const review = await Review.find({
+      writtenBy: userId,
+      _id: reviewId,
+    });
+    res.status(200).json(review);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+const deleteSpecificUserReview = async (req, res) => {
+  const userId = req.params.id;
+  const reviewId = req.params.review_id;
+};
 
 module.exports = {
   getAllUsers,
@@ -121,6 +136,8 @@ module.exports = {
   putSpecificUser,
   patchSpecificUser,
   deleteSpecificUser,
-  getUserReviews,
-  getUserReview,
+  getAllUserReviews,
+  createUserReview,
+  getSpecificUserReview,
+  deleteSpecificUserReview,
 };

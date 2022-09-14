@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userschema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -22,16 +22,11 @@ const userschema = new mongoose.Schema(
       default: "Hello Moon!",
     },
     disabledFor: {
-        type: Number,
-        required: false,
-        default: 0,
-      },
-   
-    writtenReviews: {
-      type: [mongoose.SchemapTypes.ObjectId],
+      type: Number,
       required: false,
-      default: [],
+      default: 0,
     },
+    writtenReviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Review" }],
   },
   {
     timestamps: true,

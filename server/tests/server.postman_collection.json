@@ -32,14 +32,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					]
 				}
@@ -87,14 +84,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/admins",
-					"protocol": "http",
+					"raw": "{{base_url}}api/admins",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"admins"
 					],
 					"query": [
@@ -149,14 +143,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					],
 					"query": [
@@ -202,56 +193,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get specific website by id (which doesn't exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:3001/api/websites{{websiteId}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"api",
-						"websites{{websiteId}}"
 					]
 				}
 			},
@@ -283,14 +231,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}/createdBy/",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}/createdBy/",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}",
 						"createdBy",
@@ -339,14 +284,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					],
 					"query": [
@@ -386,14 +328,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites?url=www.yahoo.com",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites?url=www.yahoo.com",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					],
 					"query": [
@@ -446,14 +385,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					],
 					"query": [
@@ -499,14 +435,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites?url=www.yahoo.com",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites?url=www.yahoo.com",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					],
 					"query": [
@@ -545,14 +478,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
 					]
 				}
@@ -598,14 +528,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -658,14 +585,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -718,14 +642,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -769,14 +690,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}"
 					]
@@ -807,15 +725,50 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific website by id (which doesn't exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"host": [
+						"{{base_url}}api"
+					],
+					"path": [
+						"websites",
+						"{{websiteId}}"
 					]
 				}
 			},
@@ -844,14 +797,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/admins",
-					"protocol": "http",
+					"raw": "{{base_url}}api/admins",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"admins"
 					]
 				}
@@ -881,20 +831,44 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
-					"protocol": "http",
+					"raw": "{{base_url}}api/websites/{{websiteId}}",
 					"host": [
-						"localhost"
+						"{{base_url}}api"
 					],
-					"port": "3001",
 					"path": [
-						"api",
 						"websites",
 						"{{websiteId}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3001/",
+			"type": "string"
 		}
 	]
 }
