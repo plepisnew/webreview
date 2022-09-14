@@ -11,7 +11,7 @@ const {
   getSpecificUser,
   getUserReviews,
   createUserReview,
-} = require("../controllers/usercontroller");
+} = require("../controllers/userController");
 
 router.get("/:id", getSpecificUser);
 
