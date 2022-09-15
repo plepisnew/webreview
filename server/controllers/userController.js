@@ -124,9 +124,7 @@ const getSpecificUserReview = async (req, res) => {
 };
 
 const deleteSpecificUserReview = async (req, res) => {
-  const userId = req.params.id;
   const reviewId = req.params.review_id;
-
 try{
   const review = await Review.findByIdAndDelete(reviewId);
   if (review) return res.status(200).json(review); 
