@@ -1056,6 +1056,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n    \"disabledFor\" \"0\"\r\n}"
+				},
 				"url": {
 					"raw": "http://localhost:3001/api/users",
 					"protocol": "http",
@@ -1081,7 +1085,7 @@
 							"pm.test(\"Successful POST request\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
 							"});\r",
-							"const user = pm.response.json();\r",
+							"const user = jsonData._id;\r",
 							"pm.environment.set(\"userId\", user);"
 						],
 						"type": "text/javascript"
@@ -1091,6 +1095,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n    \"disabledFor\" \"0\"\r\n}"
+				},
 				"url": {
 					"raw": "http://localhost:3001/api/users",
 					"protocol": "http",
@@ -1127,6 +1135,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n    \"disabledFor\" \"0\"\r\n}"
+				},
 				"url": {
 					"raw": "http://localhost:3001/api/users",
 					"protocol": "http",
@@ -1432,7 +1444,7 @@
 							"pm.test(\"Successful POST request\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
 							"});\r",
-							"const review = pm.response.json();\r",
+							"const review = jsonData._id;\r",
 							"pm.environment.set(\"reviewId\", review);"
 						],
 						"type": "text/javascript"
