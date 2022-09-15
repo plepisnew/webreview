@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "60bf0bef-7b8f-475d-824d-4f0b39319e45",
-		"name": "New Collection",
+		"_postman_id": "75477bd4-8e5f-48aa-ab5d-74fed09a192a",
+		"name": "christoper",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22970072"
+		"_exporter_id": "23107450"
 	},
 	"item": [
 		{
@@ -32,11 +32,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3000/api/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3000",
 					"path": [
+						"api",
 						"websites"
 					]
 				}
@@ -84,11 +87,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/admins",
+					"raw": "http://localhost:3001/api/admins",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"admins"
 					],
 					"query": [
@@ -143,11 +149,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
 					],
 					"query": [
@@ -193,13 +202,56 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3000/api/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3000",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific website by id (which doesn't exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/websites{{websiteId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"websites{{websiteId}}"
 					]
 				}
 			},
@@ -231,11 +283,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}/createdBy/",
+					"raw": "http://localhost:3001/api/websites/{{websiteId}}/createdBy/",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}",
 						"createdBy",
@@ -284,11 +339,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
 					],
 					"query": [
@@ -328,11 +386,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites?url=www.yahoo.com",
+					"raw": "http://localhost:3001/api/websites?url=www.yahoo.com",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
 					],
 					"query": [
@@ -385,11 +446,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
 					],
 					"query": [
@@ -435,11 +499,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites?url=www.yahoo.com",
+					"raw": "http://localhost:3001/api/websites?url=www.yahoo.com",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
 					],
 					"query": [
@@ -478,11 +545,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
 					]
 				}
@@ -528,11 +598,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -585,11 +658,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -642,11 +718,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -690,11 +769,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}"
 					]
@@ -725,50 +807,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get specific website by id (which doesn't exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
-					"host": [
-						"{{base_url}}api"
-					],
-					"path": [
-						"websites",
-						"{{websiteId}}"
 					]
 				}
 			},
@@ -797,11 +844,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/admins",
+					"raw": "http://localhost:3001/api/admins",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"admins"
 					]
 				}
@@ -831,44 +881,695 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
 						"websites",
 						"{{websiteId}}"
 					]
 				}
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		},
 		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
+			"name": "Get all users (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
 		{
-			"key": "base_url",
-			"value": "http://localhost:3001/",
-			"type": "string"
+			"name": "Get specific user by Id (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific user by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct response\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(userId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const user = jsonData._id;\r",
+							"pm.environment.set(\"userId\", user);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user (pre existing)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"const user = pm.response.json();\r",
+							"pm.environment.set(\"userId\", user);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user (missing mandatory fields)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const user = jsonData._id;\r",
+							"pm.environment.set(\"userId\", user);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.environment.get(\"userId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all users (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users review by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users review by Id (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/{{userId}}/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all of users reviews",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all of users reviews (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const user = jsonData._id;\r",
+							"pm.environment.set(\"userId\", user);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user review (pre existing)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"const review = pm.response.json();\r",
+							"pm.environment.set(\"reviewId\", review);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user review (missing mandatory fields)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const review = jsonData._id;\r",
+							"pm.environment.set(\"reviewId\", review);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.environment.get(\"reviewId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user review (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/{{userId}}/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"{{userId}}",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
