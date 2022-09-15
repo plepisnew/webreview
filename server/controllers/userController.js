@@ -126,6 +126,15 @@ const getSpecificUserReview = async (req, res) => {
 const deleteSpecificUserReview = async (req, res) => {
   const userId = req.params.id;
   const reviewId = req.params.review_id;
+
+try{
+  const review = await Review.findByIdAndDelete(reviewId);
+  if (review) return res.status(200).json(review); 
+  res
+  .status(400)
+  .json({ message: `Can't find Review by User with ObjectId ${userId}` });} catch (err){
+  res.status(400).json({ message: err.message })
+}
 };
 
 module.exports = {
