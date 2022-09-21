@@ -1,12 +1,12 @@
 <template>
-  <div class="page">
-    Home page
+  <div class="unauth-page">
+    Login page
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home'
+  name: 'login'
 }
 </script>
 

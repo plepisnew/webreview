@@ -1,19 +1,43 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-    </div>
-    <!-- Render the content of the current page view -->
-    <router-view/>
+    <Navbar v-if="!['register', 'login'].includes(this.$route.name)" />
+
+    <router-view />
   </div>
 </template>
 
+<script>
+import Navbar from '@/components/Navbar'
+
+export default {
+  components: {
+    Navbar
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.page,
+.unauth-page {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 30px;
+  background: rgb(200, 200, 200);
+}
+
+.page {
+  top: 80px;
+}
+
+.unauth-page {
+  top: 0;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <div class="page">
-    Home page
+  <div class="unauth-page">
+    Register page
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home'
+  name: 'register'
 }
 </script>
 
