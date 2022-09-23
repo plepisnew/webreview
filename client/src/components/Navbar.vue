@@ -4,7 +4,7 @@
       <img class="website-icon" src="/images/webreview.png" />
       <b-nav-text class="mx-3 font-weight-bold">WebReview</b-nav-text>
     </b-navbar-brand>
-    <b-nav-text class="m-auto h3">For all your reviewing needs</b-nav-text>
+    <b-nav-text class="m-auto h4">For all your reviewing needs</b-nav-text>
     <b-navbar-nav>
       <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
       <b-nav-item class="my-auto" to="/reviews">Reviews</b-nav-item>

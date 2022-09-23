@@ -5,6 +5,7 @@ import Register from '@/views/Register'
 import Websites from '@/views/Websites'
 import Reviews from '@/views/Reviews'
 import Home from '@/views/Home'
+import Profile from '@/views/Profile'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/profile/me',
+      name: 'profile',
+      component: Profile
     }
   ]
 })
