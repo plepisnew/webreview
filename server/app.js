@@ -9,6 +9,7 @@ const adminRouter = require("./routes/adminRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const websiteRouter = require("./routes/websiteRoutes");
 const userRouter = require("./routes/userRoutes");
+const authRouter = require("./routes/authRoutes");
 
 const addBaseData = require("./utils/addBaseData");
 
@@ -52,6 +53,7 @@ app.use("/api/users", userRouter);
 app.use("/api/admins", adminRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/websites", websiteRouter);
+app.use("/api", authRouter);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use("/api/*", function (req, res) {

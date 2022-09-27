@@ -1,0 +1,47 @@
+
+### 
+GET http://localhost:3000/api/users
+
+### Create a user with a hashed password
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+    "username": "authUser",
+    "password": "secure_password"
+}
+
+### Create a user without a required field
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+    "password": "secure_password"
+}
+
+### Login a user successfully
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username": "authUser",
+    "password": "secure_password"
+}
+
+### Login a user with an incorrect password
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username": "authUser",
+    "password": "insecure_password"
+}
+
+### Login a user that does not exist
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username": "unauthUser",
+    "password": "insecure_password"
+}
