@@ -3,7 +3,7 @@ const Admin = require("../model/Admin");
 
 const getAllReviews = async (req, res) => {
   const reviews = await Review.find({ ...req.query });
-  res.status(reviews.length === 0 ? 204 : 200).json(reviews);
+  res.status(200).json(reviews);
 };
 
 const createReview = async (req, res) => {

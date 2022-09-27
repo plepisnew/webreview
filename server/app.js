@@ -5,12 +5,8 @@ const path = require("path");
 const cors = require("cors");
 const history = require("connect-history-api-fallback");
 
-const adminRouter = require("./routes/adminRoutes");
-const reviewRouter = require("./routes/reviewRoutes");
-const websiteRouter = require("./routes/websiteRoutes");
-const userRouter = require("./routes/userRoutes");
-const authRouter = require("./routes/authRoutes");
-const addBaseData = require("./utils/addBaseData");
+// const addBaseData = require("../utils/addBaseData");
+const route = require("./routes");
 
 /* Connects to MongoDB database */
 const connectDatabase = () => {
@@ -40,6 +36,7 @@ const applyInitialMiddleware = () => {
   app.use(morgan("dev"));
   app.options("*", cors());
   app.use(cors());
+  app.set("json spaces", 2);
 };
 
 /* Applies middleware after route handlers are mounted */
@@ -66,21 +63,7 @@ const applyMiddleware = () => {
 
 /* Attaches handlers to routes */
 const mountRoutes = () => {
-  app.get("/api", (req, res) => {
-    res.json({
-      message: "Welcome to your DIT342 backend ExpressJS project!",
-    });
-  });
-
-  app.use("/api/users", userRouter);
-  app.use("/api/admins", adminRouter);
-  app.use("/api/reviews", reviewRouter);
-  app.use("/api/websites", websiteRouter);
-  app.use("/api", authRouter);
-
-  app.use("/api/*", (req, res) => {
-    res.status(404).json({ message: "Not Found" });
-  });
+  route(app);
 };
 
 /* Starts server */
