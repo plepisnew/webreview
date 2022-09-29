@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <Navbar v-if="!['register', 'login'].includes(this.$route.name)" />
-
-    <router-view />
+    <div class="page">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -17,7 +18,6 @@ export default {
 </script>
 
 <style>
-
 * {
   margin: 0;
   padding: 0;

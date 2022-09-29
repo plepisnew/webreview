@@ -5,13 +5,15 @@ const {
   uploadImage,
   getAllImages,
   getSpecificImage,
+  clearImages,
 } = require("../controllers/imageController");
 
 router.get("/images", getAllImages);
 
 router.get("/images/:name", getSpecificImage);
 
-// router.post("/images", upload.single("uploadImage"), uploadImage);
-router.post("/images", uploadImage);
+router.delete("/images", clearImages);
+
+router.post("/images", upload.single("uploadImage"), uploadImage);
 
 module.exports = router;

@@ -24,7 +24,6 @@ export default {
       ).toString('base64')}`
       console.log(source)
       this.setPicture(source)
-      // `data:${user.userPhotoExtensionType};base64, ${Buffer.from(user.userPhoto.data).toString('base64')}`
     })
   },
   methods: {

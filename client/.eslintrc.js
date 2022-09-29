@@ -3,10 +3,7 @@ module.exports = {
   env: {
     node: true
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/standard'
-  ],
+  extends: ['plugin:vue/essential', '@vue/standard'],
   rules: {
     'space-before-function-paren': [2, { anonymous: 'always', named: 'never' }],
     'no-console': 'off',
