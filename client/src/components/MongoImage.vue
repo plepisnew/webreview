@@ -10,7 +10,7 @@ export default {
   props: {
     src: {
       type: String,
-      default: 'image'
+      required: true
     },
     width: Number,
     height: Number
@@ -30,3 +30,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+img {
+  max-width: 100%;
+}
+</style>

@@ -6,7 +6,10 @@
 export default {
   name: 'Button',
   props: {
-    text: String,
+    text: {
+      type: String,
+      required: true
+    },
     onClick: Function,
     variant: {
       default: 'grey',

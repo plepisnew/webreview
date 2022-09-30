@@ -31,6 +31,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  width: 100%;
   padding: 30px;
   background: rgb(200, 200, 200);
 }
