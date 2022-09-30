@@ -1,0 +1,43 @@
+@baseUrl = http://localhost:3000
+@resource = api/reviews
+@objectId = 6317c106c7a50d1da0a09a34
+
+
+#################################
+############## GET ##############
+#################################
+
+### Get a list of all reviews: 200
+GET {{baseUrl}}/{{resource}} HTTP/1.1
+
+### Get a review by its id: 200
+GET {{baseUrl}}/{{resource}}/{{objectId}} HTTP/1.1
+
+### Get a review by its rating: 200
+GET {{baseUrl}}/{{resource}}?rating=5 HTTP/1.1
+
+### Get a review by its id which doesn't exist: 400
+GET {{baseUrl}}/{{resource}}/63178eff73a9885d248f9b76 HTTP/1.1
+
+### Get a review by its id which isn't a valid ObjectId: 400
+GET {{baseUrl}}/{{resource}}/1337 HTTP/1.1
+
+### Get a review's administrator: 200
+GET {{baseUrl}}/{{resource}}/{{objectId}}/writtenBy HTTP/1.1
+
+### (!) Same ObjectId error handling applies to all other HTTP methods
+
+##################################
+############## POST ##############
+##################################
+
+### Create a post: 200
+POST {{baseUrl}}/{{resource}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "rating": 1,
+    "content": "Absolute nincompoopery",
+    "writtenBy": "6317bb727589b131e438fa38",
+    "monitoredBy": "6317bb727589b131e438fa38"
+}

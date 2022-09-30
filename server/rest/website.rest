@@ -1,0 +1,47 @@
+
+### POST a specific website
+POST http://localhost:3000/api/websites/
+Content-Type: application/json
+
+{
+    "logo_src": "images/wow.png",
+    "description": "testing, testing",
+    "url": "www.google.com",
+    "launch_date": "2015-01-01"
+}
+### GET all websites
+GET http://localhost:3000/api/websites
+
+### GET specific website
+GET http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+
+### PUT specific website
+PUT http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+Content-Type: application/json
+
+{
+    "logo_src": "images/updated.png",
+    "description": "testy testy",
+    "url": "www.yahoo.com",
+    "launch_date": "2022-01-01"
+}
+
+### PATCH specific website
+PUT http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+Content-Type: application/json
+
+{
+    "logo_src": "images/updated.png",
+    "description": "testy testy",
+    "url": "www.yahoo.com",
+    "launch_date": "2022-01-01"
+}
+
+### DELETE specific website
+DELETE http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+
+### DELETE all websites
+DELETE http://localhost:3000/api/websites
+
+### GET website creator
+GET http://localhost:3000/api/websites/{{id}}/createdBy
