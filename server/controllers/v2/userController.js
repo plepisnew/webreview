@@ -6,6 +6,7 @@ const response = ({ id, payload }) =>
   buildResponse({ id, payload, entity: "User" });
 
 const getAllUsers = async (req, res) => {
+  console.log(req.user);
   const users = await User.find({ ...req.query });
   res.status(200).json(response({ payload: users }));
 };

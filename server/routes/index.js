@@ -12,6 +12,8 @@ const v2userRouter = require("./v2/userRoutes");
 const v2authRouter = require("./v2/authRoutes");
 const v2imageRouter = require("./v2/imageRoutes");
 
+const jwt = require("jsonwebtoken");
+
 const route = (app) => {
   app.get("/api", (req, res) => {
     res.json({
@@ -26,16 +28,39 @@ const route = (app) => {
   app.use("/api/v1", v1authRouter);
   app.use("/api/v1", v1imageRouter);
 
-  app.use("/api/v2/users", v2userRouter);
-  app.use("/api/v2/admins", v2adminRouter);
-  app.use("/api/v2/reviews", v2reviewRouter);
-  app.use("/api/v2/websites", v2websiteRouter);
+  app.use("/api/v2/users", authenticateToken, v2userRouter);
+  app.use("/api/v2/admins", authenticateToken, v2adminRouter);
+  app.use("/api/v2/reviews", authenticateToken, v2reviewRouter);
+  app.use("/api/v2/websites", authenticateToken, v2websiteRouter);
   app.use("/api/v2", v2authRouter);
-  app.use("/api/v2", v2imageRouter);
+  app.use("/api/v2", authenticateToken, v2imageRouter);
 
   app.use("/api/*", (req, res) => {
     res.status(404).json({ message: "Not Found" });
   });
+};
+
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token) {
+    jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET || "access",
+      (err, user) => {
+        if (err)
+          return res
+            .status(403)
+            .json({ message: "You do not have access to view this resource" });
+        req.user = user;
+        next();
+      }
+    );
+  } else {
+    res.status(401).json({
+      message: "Please provide an access token to view this resource ",
+    });
+  }
 };
 
 module.exports = route;

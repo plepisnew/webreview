@@ -4,9 +4,10 @@ const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
 const history = require("connect-history-api-fallback");
+const session = require("express-session");
 
-// const addBaseData = require("../utils/addBaseData");
 const route = require("./routes");
+// const addBaseData = require("../utils/addBaseData");
 
 /* Connects to MongoDB database */
 const connectDatabase = () => {

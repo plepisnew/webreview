@@ -1,11 +1,18 @@
 const bcrypt = require("bcrypt");
 const User = require("../../model/User");
+const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (await bcrypt.compare(req.body.password, user.password)) {
-      return res.status(200).json({ message: "Successfully authorized" });
+      console.log("testing?");
+      const accessToken = jwt.sign(
+        user.toJSON(),
+        process.env.ACCESS_TOKEN_SECRET || "access"
+      );
+      return res.status(200).json({ accessToken });
+      //   return res.status(200).json({ message: "Successfully authorized" });
     }
     res.status(400).json({ message: "Username or password incorrect" });
   } catch (err) {
