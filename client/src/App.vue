@@ -25,14 +25,16 @@ export default {
   font-family: 'Inter', sans-serif;
 }
 
+.navbar {
+  height: 80px;
+}
+
 .page,
 .unauth-page {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  margin-top: 80px;
   padding: 30px;
+  width: 100%;
+  height: 100%;
   background: rgb(200, 200, 200);
 }
 

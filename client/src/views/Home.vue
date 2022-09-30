@@ -48,7 +48,7 @@ export default {
           name: 'Twitch',
           description: 'Video sharing and streaming platform',
           url: 'http://twitch.tv',
-          image: 'barox',
+          image: 'twitch',
           rating: 4
         },
         {

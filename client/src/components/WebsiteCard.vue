@@ -1,11 +1,13 @@
 <template>
   <div class="website-card">
-    <a :href="this.url" target="_blank">
+    <router-link :to="`/websites/${this.name.toLowerCase()}`">
       <MongoImage :src="this.image" />
-    </a>
+    </router-link>
     <div class="content-container">
-      <span class="website-title"
-        ><span style="margin-right: 5px;">{{ this.name }}</span>
+      <span class="website-title">
+        <a :href="this.url" target="_blank" style="color: inherit;">
+          <span style="margin-right: 5px;">{{ this.name }}</span>
+        </a>
         <span class="star-span" v-for="star in this.rating" :key="star"
           >&#11088;</span
         >
@@ -43,9 +45,6 @@ export default {
       type: Number,
       required: true
     }
-  },
-  methods: {
-    getStars(count) {}
   }
 }
 </script>

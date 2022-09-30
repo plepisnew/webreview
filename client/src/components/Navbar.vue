@@ -1,5 +1,5 @@
 <template>
-  <b-navbar type="dark" fixed="top" variant="dark">
+  <b-navbar class="navbar" type="dark" fixed="top" variant="dark">
     <b-navbar-brand to="/">
       <img class="website-icon" src="/images/webreview.png" />
       <b-nav-text class="mx-3 font-weight-bold">WebReview</b-nav-text>

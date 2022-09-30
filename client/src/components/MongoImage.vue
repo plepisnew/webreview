@@ -1,5 +1,10 @@
 <template>
-  <img alt="kek" :src="imageBuffer" :width="this.width" :height="this.height" />
+  <img
+    alt="kek"
+    :src="imageBuffer"
+    :width="this.width || '100%'"
+    :height="this.height || '100%'"
+  />
 </template>
 
 <script>
