@@ -1,15 +1,20 @@
-const Review = require("../model/Review");
-const Admin = require("../model/Admin");
+const Review = require("../../model/Review");
+const Admin = require("../../model/Admin");
+const User = require("../../model/User");
+const { buildResponse } = require("./hateoas");
+
+const response = ({ id, payload }) =>
+  buildResponse({ entity: "Review", id, payload });
 
 const getAllReviews = async (req, res) => {
   const reviews = await Review.find({ ...req.query });
-  res.status(200).json(reviews);
+  res.status(200).json(response({ payload: reviews }));
 };
 
 const createReview = async (req, res) => {
   try {
     const review = await Review.create(req.body);
-    res.status(201).json(review);
+    res.status(201).json(response({ payload: review, id: review._id }));
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -28,7 +33,8 @@ const getSpecificReview = async (req, res) => {
   const reviewId = req.params.id;
   try {
     const review = await Review.findById(reviewId);
-    if (review) return res.status(200).json(review);
+    if (review)
+      return res.status(200).json(response({ payload: review, id: reviewId }));
     res
       .status(404)
       .json({ message: `Can't find Review with ObjectId ${reviewId}` });
@@ -41,7 +47,8 @@ const deleteSpecificReview = async (req, res) => {
   const reviewId = req.params.id;
   try {
     const review = await Review.findByIdAndDelete(adminId);
-    if (review) return res.status(200).json(review);
+    if (review)
+      return res.status(200).json(response({ payload: review, id: reviewId }));
     res
       .status(404)
       .json({ message: `Can't find Review with ObjectId ${reviewId}` });
@@ -70,6 +77,26 @@ const getReviewAdmin = async (req, res) => {
   }
 };
 
+const getReviewAuthor = async (req, res) => {
+  const reviewId = req.params.id;
+  try {
+    const review = await Review.findById(reviewId);
+    if (!review)
+      return res
+        .status(404)
+        .json({ messagea: `Can't find Review with ObjectId ${reviewId}` });
+    const userId = review.writtenBy;
+    const user = await User.findById(userId);
+    if (!user)
+      return res
+        .status(404)
+        .json({ messagea: `Can't find User with ObjectId ${reviewId}` });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ messagea: err.message });
+  }
+};
+
 module.exports = {
   getAllReviews,
   createReview,
@@ -77,4 +104,5 @@ module.exports = {
   getSpecificReview,
   deleteSpecificReview,
   getReviewAdmin,
+  getReviewAuthor,
 };

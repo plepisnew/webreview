@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const {
-    getAllWebsites,
-    getCreator,
-    createWebsite,
-    deleteAllWebsites,
-    getSpecificWebsite,
-    putSpecificWebsite,
-    patchSpecificWebsite,
-    deleteSpecificWebsite,
-} = require("../controllers/websiteController");
-const {getReviewAdmin} = require("../controllers/reviewController");
+  getAllWebsites,
+  getCreator,
+  createWebsite,
+  deleteAllWebsites,
+  getSpecificWebsite,
+  putSpecificWebsite,
+  patchSpecificWebsite,
+  deleteSpecificWebsite,
+  getReviewAdmin,
+} = require("../../controllers/v1/websiteController");
 
 router.get("/:id", getSpecificWebsite);
 

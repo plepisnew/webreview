@@ -1,12 +1,15 @@
-
 <template>
-  <div class="page profile">
+  <div class="profile">
     <div class="profile-container">
-      <h5 class="font-weight-bold">{{username}} </h5>
-      <b-img class="w-50" src="/images/profile_default.png" alt="Your profile image"></b-img>
-      <br>
+      <h5 class="font-weight-bold">{{ username }}</h5>
+      <b-img
+        class="w-50"
+        src="/images/profile_default.png"
+        alt="Your profile image"
+      ></b-img>
+      <br />
       <b-button variant="primary" size="sm" class="mt-2">Upload photo</b-button>
-      <br>
+      <br />
     </div>
     <div class="about-container">
       <h5 class="font-weight-bold">About me</h5>
@@ -14,7 +17,9 @@
         id="textarea"
         v-model="description"
         class="w-50 rounded-top w-100 h-100"
-      >      {{description}}  </b-form-textarea>
+      >
+        {{ description }}
+      </b-form-textarea>
     </div>
   </div>
 </template>
@@ -85,5 +90,4 @@ export default {
   top: 20%;
   left: 15%;
 }
-
 </style>

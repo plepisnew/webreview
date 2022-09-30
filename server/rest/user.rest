@@ -1,7 +1,7 @@
-@baseUrl = http://localhost:3000
-@resource = api/users
+@baseUrl = http://localhost:3000/api/v1
+@resource = users
 //what shoud Id be?
-@objectId = 63220494b7205b67482fe160
+@objectId = 633645c113fa4c20580b7e9d
 
 
 #################################

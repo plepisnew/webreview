@@ -13,7 +13,7 @@ const {
   getSpecificUserReview,
   createUserReview,
   deleteSpecificUserReview,
-} = require("../controllers/userController");
+} = require("../../controllers/v2/userController");
 
 /* User CRUD */
 

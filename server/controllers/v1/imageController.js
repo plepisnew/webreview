@@ -1,7 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const Image = require("../model/Image");
+const Image = require("../../model/Image");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

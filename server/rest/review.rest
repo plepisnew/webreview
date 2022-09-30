@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:3000
-@resource = api/reviews
+@baseUrl = http://localhost:3000/api/v1
+@resource = reviews
 @objectId = 6317c106c7a50d1da0a09a34
 
 

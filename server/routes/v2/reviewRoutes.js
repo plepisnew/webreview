@@ -8,7 +8,8 @@ const {
   getSpecificReview,
   deleteSpecificReview,
   getReviewAdmin,
-} = require("../controllers/reviewController");
+  getReviewAuthor,
+} = require("../../controllers/v2/reviewController");
 
 router.get("/:id", getSpecificReview);
 
@@ -25,6 +26,8 @@ router.post("/", createReview);
 
 router.delete("/", deleteAllReviews);
 
-router.get("/:id/writtenBy", getReviewAdmin);
+router.get("/:id/monitoredBy", getReviewAdmin);
+
+router.get("/:id/writtenBy", getReviewAuthor);
 
 module.exports = router;

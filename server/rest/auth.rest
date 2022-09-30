@@ -1,9 +1,10 @@
+@baseUrl = http://localhost:3000/api/v1
 
 ### 
-GET http://localhost:3000/api/users
+GET {{baseUrl}}/users
 
 ### Create a user with a hashed password
-POST http://localhost:3000/api/register
+POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
@@ -12,7 +13,7 @@ Content-Type: application/json
 }
 
 ### Create a user without a required field
-POST http://localhost:3000/api/register
+POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
@@ -20,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Login a user successfully
-POST http://localhost:3000/api/login
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
@@ -29,7 +30,7 @@ Content-Type: application/json
 }
 
 ### Login a user with an incorrect password
-POST http://localhost:3000/api/login
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
@@ -38,7 +39,7 @@ Content-Type: application/json
 }
 
 ### Login a user that does not exist
-POST http://localhost:3000/api/login
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {

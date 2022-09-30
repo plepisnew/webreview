@@ -34,7 +34,7 @@ export default {
   margin-top: 80px;
   padding: 30px;
   width: 100%;
-  height: 100%;
+  min-height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
 }
 

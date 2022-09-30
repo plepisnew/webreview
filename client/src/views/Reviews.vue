@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div>
     <img :src="picture" />
     Reviews page
   </div>
@@ -18,11 +18,11 @@ export default {
   mounted() {
     Api.get('/images/barox').then(res => {
       const image = res.data.image
-      console.log(image)
+      //   console.log(image)
       const source = `data:${image.contentType};base64, ${Buffer.from(
         image.data
       ).toString('base64')}`
-      console.log(source)
+      //   console.log(source)
       this.setPicture(source)
     })
   },

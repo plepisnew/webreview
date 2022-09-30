@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:3000
-@resource = api/admins
+@baseUrl = http://localhost:3000/api/v1
+@resource = admins
 @objectId = 6317bb727589b131e438fa38
 
 
@@ -13,7 +13,7 @@ GET {{baseUrl}}/{{resource}} HTTP/1.1
 ### Get an admin by its username: 200
 GET {{baseUrl}}/{{resource}}?username=admin HTTP/1.1
 
-### Get an admin by its username which doesn't exist: 204
+### Get an admin by its username which doesn't exist: 404
 GET {{baseUrl}}/{{resource}}?username=this+doesnt+exist HTTP/1.1
 
 ### Get an admin by its id: 200

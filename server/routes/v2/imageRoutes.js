@@ -6,7 +6,7 @@ const {
   getAllImages,
   getSpecificImage,
   clearImages,
-} = require("../controllers/imageController");
+} = require("../../controllers/v2/imageController");
 
 router.get("/images", getAllImages);
 

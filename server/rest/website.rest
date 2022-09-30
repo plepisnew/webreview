@@ -1,22 +1,26 @@
+@baseUrl = http://localhost:3000/api/v1
+@resource = websites
 
 ### POST a specific website
-POST http://localhost:3000/api/websites/
+POST {{baseUrl}}/{{resource}} HTTP/1.1
 Content-Type: application/json
 
 {
+    "name": "Google",
     "logo_src": "images/wow.png",
     "description": "testing, testing",
     "url": "www.google.com",
     "launch_date": "2015-01-01"
 }
+
 ### GET all websites
-GET http://localhost:3000/api/websites
+GET {{baseUrl}}/{{resource}} HTTP/1.1
 
 ### GET specific website
-GET http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+GET {{baseUrl}}/{{resource}}/6318b32e6b2e394bcc0202ba HTTP/1.1
 
 ### PUT specific website
-PUT http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+PUT {{baseUrl}}/{{resource}}/6318b32e6b2e394bcc0202ba HTTP/1.1
 Content-Type: application/json
 
 {
@@ -27,7 +31,7 @@ Content-Type: application/json
 }
 
 ### PATCH specific website
-PUT http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+PUT {{baseUrl}}/{{resource}}/6318b32e6b2e394bcc0202ba HTTP/1.1
 Content-Type: application/json
 
 {
@@ -38,10 +42,10 @@ Content-Type: application/json
 }
 
 ### DELETE specific website
-DELETE http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+DELETE {{baseUrl}}/{{resource}}/6318b32e6b2e394bcc0202ba HTTP/1.1
 
 ### DELETE all websites
-DELETE http://localhost:3000/api/websites
+DELETE {{baseUrl}}/{{resource}} HTTP/1.1
 
 ### GET website creator
-GET http://localhost:3000/api/websites/{{id}}/createdBy
+GET {{baseUrl}}/{{resource}}/6318b32e6b2e394bcc0202ba/createdBy HTTP/1.1
