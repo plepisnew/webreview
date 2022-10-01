@@ -28,6 +28,24 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+a {
+  color: inherit !important;
+}
+
+#app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .navbar {
@@ -38,7 +56,7 @@ export default {
   margin-top: 80px;
   padding: 30px;
   width: 100%;
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
 }
 

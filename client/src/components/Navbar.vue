@@ -1,10 +1,10 @@
 <template>
-  <b-navbar class="navbar" type="dark" fixed="top" variant="dark">
+  <b-navbar type="dark" fixed="top" variant="dark">
     <b-navbar-brand to="/">
       <MongoImage src="twitch" :width="50" style="border-radius: 10%;" />
       <b-nav-text class="mx-3 font-weight-bold">WebReview</b-nav-text>
     </b-navbar-brand>
-    <b-nav-text class="m-auto h4">For all your reviewing needs</b-nav-text>
+    <b-nav-text class="m-auto h4">{{ headerText() }}</b-nav-text>
     <b-navbar-nav class="navigation">
       <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
       <b-nav-item class="my-auto" to="/reviews">Reviews</b-nav-item>
@@ -32,6 +32,9 @@ export default {
     signOut() {
       localStorage.token = ''
       this.$router.push('/login')
+    },
+    headerText() {
+      return `Welcome, ${localStorage.user}!`
     }
   },
   components: { MongoImage }
@@ -41,6 +44,7 @@ export default {
 <style>
 .navigation {
   align-items: center;
+  color: white;
 }
 
 .router-link-exact-active {

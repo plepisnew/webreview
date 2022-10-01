@@ -1,96 +1,126 @@
 <template>
-  <div>
-    <p>Home Page</p>
-    <div
-      style="display: flex; flex-direction: column; max-width: 400px; gap: 10px"
-    >
-      <Button text="press me ;)" :onClick="this.log" variant="red" />
-      <Button
-        text="OR alternatively press me ;)"
-        :onClick="this.log"
-        variant="blue"
-      />
-      <MongoImage src="barox" :width="80" />
-      <TextField placeholder="Username" />
-      <FilterBar class="mt-3" :handler="this.logTags" />
-      <WebsiteCards :websites="websites" />
+  <div class="home-container">
+    <div class="left-panel">
+      <FilterBar />
+    </div>
+    <div class="right-panel">
+      <div class="website-container">
+        <h2 class="websites-title">
+          Top rated websites
+        </h2>
+        <div class="website-scrollbar">
+          <WebsiteCards :websites="websites" :cols="4" />
+        </div>
+      </div>
+      <div class="review-container">
+        <h2 class="reviews-title">Recent reviews</h2>
+        <div class="review-scrollbar">
+          <ReviewCards :reviews="reviews" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Button from '@/components/Button'
-import MongoImage from '@/components/MongoImage.vue'
-import TextField from '@/components/TextField.vue'
+// import Button from '@/components/Button'
+// import MongoImage from '@/components/MongoImage.vue'
+// import TextField from '@/components/TextField.vue'
 import FilterBar from '@/components/FilterBar.vue'
-import WebsiteCards from '../components/WebsiteCards.vue'
+import WebsiteCards from '@/components/websites/WebsiteCards.vue'
+import ReviewCards from '@/components/reviews/ReviewCards.vue'
+import { Api } from '@/Api'
 
 export default {
   name: 'home',
   components: {
-    Button,
-    MongoImage,
-    TextField,
+    // Button,
+    // MongoImage,
+    // TextField,
     FilterBar,
-    WebsiteCards
+    WebsiteCards,
+    ReviewCards
   },
   data() {
     return {
-      websites: [
-        {
-          name: 'YouTube',
-          description: 'Video sharing and streaming platform',
-          url: 'http://youtube.com',
-          image: 'barox',
-          rating: 5
-        },
-        {
-          name: 'Twitch',
-          description: 'Video sharing and streaming platform',
-          url: 'http://twitch.tv',
-          image: 'twitch',
-          rating: 4
-        },
-        {
-          name: 'TubeYou',
-          description: 'Video sharing and streaming platform',
-          url: 'http://youtube.com',
-          image: 'barox',
-          rating: 3
-        },
-        {
-          name: 'MySpace',
-          description: 'Video sharing and streaming platform',
-          url: 'http://twitch.tv',
-          image: 'barox',
-          rating: 2
-        },
-        {
-          name: 'LoL',
-          description: 'Video sharing and streaming platform',
-          url: 'http://youtube.com',
-          image: 'barox',
-          rating: 1
-        },
-        {
-          name: 'Plepis.me :>',
-          description: 'Video sharing and streaming platform',
-          url: 'http://twitch.tv',
-          image: 'barox',
-          rating: 5
-        }
-      ]
+      websites: [],
+      reviews: []
     }
   },
   methods: {
-    log() {
-      console.log('hello?')
-    },
     logTags(tags) {
       console.log(tags)
+    },
+    async recentReviews() {
+      const reviews = await Api.get('/reviews')
+      this.reviews = reviews.data.payload.sort(
+        (r1, r2) => new Date(r1.createdAt) < new Date(r2.createdAt)
+      )
+      console.log(
+        reviews.data.payload.sort(
+          (r1, r2) =>
+            new Date(r1.createdAt).getTime() > new Date(r2.createdAt).getTime()
+        )
+      )
+    },
+    async topWebsites() {
+      const websites = await Api.get('/websites')
+      this.websites = websites.data.map(website => {
+        return { ...website, rating: 3 }
+      })
     }
+  },
+  mounted() {
+    this.recentReviews()
+    this.topWebsites()
   }
 }
 </script>
 
-<style></style>
+<style>
+.home-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.left-panel,
+.right-panel {
+  flex: 1;
+  /* border-radius: 15px; */
+  display: flex;
+  flex-direction: column;
+}
+
+.website-container,
+.review-container {
+  flex: 1;
+  height: 50%;
+  background: rgb(50, 50, 50);
+  padding: 10px;
+  margin: 5px;
+  border-radius: 15px;
+}
+
+.website-scrollbar,
+.review-scrollbar {
+  max-height: 90%;
+  padding: 15px;
+  overflow-y: scroll;
+  background: white;
+  border-radius: 15px;
+}
+
+.review-container {
+  flex: 1;
+}
+
+.websites-title,
+.reviews-title {
+  font-size: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+</style>

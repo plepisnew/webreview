@@ -1,9 +1,10 @@
 <template>
   <img
-    alt="kek"
+    alt="mongodb-image"
     :src="imageBuffer"
     :width="this.width || '100%'"
     :height="this.height || '100%'"
+    :class="this.rounded ? 'rounded-circle' : ''"
   />
 </template>
 
@@ -17,8 +18,13 @@ export default {
       type: String,
       required: true
     },
-    width: Number,
-    height: Number
+    width: {
+      value: [Number, String]
+    },
+    height: {
+      value: [Number, String]
+    },
+    rounded: Boolean
   },
   data() {
     return {
@@ -38,6 +44,7 @@ export default {
 
 <style scoped>
 img {
-  max-width: 100%;
+  /* max-width: 100%; */
+  max-height: 100%;
 }
 </style>

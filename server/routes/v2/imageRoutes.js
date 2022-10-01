@@ -4,11 +4,14 @@ const {
   upload,
   uploadImage,
   getAllImages,
+  getImageNames,
   getSpecificImage,
   clearImages,
 } = require("../../controllers/v2/imageController");
 
 router.get("/images", getAllImages);
+
+router.get("/images/names", getImageNames);
 
 router.get("/images/:name", getSpecificImage);
 

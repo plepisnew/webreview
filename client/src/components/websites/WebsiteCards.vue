@@ -1,11 +1,14 @@
 <template>
-  <div class="website-cards">
+  <div
+    class="website-cards"
+    :style="`grid-template-columns: repeat(${cols}, 1fr)`"
+  >
     <div v-for="website in websites" :key="website.name">
       <WebsiteCard
         :name="website.name"
         :description="website.description"
         :url="website.url"
-        :image="website.image"
+        :logoSrc="website.logoSrc"
         :rating="website.rating"
       />
     </div>
@@ -20,6 +23,10 @@ export default {
     websites: {
       type: Array,
       required: true
+    },
+    cols: {
+      type: Number,
+      default: 4
     }
   },
   components: { WebsiteCard }
@@ -30,8 +37,6 @@ export default {
 <style>
 .website-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 900px;
   column-gap: 10px;
   row-gap: 10px;
 }

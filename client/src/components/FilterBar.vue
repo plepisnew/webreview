@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      tags: ['kek', 'kek1', 'kek2']
+      tags: ['tag', 'tag1', 'tag2']
     }
   },
   methods: {

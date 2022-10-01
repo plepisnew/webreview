@@ -10,7 +10,7 @@ const login = async (req, res) => {
         user.toJSON(),
         process.env.ACCESS_TOKEN_SECRET || "access"
       );
-      return res.status(200).json({ accessToken });
+      return res.status(200).json({ accessToken, user });
       //   return res.status(200).json({ message: "Successfully authorized" });
     }
     res.status(400).json({ message: "Username or password incorrect" });

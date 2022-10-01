@@ -1,7 +1,7 @@
 <template>
   <div class="website-card">
     <router-link :to="`/websites/${this.name.toLowerCase()}`">
-      <MongoImage :src="this.image" />
+      <MongoImage :src="this.logoSrc" />
     </router-link>
     <div class="content-container">
       <span class="website-title">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import MongoImage from './MongoImage.vue'
+import MongoImage from '@/components/MongoImage.vue'
 export default {
   name: 'WebsiteCard',
   components: {
@@ -37,7 +37,7 @@ export default {
       type: String,
       required: true
     },
-    image: {
+    logoSrc: {
       type: String,
       required: true
     },
@@ -54,6 +54,7 @@ export default {
   background-color: #424242;
   color: white;
   display: flex;
+  height: 100%;
   flex-direction: column;
   border-radius: 15px;
   overflow: hidden;

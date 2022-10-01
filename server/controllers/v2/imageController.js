@@ -5,7 +5,7 @@ const Image = require("../../model/Image");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "..", "uploads"));
+    cb(null, path.join(__dirname, "..", "..", "uploads"));
   },
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
@@ -18,6 +18,16 @@ const getAllImages = async (req, res) => {
   try {
     const images = await Image.find({});
     res.status(200).json(images);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+const getImageNames = async (req, res) => {
+  try {
+    const images = await Image.find({});
+    const imageNames = images.map((el) => el.name);
+    res.status(200).json(imageNames);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -38,12 +48,13 @@ const getSpecificImage = async (req, res) => {
 const uploadImage = async (req, res) => {
   console.log(req.body);
   console.log(req.file);
+  console.log("KEK");
   try {
     const image = await Image.create({
       name: req.body.name,
       image: {
         data: fs.readFileSync(
-          path.join(__dirname, "..", "uploads", req.file.filename)
+          path.join(__dirname, "..", "..", "uploads", req.file.filename)
         ),
         contentType: "image/png",
       },
@@ -63,6 +74,7 @@ const clearImages = async (req, res) => {
 
 module.exports = {
   getAllImages,
+  getImageNames,
   getSpecificImage,
   uploadImage,
   clearImages,
