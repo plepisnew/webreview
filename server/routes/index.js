@@ -33,7 +33,7 @@ const route = (app) => {
   app.use("/api/v2/reviews", authenticateToken, v2reviewRouter);
   app.use("/api/v2/websites", authenticateToken, v2websiteRouter);
   app.use("/api/v2", v2authRouter);
-  app.use("/api/v2", authenticateToken, v2imageRouter);
+  app.use("/api/v2", v2imageRouter);
 
   app.use("/api/*", (req, res) => {
     res.status(404).json({ message: "Not Found" });

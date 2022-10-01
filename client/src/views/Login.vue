@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { Api } from '../Api'
 import Button from '../components/Button.vue'
 export default {
   data() {
@@ -72,13 +73,22 @@ export default {
   methods: {
     registerUser() {
       if (this.form.username.length > 0 && this.form.password.length > 0) {
-        this.$router.push('/')
+        this.$router.push('/register')
       }
     },
-    loginUser() {
+    async loginUser() {
+      const { username, password } = this.form
       console.log(this.form)
-      if (this.form.username.length > 0 && this.form.password.length > 0) {
+      try {
+        const res = await Api.post('/login', {
+          username,
+          password
+        })
+        const accessToken = res.data.accessToken
+        localStorage.token = accessToken
         this.$router.push('/')
+      } catch (err) {
+        console.log(err)
       }
     }
   }

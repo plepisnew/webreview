@@ -1,87 +1,142 @@
 <template>
-  <div>
-    <div class="center">
-      <b-card
-        title="Create account"
-        img-src="/images/webreview-1.png"
-        img-alt="Image"
-        img-top
-        tag="article"
-        style="max-width: 20rem;"
-        class="mb-2"
-        bg-variant="dark"
-        text-variant="white"
-      >
-        <b-card-text>
-          <b-form inline>
-            <label class="sr-only" for="inline-form-input-name">Username</label>
+  <div class="register-container">
+    <b-card
+      title="Create account"
+      img-src="/images/webreview-1.png"
+      img-alt="Image"
+      img-top
+      tag="article"
+      style="max-width: 25rem;"
+      bg-variant="dark"
+      text-variant="white"
+    >
+      <b-card-text>
+        <b-form-group
+          :state="formValidation"
+          :valid-feedback="`Looks good to me, ${username}!`"
+          :invalid-feedback="invalidFeedback"
+        >
+          <b-form valid-feedback="Kek">
+            <label class="sr-only" for="input-username">Username</label>
             <b-form-input
-              id="inline-form-input-name"
-              class="mb-2 mr-sm-2 mb-sm-2"
+              id="input-username"
+              class="mr-sm-2 mb-sm-2"
               placeholder="Username"
-            ></b-form-input>
-
-            <label class="sr-only" for="inline-form-input-mail">Email</label>
+              v-model="username"
+              required
+            />
+            <label class="sr-only" for="input-input-descripton"
+              >Description</label
+            >
+            <b-form-textarea
+              rows="3"
+              id="input-description"
+              class="mr-sm-2 mb-sm-2"
+              v-model="description"
+              placeholder="Tell us something about yourself (Optional)"
+            />
+            <label class="sr-only" for="input-password">Password</label>
             <b-form-input
-              id="inline-form-input-mail"
-              class="mb-2 mr-sm-2 mb-sm-2"
-              placeholder="Email"
-            ></b-form-input>
-            <b-form @submit.stop.prevent>
-              <label for="user-password"></label>
-              <b-form-input
-                v-model="userPassword"
-                :state="validation"
-                id="user-password"
-              ></b-form-input>
-              <b-form-invalid-feedback :state="validation">
-                Your user Password must be 5-12 characters long.
-              </b-form-invalid-feedback>
-              <b-form-valid-feedback :state="validation">
-                Perfect.
-              </b-form-valid-feedback>
-            </b-form>
+              type="password"
+              id="input-password"
+              class="mr-sm-2 mb-sm-2"
+              v-model="password"
+              placeholder="Password"
+              required
+            />
           </b-form>
-        </b-card-text>
-
-        <b-button href="home" variant="primary">create account</b-button>
-        <b-card-body>
-          <router-link class="card-link" to="/login">
-            Already have an account?
-          </router-link>
-        </b-card-body>
-        <template #footer>
-          <em>All rights reserved 2022</em>
-        </template>
-      </b-card>
-    </div>
+        </b-form-group>
+      </b-card-text>
+      <b-card-body class="card-buttons">
+        <Button class="m-1" text="Create Account" :onClick="registerUser" />
+        <router-link class="card-link m-1" to="/login">
+          Already have an account?
+        </router-link>
+      </b-card-body>
+      <template #footer>
+        <em>All rights reserved 2022</em>
+      </template>
+    </b-card>
   </div>
 </template>
 
 <script>
+import Button from '@/components/Button'
+import { Api } from '@/Api'
+import 'axios'
 export default {
   data() {
     return {
-      userPassword: ''
+      username: '',
+      password: '',
+      description: '',
+      error: ''
     }
   },
   computed: {
-    validation() {
-      return this.userPassword.length > 4 && this.userPassword.length < 13
+    formValidation() {
+      return (
+        this.password.length > 4 && this.password.length < 13 && !!this.username
+      )
+    },
+    invalidFeedback() {
+      if (this.error) return this.error
+      if (this.password.length <= 4 || this.password.length >= 13) {
+        return 'Password must be 5-13 characters long'
+      }
+      return 'Please specify a username'
     }
+  },
+  methods: {
+    async registerUser() {
+      this.error = ''
+      try {
+        await Api.post('/register', {
+          username: this.username,
+          password: this.password,
+          description: this.description
+        })
+        this.$router.push('/login')
+      } catch (err) {
+        if (err.response.data.message.includes('duplicate key')) {
+          this.error = `Username ${this.username} is already taken`
+          this.username = ''
+        }
+      }
+    }
+  },
+  components: {
+    Button
   }
 }
 </script>
 
 <style>
+.register-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 !important;
+}
+
+.error {
+  color: red;
+}
+
 .card {
-  margin: 0 auto; /* Added */
   float: none; /* Added */
-  margin-bottom: 10px; /* Added */
+  margin: auto;
 }
 .content {
-  max-width: 500px;
-  margin: 0 auto;
+  max-width: 700px;
 }
 
 .unauth-page {

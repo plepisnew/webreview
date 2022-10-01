@@ -9,7 +9,7 @@ import Profile from '@/views/Profile'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -45,3 +45,14 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  const token = localStorage.token
+  if (token && ['register', 'login'].includes(to.name)) {
+    next({ name: 'home' })
+  }
+  if (!token && !['register', 'login'].includes(to.name)) {
+    next({ name: 'login' })
+  }
+  next()
+})
+export default router

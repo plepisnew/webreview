@@ -25,6 +25,7 @@ export default {
       //   console.log(source)
       this.setPicture(source)
     })
+    console.log(localStorage.token)
   },
   methods: {
     setPicture(src) {

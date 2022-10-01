@@ -6,7 +6,6 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (await bcrypt.compare(req.body.password, user.password)) {
-      console.log("testing?");
       const accessToken = jwt.sign(
         user.toJSON(),
         process.env.ACCESS_TOKEN_SECRET || "access"
