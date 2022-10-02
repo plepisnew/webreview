@@ -84,6 +84,7 @@ export default {
         const { accessToken, user } = res.data
         localStorage.token = accessToken
         localStorage.user = user.username
+        localStorage.userId = user._id
         this.$router.push('/')
       } catch (err) {
         console.log(err)

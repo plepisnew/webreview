@@ -7,8 +7,7 @@
         src="/images/profile_default.png"
         alt="Your profile image"
       ></b-img>
-      <br />
-      <b-button variant="primary" size="sm" class="mt-2">Upload photo</b-button>
+      <b-button class="mt-2" variant="primary"><b-icon icon="upload" aria-hidden="true"></b-icon> Upload photo</b-button>
       <br />
     </div>
     <div class="about-container">
@@ -16,37 +15,39 @@
       <b-form-textarea
         id="textarea"
         v-model="description"
-        class="w-50 rounded-top w-100 h-100"
-      >
+        class="w-50 rounded-top w-100 h-100">
         {{ description }}
       </b-form-textarea>
+      <b-button variant="primary" v-on:click="saveDescription()" class="mt-2">
+        <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
+      </b-button>
     </div>
   </div>
 </template>
 
 <script>
 import { Api } from '@/Api'
+
+import Swal from 'sweetalert2'
+
 export default {
   name: 'profile',
   data() {
     return {
-      username: 'USERNAME',
-      description: 'Write something about yourself...',
+      username: '',
+      description: '',
       profilePictureSrc: '',
       id: ''
     }
   },
   mounted() {
-    Api.get('/users/6331bc3617a1c127c831b228') // 632f32e8c4b6624870da28f3t
+    const userId = localStorage.getItem('userId')
+    Api.get(`/users/${userId}`)
       .then(response => {
-        if (this.username.length > 0) {
-          this.username = response.data.username
-        }
-        if (this.description.length > 0) {
-          this.description = response.data.description
-        }
-        this.profilePictureSrc = response.data.profilePictureSrc
-        this.id = response.data._id
+        this.username = response.data.payload.username
+        this.description = response.data.payload.description
+        this.profilePictureSrc = response.data.payload.profilePictureSrc
+        this.id = response.data.payload._id
       })
       .catch(error => {
         console.log(error)
@@ -57,6 +58,22 @@ export default {
       Api.delete(`/users/${this.id}`)
         .then(response => {
           this.$router.push('/login')
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    saveDescription() {
+      Api.patch(`/users/${this.id}`, { description: this.description })
+        .then(response => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Description saved!',
+            showConfirmButton: false,
+            timer: 1500,
+            width: '24em'
+          })
         })
         .catch(error => {
           console.error(error)
