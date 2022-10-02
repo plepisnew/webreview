@@ -87,7 +87,8 @@ export default {
 
 .left-panel,
 .right-panel {
-  flex: 1;
+  /* flex: 1; */
+  width: 50%;
   /* border-radius: 15px; */
   display: flex;
   flex-direction: column;
@@ -96,11 +97,13 @@ export default {
 .website-container,
 .review-container {
   flex: 1;
-  height: 50%;
+  height: 40%;
   background: rgb(50, 50, 50);
-  padding: 10px;
+  /* padding: 10px 5px; */
   margin: 5px;
   border-radius: 15px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
 }
 
 .website-scrollbar,
@@ -109,7 +112,7 @@ export default {
   padding: 15px;
   overflow-y: scroll;
   background: white;
-  border-radius: 15px;
+  border-radius: 0 0 15px 15px;
 }
 
 .review-container {
@@ -118,6 +121,8 @@ export default {
 
 .websites-title,
 .reviews-title {
+  padding: 5px;
+  margin: 0;
   font-size: 20px;
   color: white;
   display: flex;

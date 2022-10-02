@@ -54,7 +54,7 @@ a {
 
 .page {
   margin-top: 80px;
-  padding: 30px;
+  padding: 20px;
   width: 100%;
   height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
