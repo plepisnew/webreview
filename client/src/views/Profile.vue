@@ -53,10 +53,19 @@ export default {
       this.id = this.$route.params.id
       Api.get(`/users/?username=${this.id}`)
         .then(response => {
-          this.username = response.data.payload[0].username
-          this.description = response.data.payload[0].description
-          this.profilePictureSrc = response.data.payload[0].profilePictureSrc
-          this.ownPage = false
+          if (response.data.payload.length === 0) {
+            Swal.fire({
+              title: 'Page not found',
+              text: 'No user with that name',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
+            this.$router.push('/')
+          } else {
+            this.username = response.data.payload[0].username
+            this.description = response.data.payload[0].description
+            this.profilePictureSrc = response.data.payload[0].profilePictureSrc
+          }
         })
         .catch(error => {
           console.log(error)
