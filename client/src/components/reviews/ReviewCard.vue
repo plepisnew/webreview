@@ -10,7 +10,7 @@
           :src="writtenBy.profilePictureSrc"
           :height="20"
           width="auto"
-        />&nbsp;<router-link :to="`/users/${writtenBy.username}`">
+        />&nbsp;<router-link :to="`/profile/${writtenBy.username}`">
           <span class="username-span">{{ writtenBy.username }}</span>
         </router-link>
         rated
