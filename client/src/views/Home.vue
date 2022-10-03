@@ -59,11 +59,11 @@ export default {
   props: {
     recentReviewCount: {
       type: Number,
-      default: 5
+      default: 10
     },
     topWebsiteCount: {
       type: Number,
-      default: 5
+      default: 8
     }
   },
   data() {
@@ -113,9 +113,27 @@ export default {
     },
     async topWebsites() {
       const res = await Api.get('/websites')
-      this.websites = res.data
-        .map(website => {
-          return { ...website, rating: 3 }
+      const promises = res.data.map(async website => {
+        return {
+          website,
+          reviews: (await Api.get(`/websites/${website._id}/reviews`)).data
+        }
+      })
+      const items = await Promise.all(promises)
+      this.websites = items
+        .map(item => {
+          const averageRating =
+            item.reviews.reduce(
+              (previousRating, currentItem) =>
+                previousRating + currentItem.rating,
+              0
+            ) / item.reviews.length
+          return { ...item.website, rating: Math.floor(averageRating) }
+        })
+        .sort((w1, w2) => {
+          if (w1.rating > w2.rating) return -1
+          if (w1.rating < w2.rating) return 1
+          return 0
         })
         .slice(0, this.topWebsiteCount)
     }

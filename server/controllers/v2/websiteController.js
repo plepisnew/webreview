@@ -1,9 +1,21 @@
 const Website = require("../../model/Website");
+const Review = require("../../model/Review");
 const Admin = require("../../model/Admin");
 
 const getAllWebsites = async (req, res) => {
   const websites = await Website.find({ ...req.query });
   res.status(200).json(websites);
+};
+
+const getWebsiteReviews = async (req, res) => {
+  const websiteId = req.params.id;
+  try {
+    const website = await Website.findById(websiteId);
+    const reviews = await Review.find({ website: website._id });
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 const createWebsite = async (req, res) => {
@@ -115,6 +127,7 @@ const getSpecificWebsite = async (req, res) => {
 
 module.exports = {
   getAllWebsites,
+  getWebsiteReviews,
   createWebsite,
   getCreator,
   deleteAllWebsites,

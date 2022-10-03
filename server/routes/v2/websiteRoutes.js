@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllWebsites,
+  getWebsiteReviews,
   getCreator,
   createWebsite,
   deleteAllWebsites,
@@ -11,6 +12,8 @@ const {
   deleteSpecificWebsite,
   getReviewAdmin,
 } = require("../../controllers/v2/websiteController");
+
+router.get("/:id/reviews", getWebsiteReviews);
 
 router.get("/:id", getSpecificWebsite);
 
