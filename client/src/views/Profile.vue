@@ -7,18 +7,25 @@
         src="/images/profile_default.png"
         alt="Your profile image"
       ></b-img>
-      <b-button class="mt-2" variant="primary"><b-icon icon="upload" aria-hidden="true"></b-icon> Upload photo</b-button>
+      <b-button v-if="ownPage" class="mt-2" variant="primary"><b-icon icon="upload" aria-hidden="true"></b-icon> Upload photo</b-button>
       <br />
     </div>
     <div class="about-container">
       <h5 class="font-weight-bold">About me</h5>
-      <b-form-textarea
+      <b-form-textarea v-if="ownPage"
         id="textarea"
         v-model="description"
         class="w-50 rounded-top w-100 h-100">
         {{ description }}
       </b-form-textarea>
-      <b-button variant="primary" v-on:click="saveDescription()" class="mt-2">
+      <b-form-textarea v-if="!ownPage"
+                       id="textarea"
+                       v-model="description"
+                       readonly="readonly"
+                       class="w-50 rounded-top w-100 h-100">
+        {{ description }}
+      </b-form-textarea>
+      <b-button variant="primary" v-if="ownPage" v-on:click="saveDescription()" class="mt-2">
         <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
       </b-button>
     </div>
@@ -37,21 +44,37 @@ export default {
       username: '',
       description: '',
       profilePictureSrc: '',
-      id: ''
+      id: '',
+      ownPage: false
     }
   },
   mounted() {
-    const userId = localStorage.getItem('userId')
-    Api.get(`/users/${userId}`)
-      .then(response => {
-        this.username = response.data.payload.username
-        this.description = response.data.payload.description
-        this.profilePictureSrc = response.data.payload.profilePictureSrc
-        this.id = response.data.payload._id
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    if (this.$route.params.id) {
+      this.id = this.$route.params.id
+      Api.get(`/users/?username=${this.id}`)
+        .then(response => {
+          this.username = response.data.payload[0].username
+          this.description = response.data.payload[0].description
+          this.profilePictureSrc = response.data.payload[0].profilePictureSrc
+          this.ownPage = false
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    } else {
+      this.id = localStorage.getItem('userId')
+      Api.get(`/users/${this.id}`)
+        .then(response => {
+          console.log(response)
+          this.username = response.data.payload.username
+          this.description = response.data.payload.description
+          this.profilePictureSrc = response.data.payload.profilePictureSrc
+          this.ownPage = true
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   },
   methods: {
     removeUser() {
