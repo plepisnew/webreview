@@ -11,9 +11,24 @@ const getAllReviews = async (req, res) => {
   res.status(200).json(response({ payload: reviews }));
 };
 
+const getAllReviewsPopulated = async (req, res) => {
+  const reviews = await Review.find({ ...req.query })
+    .populate("writtenBy")
+    .populate("website");
+  res.status(200).json(response({ payload: reviews }));
+};
+
+const getAllReviewsWithAuthors = async (req, res) => {
+  const reviews = await Review.find({ ...req.query }).populate("writtenBy");
+  res.status(200).json(response({ payload: reviews }));
+};
+
 const createReview = async (req, res) => {
   try {
-    const review = await Review.create(req.body);
+    const review = await Review.create({
+      writtenBy: req.user._id,
+      ...req.body,
+    });
     res.status(201).json(response({ payload: review, id: review._id }));
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -46,7 +61,7 @@ const getSpecificReview = async (req, res) => {
 const deleteSpecificReview = async (req, res) => {
   const reviewId = req.params.id;
   try {
-    const review = await Review.findByIdAndDelete(adminId);
+    const review = await Review.findByIdAndDelete(reviewId);
     if (review)
       return res.status(200).json(response({ payload: review, id: reviewId }));
     res
@@ -99,6 +114,8 @@ const getReviewAuthor = async (req, res) => {
 
 module.exports = {
   getAllReviews,
+  getAllReviewsWithAuthors,
+  getAllReviewsPopulated,
   createReview,
   deleteAllReviews,
   getSpecificReview,

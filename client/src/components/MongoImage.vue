@@ -31,8 +31,13 @@ export default {
       imageBuffer: ''
     }
   },
+  // removes `images/` prefix and `.png` suffix
   async mounted() {
-    const res = await Api.get(`/images/${this.src}`)
+    const resourceName = this.src
+      .split('.png')[0]
+      .split('images/')
+      .at(-1)
+    const res = await Api.get(`/images/${resourceName}`)
     const image = res.data.image
     const source = `data:${image.contentType};base64, ${Buffer.from(
       image.data

@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000/api/v1
 @resource = users
 //what shoud Id be?
-@objectId = 633645c113fa4c20580b7e9d
+@objectId = 63386148eea0a31f502dcb7d
 
 
 #################################
@@ -131,6 +131,6 @@ PATCH {{baseUrl}}/{{resource}}/{{objectId}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "profilePictureSrc": "images/src.png",
+    "profilePictureSrc": "barox",
     "kinda": "based_ngl"
 }

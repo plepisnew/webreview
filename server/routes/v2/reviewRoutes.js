@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllReviews,
+  getAllReviewsWithAuthors,
+  getAllReviewsPopulated,
   createReview,
   deleteAllReviews,
   getSpecificReview,
@@ -11,8 +13,11 @@ const {
   getReviewAuthor,
 } = require("../../controllers/v2/reviewController");
 
-router.get("/:id", getSpecificReview);
+router.get("/inflate_author", getAllReviewsWithAuthors);
 
+router.get("/inflate", getAllReviewsPopulated);
+
+router.get("/:id", getSpecificReview);
 // TBD
 // router.put("/:id", putSpecificAdmin);
 

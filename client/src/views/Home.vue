@@ -1,7 +1,23 @@
 <template>
   <div class="home-container">
     <div class="left-panel">
-      <FilterBar />
+      <h2 class="search-title">Search for Reviews:</h2>
+      <FilterBar class="mb-3" :handler="searchByTags" />
+      <div class="search-review-container">
+        <div
+          v-if="!!filteredReviews && filteredReviews.length > 0"
+          class="search-review-scrollbar"
+        >
+          <ReviewCards :reviews="filteredReviews" />
+        </div>
+        <div
+          v-else-if="filteredReviews && filteredReviews.length === 0"
+          style="color: white;"
+        >
+          Couldn't find any reviews &#128557; Please try again with different
+          tags
+        </div>
+      </div>
     </div>
     <div class="right-panel">
       <div class="website-container">
@@ -18,9 +34,8 @@
           <ReviewCards :reviews="reviews" />
         </div>
       </div>
-    </div>
-  </div>
-</template>
+    </div></div
+></template>
 
 <script>
 // import Button from '@/components/Button'
@@ -41,33 +56,68 @@ export default {
     WebsiteCards,
     ReviewCards
   },
+  props: {
+    recentReviewCount: {
+      type: Number,
+      default: 5
+    },
+    topWebsiteCount: {
+      type: Number,
+      default: 5
+    }
+  },
   data() {
     return {
       websites: [],
-      reviews: []
+      reviews: [],
+      allReviews: [],
+      filteredReviews: undefined
     }
   },
   methods: {
-    logTags(tags) {
-      console.log(tags)
+    async searchByTags(tags) {
+      const res = await Api.get('/reviews/inflate')
+      if (tags.includes('all')) {
+        this.filteredReviews = res.data.payload
+        return
+      }
+      this.filteredReviews = res.data.payload.filter(review => {
+        const reviewData = [
+          review.content,
+          review.createdAt,
+          `${review.rating} stars`,
+          JSON.stringify(review.website),
+          review.writtenBy.username
+        ]
+          .join(' ')
+          .toLowerCase()
+        for (let tag = 0; tag < tags.length; tag++) {
+          if (reviewData.includes(tags[tag].toLowerCase())) {
+            return true
+          }
+        }
+        return false
+      })
     },
     async recentReviews() {
-      const reviews = await Api.get('/reviews')
-      this.reviews = reviews.data.payload.sort(
-        (r1, r2) => new Date(r1.createdAt) < new Date(r2.createdAt)
-      )
-      console.log(
-        reviews.data.payload.sort(
-          (r1, r2) =>
-            new Date(r1.createdAt).getTime() > new Date(r2.createdAt).getTime()
-        )
-      )
+      const res = await Api.get('/reviews/inflate')
+      this.reviews = res.data.payload
+        .sort((r1, r2) => {
+          const firstDate = new Date(r1.createdAt)
+          const secondDate = new Date(r2.createdAt)
+          if (firstDate > secondDate) return -1
+          if (firstDate < secondDate) return 1
+          return 0
+        })
+        .slice(0, this.recentReviewCount)
     },
     async topWebsites() {
-      const websites = await Api.get('/websites')
-      this.websites = websites.data.map(website => {
-        return { ...website, rating: 3 }
-      })
+      const res = await Api.get('/websites')
+      this.websites = res.data
+        .map(website => {
+          return { ...website, rating: 3 }
+        })
+        .slice(0, this.topWebsiteCount)
     }
   },
   mounted() {
@@ -87,9 +137,8 @@ export default {
 
 .left-panel,
 .right-panel {
-  /* flex: 1; */
+  max-height: 100%;
   width: 50%;
-  /* border-radius: 15px; */
   display: flex;
   flex-direction: column;
 }
@@ -108,7 +157,8 @@ export default {
 
 .website-scrollbar,
 .review-scrollbar {
-  max-height: 90%;
+  /* max-height: 80%; */
+  height: 90%;
   padding: 15px;
   overflow-y: scroll;
   background: white;
@@ -127,5 +177,24 @@ export default {
   color: white;
   display: flex;
   justify-content: center;
+}
+
+.search-review-container {
+  background: rgb(50, 50, 50);
+  padding: 10px;
+  /* flex: 1; */
+  /* display: flex; */
+  max-height: calc(100% - 150px);
+  border-radius: 15px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+.search-review-container:empty {
+  display: none;
+}
+
+.search-review-scrollbar {
+  height: 100%;
+  overflow-y: scroll;
 }
 </style>

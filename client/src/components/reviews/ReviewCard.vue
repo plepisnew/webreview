@@ -1,21 +1,26 @@
 <template>
-  <div v-if="website && user" class="review-card">
+  <div class="review-card">
     <router-link :to="`/websites/${website.name}`">
       <MongoImage :src="website.logoSrc" width="auto" rounded />
     </router-link>
     <div class="review-info">
       <p class="review-meta">
-        <router-link :to="`/users/${user.username}`">
-          <span class="username-span">{{ user.username }}</span>
+        <MongoImage
+          class="rounded-circle"
+          :src="writtenBy.profilePictureSrc"
+          :height="20"
+          width="auto"
+        />&nbsp;<router-link :to="`/users/${writtenBy.username}`">
+          <span class="username-span">{{ writtenBy.username }}</span>
         </router-link>
         rated
         <a :href="website.url" target="_blank">
           <span class="website-span">{{ website.name }}</span>
         </a>
         <span :class="`rating-span star-${rating}`">
-          {{ rating }} star{{ rating === 1 ? '' : 's' }}</span
-        >
-        at <span class="date-span">{{ getTime(createdAt) }}:</span>
+          {{ rating }} star{{ rating === 1 ? '' : 's' }}
+        </span>
+        <span class="date-span">{{ getTime(createdAt) }}:</span>
       </p>
       <div class="content-scrollbar">
         <p class="review-content">{{ content }}</p>
@@ -25,8 +30,7 @@
 </template>
 
 <script>
-import MongoImage from '@/components/MongoImage'
-import { Api } from '@/Api'
+import MongoImage from '../MongoImage.vue'
 export default {
   name: 'ReviewCard',
   props: {
@@ -47,34 +51,34 @@ export default {
       required: true
     },
     writtenBy: {
-      type: String,
+      type: Object,
       required: true
-    }
-  },
-  data() {
-    return {
-      website: undefined,
-      user: undefined
+    },
+    website: {
+      type: Object,
+      required: true
     }
   },
   methods: {
     getTime(isoString) {
-      const obj = new Date(isoString)
-      const date = obj.getDate()
-      return ` ${obj.toLocaleTimeString()} on ${date}${
-        date === 1 ? 'st' : date === 2 ? 'nd' : date === 3 ? 'rd' : 'th'
-      } of ${obj.toLocaleString('default', {
-        month: 'long'
-      })}, ${obj.getFullYear()}`
+      const dt = Date.now() - new Date(isoString).getTime()
+      const seconds = dt / 1000
+      const minutes = seconds / 60
+      const hours = minutes / 60
+      const days = hours / 24
+      if (seconds < 60) return `${Math.floor(seconds)} seconds ago`
+      if (minutes < 60) return `${Math.floor(minutes)} minutes ago`
+      if (hours < 24) return `${Math.floor(hours)} hours ago`
+      return `${Math.floor(days)} days ago`
+      //   const date = obj.getDate()
+      //   return ` ${obj.toLocaleTimeString()} on ${date}${
+      //     date === 1 ? 'st' : date === 2 ? 'nd' : date === 3 ? 'rd' : 'th'
+      //   } of ${obj.toLocaleString('default', {
+      //     month: 'long'
+      //   })}, ${obj.getFullYear()}`
     }
   },
-  components: { MongoImage },
-  async mounted() {
-    const website = (await Api.get(`/websites?url=${this.url}`)).data[0]
-    this.website = website
-    const user = (await Api.get(`/users/${this.writtenBy}`)).data.payload
-    this.user = user
-  }
+  components: { MongoImage }
 }
 </script>
 
@@ -104,6 +108,7 @@ export default {
 .review-meta,
 .review-content {
   margin-bottom: 0;
+  font-size: 14px;
 }
 
 .review-content {

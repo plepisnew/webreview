@@ -6,6 +6,10 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    website: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Website",
+    },
     rating: {
       type: Number,
       min: 1,
@@ -24,6 +28,7 @@ const reviewSchema = new mongoose.Schema(
     },
     writtenBy: {
       type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
       required: true,
     },
     monitoredBy: {

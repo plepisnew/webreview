@@ -1,12 +1,13 @@
 <template>
   <div class="review-cards">
-    <div v-for="review in reviews" :key="review.id">
+    <div v-for="review in reviews" :key="review.createdAt">
       <ReviewCard
         :content="review.content"
         :url="review.url"
         :rating="review.rating"
         :createdAt="review.createdAt"
         :writtenBy="review.writtenBy"
+        :website="review.website"
       />
     </div>
   </div>

@@ -85,6 +85,7 @@ export default {
         localStorage.token = accessToken
         localStorage.user = user.username
         localStorage.userId = user._id
+        localStorage.pfp = user.profilePictureSrc
         this.$router.push('/')
       } catch (err) {
         console.log(err)

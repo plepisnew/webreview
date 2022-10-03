@@ -4,7 +4,7 @@
       <TextField
         class="tag-input"
         :handler="this.addTag"
-        placeholder="Search for tags"
+        placeholder="Enter tags (e.g. YouTube, newUser, October)"
         ref="inputRef"
       />
       <Button text="Search" :onClick="() => handler(tags)" />
@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      tags: ['tag', 'tag1', 'tag2']
+      tags: ['all']
     }
   },
   methods: {

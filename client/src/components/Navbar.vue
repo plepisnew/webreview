@@ -10,7 +10,7 @@
       <b-nav-item class="my-auto" to="/reviews">Reviews</b-nav-item>
       <b-nav-item class="my-auto" to="/profile/me">
         <MongoImage
-          src="barox"
+          :src="profilePicture()"
           :width="50"
           style="border-radius: 50%; border: 1px solid black;"
         />
@@ -35,6 +35,9 @@ export default {
     },
     headerText() {
       return `Welcome, ${localStorage.user}!`
+    },
+    profilePicture() {
+      return localStorage.pfp
     }
   },
   components: { MongoImage }
