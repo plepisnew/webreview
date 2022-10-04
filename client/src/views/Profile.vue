@@ -48,43 +48,6 @@ export default {
       ownPage: false
     }
   },
-  mounted() {
-    if (this.$route.params.id) {
-      this.id = this.$route.params.id
-      Api.get(`/users/?username=${this.id}`)
-        .then(response => {
-          if (response.data.payload.length === 0) {
-            Swal.fire({
-              title: 'Page not found',
-              text: 'No user with that name',
-              icon: 'error',
-              confirmButtonText: 'Ok'
-            })
-            this.$router.push('/')
-          } else {
-            this.username = response.data.payload[0].username
-            this.description = response.data.payload[0].description
-            this.profilePictureSrc = response.data.payload[0].profilePictureSrc
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    } else {
-      this.id = localStorage.getItem('userId')
-      Api.get(`/users/${this.id}`)
-        .then(response => {
-          console.log(response)
-          this.username = response.data.payload.username
-          this.description = response.data.payload.description
-          this.profilePictureSrc = response.data.payload.profilePictureSrc
-          this.ownPage = true
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
-  },
   methods: {
     removeUser() {
       Api.delete(`/users/${this.id}`)
@@ -110,7 +73,51 @@ export default {
         .catch(error => {
           console.error(error)
         })
+    },
+    loadData() {
+      if (this.$route.params.id) {
+        this.id = this.$route.params.id
+        Api.get(`/users/?username=${this.id}`)
+          .then(response => {
+            if (response.data.payload.length === 0) {
+              Swal.fire({
+                title: 'Page not found',
+                text: 'No user with that name',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
+              this.$router.push('/')
+            } else {
+              this.username = response.data.payload[0].username
+              this.description = response.data.payload[0].description
+              this.profilePictureSrc = response.data.payload[0].profilePictureSrc
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else {
+        this.id = localStorage.getItem('userId')
+        Api.get(`/users/${this.id}`)
+          .then(response => {
+            console.log(response)
+            this.username = response.data.payload.username
+            this.description = response.data.payload.description
+            this.profilePictureSrc = response.data.payload.profilePictureSrc
+            this.ownPage = true
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
+  },
+  mounted() {
+    this.loadData()
+  },
+  async created() {
+    this.loadData()
+    this.$watch(() => this.$route.params, this.loadData)
   }
 }
 </script>
