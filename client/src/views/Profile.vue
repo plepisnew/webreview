@@ -1,51 +1,72 @@
 <template>
-  <div class="profile">
+  <div class="profile auth">
     <div class="profile-container">
       <h5 class="font-weight-bold">{{ username }}</h5>
       <b-img
-        class="w-50"
+        class="container-fluid w-50"
         src="/images/profile_default.png"
         alt="Your profile image"
       ></b-img>
-      <b-button v-if="ownPage" class="mt-2" variant="primary"><b-icon icon="upload" aria-hidden="true"></b-icon> Upload photo</b-button>
-      <br />
+      <b-form-file accept=".jpg, .png"
+        v-if="ownPage"
+        v-model="file"
+        :state="Boolean(file)"
+        class="mt-2 w-75"
+      ></b-form-file>
+      <b-button variant="primary" v-if="ownPage && file" v-on:click="saveImage()" class="mt-3">
+        <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
+      </b-button>
     </div>
-    <div class="about-container">
-      <h5 class="font-weight-bold">About me</h5>
-      <b-form-textarea v-if="ownPage"
+    <div class="about-container mt-3">
+      <h5 v-if="ownPage" class="font-weight-bold">About me</h5>
+      <h5 v-if="!ownPage" class="font-weight-bold">About {{username}}</h5>
+      <b-form-textarea rows="3"
+                       max-rows="6" style="resize: none" v-if="ownPage"
         id="textarea"
         v-model="description"
-        class="w-50 rounded-top w-100 h-100">
+        class="textarea">
         {{ description }}
       </b-form-textarea>
       <b-form-textarea v-if="!ownPage"
                        id="textarea"
                        v-model="description"
                        readonly="readonly"
-                       class="w-50 rounded-top w-100 h-100">
+                       class="textarea">
         {{ description }}
       </b-form-textarea>
       <b-button variant="primary" v-if="ownPage" v-on:click="saveDescription()" class="mt-2">
         <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
       </b-button>
     </div>
+    <div class="review-container">
+      <div class="review-container">
+        <h2 class="reviews-title">{{username}}'s reviews</h2>
+        <div class="review-scrollbar">
+          <ReviewCards :reviews="reviews"/>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
 import { Api } from '@/Api'
-
+import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import Swal from 'sweetalert2'
 
 export default {
   name: 'profile',
+  components: {
+    ReviewCards
+  },
   data() {
     return {
       username: '',
       description: '',
       profilePictureSrc: '',
       id: '',
-      ownPage: false
+      ownPage: false,
+      file: null,
+      reviews: []
     }
   },
   methods: {
@@ -57,6 +78,20 @@ export default {
         .catch(error => {
           console.error(error)
         })
+    },
+    saveImage() {
+    },
+    async recentReviews() {
+      const res = await Api.get('/reviews/inflate')
+      this.reviews = res.data.payload
+        .sort((r1, r2) => {
+          const firstDate = new Date(r1.createdAt)
+          const secondDate = new Date(r2.createdAt)
+          if (firstDate > secondDate) return -1
+          if (firstDate < secondDate) return 1
+          return 0
+        })
+        .slice(0, this.recentReviewCount)
     },
     saveDescription() {
       Api.patch(`/users/${this.id}`, { description: this.description })
@@ -114,6 +149,7 @@ export default {
   },
   mounted() {
     this.loadData()
+    this.recentReviews()
   },
   async created() {
     this.loadData()
@@ -125,25 +161,59 @@ export default {
 <style>
 .profile {
   display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .about-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 20%;
-  left: 35%;
-  height: 20vh;
-  width: 30vw;
+  height: auto;
+  width: auto;
+  margin: 2rem;
 }
 
 .profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 20%;
-  left: 15%;
 }
+.review-scrollbar {
+  /* max-height: 80%; */
+  height: 90%;
+  padding: 15px;
+  overflow-y: scroll;
+  background: white;
+  border-radius: 0 0 15px 15px;
+}
+.reviews-title {
+  padding: 5px;
+  margin: 0;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+.review-container {
+  flex: 1;
+  width: 75vw;
+  height: 100vh;
+  height: 25vh;
+  background: rgb(50, 50, 50);
+  margin: 5px;
+  border-radius: 15px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+img {
+}
+
+.textarea {
+  height: 500px;
+  margin: 1rem;
+}
+
 </style>
