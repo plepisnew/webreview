@@ -39,11 +39,6 @@ const router = new Router({
       component: Home
     },
     {
-      path: '/profile/me',
-      name: 'profile',
-      component: Profile
-    },
-    {
       path: '/profile/:id',
       name: 'profile',
       component: Profile

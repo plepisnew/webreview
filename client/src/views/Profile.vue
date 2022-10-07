@@ -110,28 +110,8 @@ export default {
         })
     },
     loadData() {
-      if (this.$route.params.id) {
-        this.id = this.$route.params.id
-        Api.get(`/users/?username=${this.id}`)
-          .then(response => {
-            if (response.data.payload.length === 0) {
-              Swal.fire({
-                title: 'Page not found',
-                text: 'No user with that name',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
-              this.$router.push('/')
-            } else {
-              this.username = response.data.payload[0].username
-              this.description = response.data.payload[0].description
-              this.profilePictureSrc = response.data.payload[0].profilePictureSrc
-            }
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      } else {
+      if (this.$route.params.id === 'me' || this.$route.params.id === localStorage.getItem('user')) {
+        console.log(localStorage.getItem('user'))
         this.id = localStorage.getItem('userId')
         Api.get(`/users/${this.id}`)
           .then(response => {
@@ -144,6 +124,29 @@ export default {
           .catch(error => {
             console.log(error)
           })
+      } else {
+        if (this.$route.params.id) {
+          this.id = this.$route.params.id
+          Api.get(`/users/?username=${this.id}`)
+            .then(response => {
+              if (response.data.payload.length === 0) {
+                Swal.fire({
+                  title: 'Page not found',
+                  text: 'No user with that name',
+                  icon: 'error',
+                  confirmButtonText: 'Ok'
+                })
+                this.$router.push('/')
+              } else {
+                this.username = response.data.payload[0].username
+                this.description = response.data.payload[0].description
+                this.profilePictureSrc = response.data.payload[0].profilePictureSrc
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
       }
     }
   },
