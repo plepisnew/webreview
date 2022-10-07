@@ -110,10 +110,19 @@ export default {
           console.error(error)
         })
     },
+    parseJwt(token) {
+      const base64Url = token.split('.')[1]
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+
+      return JSON.parse(jsonPayload)
+    },
     loadData() {
-      if (this.$route.params.username === 'me' || this.$route.params.username === localStorage.getItem('user')) {
-        console.log(localStorage.getItem('user'))
-        this.id = localStorage.getItem('userId')
+      const user = this.parseJwt(localStorage.getItem('token'))
+      this.id = user._id
+      if (this.$route.params.username === 'me' || this.$route.params.username === user.username) {
         Api.get(`/users/${this.id}`)
           .then(response => {
             console.log(response)
@@ -200,6 +209,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .review-container {
   flex: 1;
   width: 75vw;

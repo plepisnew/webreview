@@ -81,11 +81,8 @@ export default {
           username,
           password
         })
-        const { accessToken, user } = res.data
+        const { accessToken } = res.data
         localStorage.token = accessToken
-        localStorage.user = user.username
-        localStorage.userId = user._id
-        localStorage.pfp = user.profilePictureSrc
         this.$router.push('/')
       } catch (err) {
         console.log(err)
