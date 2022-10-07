@@ -65,6 +65,7 @@ export default {
       profilePictureSrc: '',
       id: '',
       ownPage: false,
+      createdAt: '',
       file: null,
       reviews: []
     }
@@ -110,7 +111,7 @@ export default {
         })
     },
     loadData() {
-      if (this.$route.params.id === 'me' || this.$route.params.id === localStorage.getItem('user')) {
+      if (this.$route.params.username === 'me' || this.$route.params.username === localStorage.getItem('user')) {
         console.log(localStorage.getItem('user'))
         this.id = localStorage.getItem('userId')
         Api.get(`/users/${this.id}`)
@@ -125,8 +126,8 @@ export default {
             console.log(error)
           })
       } else {
-        if (this.$route.params.id) {
-          this.id = this.$route.params.id
+        if (this.$route.params.username) {
+          this.id = this.$route.params.username
           Api.get(`/users/?username=${this.id}`)
             .then(response => {
               if (response.data.payload.length === 0) {
