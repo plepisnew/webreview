@@ -18,6 +18,7 @@
       </b-button>
     </div>
     <div class="about-container mt-3">
+      <h5 class="font-weight-bold">Member since: {{createdAt.substring(0, 10)}}</h5>
       <h5 v-if="ownPage" class="font-weight-bold">About me</h5>
       <h5 v-if="!ownPage" class="font-weight-bold">About {{username}}</h5>
       <b-form-textarea rows="3"
@@ -27,7 +28,7 @@
         class="textarea">
         {{ description }}
       </b-form-textarea>
-      <b-form-textarea v-if="!ownPage"
+      <b-form-textarea rows="3" max-rows="6" v-if="!ownPage"
                        id="textarea"
                        v-model="description"
                        readonly="readonly"
@@ -130,6 +131,7 @@ export default {
             this.description = response.data.payload.description
             this.profilePictureSrc = response.data.payload.profilePictureSrc
             this.ownPage = true
+            this.createdAt = response.data.payload.createdAt
           })
           .catch(error => {
             console.log(error)
@@ -151,6 +153,7 @@ export default {
                 this.username = response.data.payload[0].username
                 this.description = response.data.payload[0].description
                 this.profilePictureSrc = response.data.payload[0].profilePictureSrc
+                this.createdAt = response.data.payload[0].createdAt
               }
             })
             .catch(error => {
@@ -171,7 +174,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .profile {
   display: flex;
   flex-direction: column;
