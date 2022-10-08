@@ -4,7 +4,7 @@
     <div
       :class="
         ['register', 'login'].includes(this.$route.name)
-          ? 'unauth-page'
+          ? 'unauth page'
           : 'auth page'
       "
     >
@@ -53,16 +53,21 @@ a {
 }
 
 .page {
-  margin-top: 80px;
   padding: 20px;
   width: 100%;
   height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
+  overflow-y: scroll;
 }
 
-.unauth-page {
-  width: 100%;
+.unauth {
   height: 100vh;
+  background: rgb(33, 30, 30);
+}
+
+.auth {
+  margin-top: 80px;
+  height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
 }
 </style>

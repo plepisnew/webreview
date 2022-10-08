@@ -17,7 +17,7 @@ const websiteSchema = new mongoose.Schema(
     },
     url: {
       type: String,
-      required: true,
+      required: false, // TODO: remove if test fails
       unique: true,
     },
     launchDate: {

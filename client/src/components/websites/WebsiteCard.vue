@@ -8,7 +8,10 @@
         <a :href="this.url" target="_blank" style="color: inherit;">
           <span style="margin-right: 5px;">{{ this.name }}</span>
         </a>
-        <span class="star-span" v-for="star in this.rating" :key="star"
+        <span
+          class="star-span"
+          v-for="star in Math.round(this.rating)"
+          :key="star"
           >&#11088;</span
         >
       </span>

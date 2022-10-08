@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
+import Website from '@/views/Website'
 import Websites from '@/views/Websites'
-import Reviews from '@/views/Reviews'
+import Review from '@/views/Review'
 import Home from '@/views/Home'
 import Profile from '@/views/Profile'
 
@@ -29,9 +30,14 @@ const router = new Router({
       component: Websites
     },
     {
-      path: '/reviews',
-      name: 'reviews',
-      component: Reviews
+      path: '/websites/:name',
+      name: 'website',
+      component: Website
+    },
+    {
+      path: '/reviews/:id',
+      name: 'review',
+      component: Review
     },
     {
       path: '/',

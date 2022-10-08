@@ -32,38 +32,10 @@ export default {
 
 <!-- set your own width and add responsiveness to change grid templating -->
 <style>
-@media screen and (max-width: 3000px) {
-  .website-cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-@media screen and (max-width: 1400px) {
-  .website-cards {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media screen and (max-width: 1200px) {
-  .website-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media screen and (max-width: 800px) {
-  .website-cards {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-/* @media screen and (min-width: 1500px) {
-  .website-cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-@media screen and (min-width: 1500px) {
-  .website-cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-} */
-
 .website-cards {
+  /* background: rgb(30, 30, 30); */
+  /* padding: 10px; */
+  border-radius: 15px;
   display: grid;
   column-gap: 10px;
   row-gap: 10px;

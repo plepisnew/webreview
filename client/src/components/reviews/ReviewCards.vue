@@ -3,7 +3,6 @@
     <div v-for="review in reviews" :key="review.createdAt">
       <ReviewCard
         :content="review.content"
-        :url="review.url"
         :rating="review.rating"
         :createdAt="review.createdAt"
         :writtenBy="review.writtenBy"

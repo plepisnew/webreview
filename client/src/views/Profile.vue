@@ -7,43 +7,64 @@
         src="/images/profile_default.png"
         alt="Your profile image"
       ></b-img>
-      <b-form-file accept=".jpg, .png"
+      <b-form-file
+        accept=".jpg, .png"
         v-if="ownPage"
         v-model="file"
         :state="Boolean(file)"
         class="mt-2 w-75"
       ></b-form-file>
-      <b-button variant="primary" v-if="ownPage && file" v-on:click="saveImage()" class="mt-3">
+      <b-button
+        variant="primary"
+        v-if="ownPage && file"
+        v-on:click="saveImage()"
+        class="mt-3"
+      >
         <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
       </b-button>
     </div>
     <div class="about-container mt-3">
-      <h5 class="font-weight-bold">Member since: {{createdAt.substring(0, 10)}}</h5>
+      <h5 class="font-weight-bold">
+        Member since: {{ createdAt.substring(0, 10) }}
+      </h5>
       <h5 v-if="ownPage" class="font-weight-bold">About me</h5>
-      <h5 v-if="!ownPage" class="font-weight-bold">About {{username}}</h5>
-      <b-form-textarea rows="3"
-                       max-rows="6" style="resize: none" v-if="ownPage"
+      <h5 v-if="!ownPage" class="font-weight-bold">About {{ username }}</h5>
+      <b-form-textarea
+        rows="3"
+        max-rows="6"
+        style="resize: none"
+        v-if="ownPage"
         id="textarea"
         v-model="description"
-        class="textarea">
+        class="textarea"
+      >
         {{ description }}
       </b-form-textarea>
-      <b-form-textarea rows="3" max-rows="6" v-if="!ownPage"
-                       id="textarea"
-                       v-model="description"
-                       readonly="readonly"
-                       class="textarea">
+      <b-form-textarea
+        rows="3"
+        max-rows="6"
+        v-if="!ownPage"
+        id="textarea"
+        v-model="description"
+        readonly="readonly"
+        class="textarea"
+      >
         {{ description }}
       </b-form-textarea>
-      <b-button variant="primary" v-if="ownPage" v-on:click="saveDescription()" class="mt-2">
+      <b-button
+        variant="primary"
+        v-if="ownPage"
+        v-on:click="saveDescription()"
+        class="mt-2"
+      >
         <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
       </b-button>
     </div>
     <div class="review-container">
       <div class="review-container">
-        <h2 class="reviews-title">{{username}}'s reviews</h2>
+        <h2 class="reviews-title">{{ username }}'s reviews</h2>
         <div class="review-scrollbar">
-          <ReviewCards :reviews="reviews"/>
+          <ReviewCards :reviews="reviews" />
         </div>
       </div>
     </div>
@@ -53,6 +74,7 @@
 import { Api } from '@/Api'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import Swal from 'sweetalert2'
+import parseJWT from '@/utils/parseJWT.js'
 
 export default {
   name: 'profile',
@@ -81,8 +103,7 @@ export default {
           console.error(error)
         })
     },
-    saveImage() {
-    },
+    saveImage() {},
     async recentReviews() {
       const res = await Api.get('/reviews/inflate')
       this.reviews = res.data.payload
@@ -111,19 +132,13 @@ export default {
           console.error(error)
         })
     },
-    parseJwt(token) {
-      const base64Url = token.split('.')[1]
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-      }).join(''))
-
-      return JSON.parse(jsonPayload)
-    },
     loadData() {
-      const user = this.parseJwt(localStorage.getItem('token'))
+      const user = parseJWT(localStorage.getItem('token'))
       this.id = user._id
-      if (this.$route.params.username === 'me' || this.$route.params.username === user.username) {
+      if (
+        this.$route.params.username === 'me' ||
+        this.$route.params.username === user.username
+      ) {
         Api.get(`/users/${this.id}`)
           .then(response => {
             console.log(response)
@@ -152,7 +167,8 @@ export default {
               } else {
                 this.username = response.data.payload[0].username
                 this.description = response.data.payload[0].description
-                this.profilePictureSrc = response.data.payload[0].profilePictureSrc
+                this.profilePictureSrc =
+                  response.data.payload[0].profilePictureSrc
                 this.createdAt = response.data.payload[0].createdAt
               }
             })
@@ -232,5 +248,4 @@ img {
   height: 500px;
   margin: 1rem;
 }
-
 </style>

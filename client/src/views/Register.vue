@@ -138,8 +138,4 @@ export default {
 .content {
   max-width: 700px;
 }
-
-.unauth-page {
-  background: rgb(33, 30, 30);
-}
 </style>

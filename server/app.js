@@ -7,7 +7,6 @@ const history = require("connect-history-api-fallback");
 const session = require("express-session");
 
 const route = require("./routes");
-// const addBaseData = require("../utils/addBaseData");
 
 /* Connects to MongoDB database */
 const connectDatabase = () => {
@@ -25,7 +24,6 @@ const connectDatabase = () => {
             : "Successfully connceted to database"
         } ${mongoURI}`
       );
-      // addBaseData();
     }
   );
 };

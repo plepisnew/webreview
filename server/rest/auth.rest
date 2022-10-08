@@ -1,48 +1,37 @@
-@baseUrl = http://localhost:3000/api/v2
+@baseUrl = http://localhost:3000/api/v3
 
-### 
-GET {{baseUrl}}/users
-
-### Create a user with a hashed password
+### Register a User
 POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-    "username": "authUser",
-    "password": "secure_password"
+    "username": "user",
+    "password" : "password"
 }
 
-### Create a user without a required field
-POST {{baseUrl}}/register
-Content-Type: application/json
-
-{
-    "password": "secure_password"
-}
-
-### Login a user successfully
+### Login a User
 POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "username": "authUser",
-    "password": "secure_password"
+    "username": "user",
+    "password": "password"
 }
 
-### Login a user with an incorrect password
+### Login a User that doesn't exist
 POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "username": "authUser",
-    "password": "insecure_password"
+    "username": "usern't",
+    "password": "password"
 }
 
-### Login a user that does not exist
+### Login a User with invalid password
 POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "username": "unauthUser",
-    "password": "insecure_password"
+    "username": "user",
+    "password": "password2"
 }

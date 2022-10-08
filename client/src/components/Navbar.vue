@@ -1,16 +1,19 @@
 <template>
   <b-navbar type="dark" fixed="top" variant="dark">
     <b-navbar-brand to="/">
-      <MongoImage src="twitch" :width="50" style="border-radius: 10%;" />
-      <b-nav-text class="mx-3 font-weight-bold">WebReview</b-nav-text>
+      <MongoImage
+        src="webreview_landscape"
+        :height="50"
+        width="auto"
+        style="border-radius: 15px"
+      />
     </b-navbar-brand>
-    <b-nav-text class="m-auto h4">{{ headerText() }}</b-nav-text>
+    <b-nav-text class="m-auto h4">Welcome, {{ username }}!</b-nav-text>
     <b-navbar-nav class="navigation">
       <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
-      <b-nav-item class="my-auto" to="/reviews">Reviews</b-nav-item>
       <b-nav-item class="my-auto" to="/profile/me">
         <MongoImage
-          :src="profilePicture()"
+          :src="pfp"
           :width="50"
           style="border-radius: 50%; border: 1px solid black;"
         />
@@ -26,19 +29,26 @@
 
 <script>
 import MongoImage from './MongoImage.vue'
+import parseJWT from '@/utils/parseJWT.js'
+
 export default {
   name: 'navbar',
+  data() {
+    return {
+      username: '',
+      pfp: ''
+    }
+  },
   methods: {
     signOut() {
       localStorage.token = ''
       this.$router.push('/login')
-    },
-    headerText() {
-      return `Welcome, ${localStorage.user}!`
-    },
-    profilePicture() {
-      return localStorage.pfp
     }
+  },
+  created() {
+    const user = parseJWT(localStorage.token)
+    this.username = user.username
+    this.pfp = user.profilePictureSrc
   },
   components: { MongoImage }
 }

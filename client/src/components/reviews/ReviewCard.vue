@@ -1,6 +1,6 @@
 <template>
   <div class="review-card">
-    <router-link :to="`/websites/${website.name}`">
+    <router-link :to="`/websites/${website.name}`.toLowerCase()">
       <MongoImage :src="website.logoSrc" width="auto" rounded />
     </router-link>
     <div class="review-info">
@@ -35,10 +35,6 @@ export default {
   name: 'ReviewCard',
   props: {
     content: {
-      type: String,
-      required: true
-    },
-    url: {
       type: String,
       required: true
     },

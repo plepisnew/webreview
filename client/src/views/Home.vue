@@ -31,16 +31,13 @@
       <div class="review-container">
         <h2 class="reviews-title">Recent reviews</h2>
         <div class="review-scrollbar">
-          <ReviewCards :reviews="reviews" />
+          <ReviewCards :reviews="recentReviews" />
         </div>
       </div>
     </div></div
 ></template>
 
 <script>
-// import Button from '@/components/Button'
-// import MongoImage from '@/components/MongoImage.vue'
-// import TextField from '@/components/TextField.vue'
 import FilterBar from '@/components/FilterBar.vue'
 import WebsiteCards from '@/components/websites/WebsiteCards.vue'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
@@ -49,9 +46,6 @@ import { Api } from '@/Api'
 export default {
   name: 'home',
   components: {
-    // Button,
-    // MongoImage,
-    // TextField,
     FilterBar,
     WebsiteCards,
     ReviewCards
@@ -69,39 +63,35 @@ export default {
   data() {
     return {
       websites: [],
-      reviews: [],
+      recentReviews: [],
       allReviews: [],
       filteredReviews: undefined
     }
   },
   methods: {
     async searchByTags(tags) {
-      const res = await Api.get('/reviews/inflate')
-      if (tags.includes('all')) {
-        this.filteredReviews = res.data.payload
-        return
-      }
-      this.filteredReviews = res.data.payload.filter(review => {
-        const reviewData = [
-          review.content,
-          review.createdAt,
-          `${review.rating} stars`,
-          JSON.stringify(review.website),
-          review.writtenBy.username
-        ]
-          .join(' ')
-          .toLowerCase()
-        for (let tag = 0; tag < tags.length; tag++) {
-          if (reviewData.includes(tags[tag].toLowerCase())) {
-            return true
+      const res = await Api.get('/reviews')
+      this.filteredReviews = tags.includes('all')
+        ? res.data
+        : res.data.filter(review => {
+          const reviewData = [
+            review.content,
+            review.createdAt,
+              `${review.rating} stars`,
+              JSON.stringify(review.website),
+              review.writtenBy.username
+          ]
+            .join(' ')
+            .toLowerCase()
+          for (let i = 0; i < tags.length; i++) {
+            if (reviewData.includes(tags[i])) return true
           }
-        }
-        return false
-      })
+          return false
+        })
     },
-    async recentReviews() {
-      const res = await Api.get('/reviews/inflate')
-      this.reviews = res.data.payload
+    async getRecentReviews() {
+      const res = await Api.get('/reviews')
+      this.recentReviews = res.data
         .sort((r1, r2) => {
           const firstDate = new Date(r1.createdAt)
           const secondDate = new Date(r2.createdAt)
@@ -109,43 +99,54 @@ export default {
           if (firstDate < secondDate) return 1
           return 0
         })
-        .slice(0, this.recentReviewCount)
+        .splice(0, this.recentReviewCount)
     },
-    async topWebsites() {
+    async getTopWebsites() {
       const res = await Api.get('/websites')
-      const promises = res.data.map(async website => {
-        return {
-          website,
-          reviews: (await Api.get(`/websites/${website._id}/reviews`)).data
-        }
-      })
-      const items = await Promise.all(promises)
-      this.websites = items
-        .map(item => {
-          const averageRating =
-            item.reviews.reduce(
-              (previousRating, currentItem) =>
-                previousRating + currentItem.rating,
-              0
-            ) / item.reviews.length
-          return { ...item.website, rating: Math.floor(averageRating) }
+      this.websites = res.data
+        .map(website => {
+          return {
+            ...website.website,
+            rating: website.averageRating
+          }
         })
         .sort((w1, w2) => {
           if (w1.rating > w2.rating) return -1
           if (w1.rating < w2.rating) return 1
           return 0
-        })
-        .slice(0, this.topWebsiteCount)
+        }).splice(0, this.topWebsiteCount)
     }
   },
-  mounted() {
-    this.recentReviews()
-    this.topWebsites()
+  created() {
+    this.getRecentReviews()
+    this.getTopWebsites()
   }
 }
 </script>
 
 <style>
+
+@media screen and (max-width: 3000px) {
+  .website-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (max-width: 1400px) {
+  .website-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 1200px) {
+  .website-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 800px) {
+  .website-cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .home-container {
   width: 100%;
   height: 100%;
@@ -166,7 +167,6 @@ export default {
   flex: 1;
   height: 40%;
   background: rgb(50, 50, 50);
-  /* padding: 10px 5px; */
   margin: 5px;
   border-radius: 15px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);

@@ -12,6 +12,13 @@ const v2userRouter = require("./v2/userRoutes");
 const v2authRouter = require("./v2/authRoutes");
 const v2imageRouter = require("./v2/imageRoutes");
 
+// const v3adminRouter = require("./v3/adminRoutes");
+const v3reviewRouter = require("./v3/reviewRoutes");
+const v3websiteRouter = require("./v3/websiteRoutes");
+const v3userRouter = require("./v3/userRoutes");
+const v3authRouter = require("./v3/authRoutes");
+const v3imageRouter = require("./v3/imageRoutes");
+
 const jwt = require("jsonwebtoken");
 
 const route = (app) => {
@@ -34,6 +41,13 @@ const route = (app) => {
   app.use("/api/v2/websites", authenticateToken, v2websiteRouter);
   app.use("/api/v2", v2authRouter);
   app.use("/api/v2", v2imageRouter);
+
+  app.use("/api/v3/users", authenticateToken, v3userRouter);
+  //   app.use("/api/v3/admins", authenticateToken, v3adminRouter);
+  app.use("/api/v3/reviews", authenticateToken, v3reviewRouter);
+  app.use("/api/v3/websites", authenticateToken, v3websiteRouter);
+  app.use("/api/v3", v3authRouter);
+  app.use("/api/v3", v3imageRouter);
 
   app.use("/api/*", (req, res) => {
     res.status(404).json({ message: "Not Found" });

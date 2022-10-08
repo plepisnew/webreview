@@ -4,7 +4,7 @@ const reviewSchema = new mongoose.Schema(
   {
     url: {
       type: String,
-      required: true,
+      required: false, // TODO: remove if tests fail
     },
     website: {
       type: mongoose.SchemaTypes.ObjectId,
