@@ -2,11 +2,12 @@
   <div class="profile auth">
     <div class="profile-container">
       <h5 class="font-weight-bold">{{ username }}</h5>
-      <b-img
-        class="container-fluid w-50"
-        src="/images/profile_default.png"
-        alt="Your profile image"
-      ></b-img>
+      <MongoImage
+        class="rounded-circle"
+        :src="'123'"
+        :height="200"
+        width="auto"
+      />
       <b-form-file
         accept=".jpg, .png"
         v-if="ownPage"
@@ -73,11 +74,13 @@ import { Api } from '@/Api'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import Swal from 'sweetalert2'
 import parseJWT from '@/utils/parseJWT.js'
+import MongoImage from '@/components/MongoImage'
 
 export default {
   name: 'profile',
   components: {
-    ReviewCards
+    ReviewCards,
+    MongoImage
   },
   data() {
     return {
@@ -101,11 +104,33 @@ export default {
           console.error(error)
         })
     },
-    saveImage() {},
+    saveImage() {
+      const formData = new FormData()
+      console.log(this.file)
+      formData.append('uploadImage', this.file)
+      formData.append('name', this.username)
+      Api.post('/images/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        data: {
+          name: this.username
+        }
+      })
+        .then(response => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Image saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
     async recentReviews() {
-      console.log(this.username)
       const res = await Api.get(`/reviews/?username=${this.username}`)
-      console.log(res.data)
       this.reviews = res.data.sort((r1, r2) => {
         const firstDate = new Date(r1.createdAt)
         const secondDate = new Date(r2.createdAt)
@@ -142,14 +167,13 @@ export default {
             const {
               username,
               description,
-              profilePictureSrc,
               createdAt
             } = response.data
             this.username = username
             this.description = description
-            this.profilePictureSrc = profilePictureSrc
             this.ownPage = true
             this.createdAt = createdAt
+            this.profilePictureSrc = this.username
             this.recentReviews()
           })
           .catch(error => {
@@ -172,14 +196,13 @@ export default {
                 const {
                   username,
                   description,
-                  profilePictureSrc,
                   createdAt
                 } = response.data[0]
                 console.log(response)
                 this.username = username
                 this.description = description
-                this.profilePictureSrc = profilePictureSrc
                 this.createdAt = createdAt
+                this.profilePictureSrc = this.username
                 this.recentReviews()
               }
             })
@@ -204,6 +227,7 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: 0;
 }
 
 .about-container {
@@ -212,7 +236,6 @@ export default {
   align-items: center;
   height: auto;
   width: auto;
-  margin: 2rem;
 }
 
 .profile-container {
@@ -247,9 +270,6 @@ export default {
   border-radius: 15px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
   overflow: hidden;
-}
-
-img {
 }
 
 .textarea {
