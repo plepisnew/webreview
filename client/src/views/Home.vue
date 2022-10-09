@@ -42,6 +42,7 @@ import FilterBar from '@/components/FilterBar.vue'
 import WebsiteCards from '@/components/websites/WebsiteCards.vue'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import { Api } from '@/Api'
+import { descending } from '@/utils/sortChrono'
 
 export default {
   name: 'home',
@@ -91,15 +92,7 @@ export default {
     },
     async getRecentReviews() {
       const res = await Api.get('/reviews')
-      this.recentReviews = res.data
-        .sort((r1, r2) => {
-          const firstDate = new Date(r1.createdAt)
-          const secondDate = new Date(r2.createdAt)
-          if (firstDate > secondDate) return -1
-          if (firstDate < secondDate) return 1
-          return 0
-        })
-        .splice(0, this.recentReviewCount)
+      this.recentReviews = descending(res.data)
     },
     async getTopWebsites() {
       const res = await Api.get('/websites')
@@ -123,6 +116,28 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.website-container,
+.review-container {
+  flex: 1;
+  height: 40%;
+  background: rgb(50, 50, 50);
+  margin: 5px;
+  border-radius: 15px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.website-scrollbar,
+.review-scrollbar {
+  /* max-height: 80%; */
+  height: 90%;
+  padding: 15px;
+  overflow-y: scroll;
+  background: white;
+  border-radius: 0 0 15px 15px;
+}</style>
 
 <style>
 
@@ -160,27 +175,6 @@ export default {
   width: 50%;
   display: flex;
   flex-direction: column;
-}
-
-.website-container,
-.review-container {
-  flex: 1;
-  height: 40%;
-  background: rgb(50, 50, 50);
-  margin: 5px;
-  border-radius: 15px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-}
-
-.website-scrollbar,
-.review-scrollbar {
-  /* max-height: 80%; */
-  height: 90%;
-  padding: 15px;
-  overflow-y: scroll;
-  background: white;
-  border-radius: 0 0 15px 15px;
 }
 
 .review-container {

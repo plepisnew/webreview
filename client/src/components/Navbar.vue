@@ -43,6 +43,7 @@ export default {
     signOut() {
       localStorage.token = ''
       this.$router.push('/login')
+      //   location.href = '/login'
     }
   },
   created() {

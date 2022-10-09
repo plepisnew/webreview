@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000/api/v3
 @resource = users
 @url = {{baseUrl}}/{{resource}}
-@ObjectId = 6340983da164024708bbc257
+@ObjectId = 634302f6b5a98042985930e8
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlUGljdHVyZVNyYyI6ImltYWdlcy9kZWZhdWx0X3VzZXJfaWNvbi5wbmciLCJkZXNjcmlwdGlvbiI6IkhlbGxvIE1vb24hIiwiZGlzYWJsZWRGb3IiOjAsIndyaXR0ZW5SZXZpZXdzIjpbXSwiX2lkIjoiNjM0MDk4M2RhMTY0MDI0NzA4YmJjMjU3IiwidXNlcm5hbWUiOiJ1c2VyIiwicGFzc3dvcmQiOiIkMmIkMTAkem0uakQudHZVcHZOQjdNT3V0bVVqdUxOamtOb2h2a3R4d28ydlZESTZUMzQ1Q09qeWFibDIiLCJjcmVhdGVkQXQiOiIyMDIyLTEwLTA3VDIxOjIxOjAxLjkzMloiLCJ1cGRhdGVkQXQiOiIyMDIyLTEwLTA3VDIxOjIxOjAxLjkzMloiLCJfX3YiOjAsImlhdCI6MTY2NTE3NzY2M30.NtupY86vQeSp6uSWaoEQ6cVNc5ewBMl-WcIhG3EU_lI
 
 #################################
@@ -57,7 +57,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "profilePictureSrc": "barox"
+    "profilePictureSrc": "twitch"
 }
 
 #################################

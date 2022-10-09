@@ -26,7 +26,9 @@
         <span class="date-span">{{ getTime(createdAt) }}:</span>
       </p>
       <div class="content-scrollbar">
-        <p class="review-content py-1">"{{ content }}"</p>
+        <p :class="`review-content py-1 ${content ? '' : 'font-italic'}`">
+          {{ content ? `"${content}"` : 'No Content' }}
+        </p>
       </div>
     </div>
   </div>

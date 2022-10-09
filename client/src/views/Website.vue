@@ -1,13 +1,19 @@
 <template>
-  <div class="specific-website">
-    <div class="website-panel" v-if="website">
+  <div class="specific-website" v-if="website">
+    <div class="website-panel">
       <WebsiteDisplay :website="website" :reviewCount="reviews.length" />
       <LighthouseDisplay />
     </div>
     <div class="review-container">
-      <h2 class="reviews-title p-2">User Reviews:</h2>
+      <h2 class="reviews-title p-2">
+        {{
+          reviews.length === 0
+            ? `${website.name} doesn't have any reviews`
+            : 'User Reviews:'
+        }}
+      </h2>
       <div class="review-scrollbar">
-        <ReviewCards :reviews="reviews" />
+        <ReviewCards v-if="reviews.length !== 0" :reviews="reviews" />
       </div>
     </div>
   </div>
@@ -18,6 +24,7 @@ import { Api } from '@/Api'
 import ReviewCards from '../components/reviews/ReviewCards.vue'
 import WebsiteDisplay from '../components/WebsiteDisplay.vue'
 import LighthouseDisplay from '../components/LighthouseDisplay.vue'
+import { descending } from '@/utils/sortChrono'
 
 export default {
   name: 'Website',
@@ -37,7 +44,7 @@ export default {
       ...website,
       averageRating
     }
-    this.reviews = reviews
+    this.reviews = descending(reviews)
   },
   components: { ReviewCards, WebsiteDisplay, LighthouseDisplay }
 }
@@ -58,12 +65,23 @@ export default {
   height: 100%;
 }
 
-.review-container,
-.review-scrollbar {
+.review-container {
   height: max-content;
+  max-height: 100%;
+  background: rgb(50, 50, 50);
+  margin: 5px;
+  border-radius: 15px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  overflow-y: scroll;
+}
+.review-scrollbar {
+  padding: 15px;
+  overflow-y: scroll;
+  background: white;
+  border-radius: 0 0 15px 15px;
 }
 
-.review-scrollbar {
-  /* height: auto; */
+.review-scrollbar:empty {
+  padding: 0;
 }
 </style>

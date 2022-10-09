@@ -58,4 +58,12 @@ export default {
 .button:active {
   box-shadow: none;
 }
+
+.green {
+  background-color: rgb(67, 160, 71);
+}
+
+.green:hover {
+  background-color: rgb(76, 175, 80);
+}
 </style>
