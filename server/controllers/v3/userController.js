@@ -21,7 +21,9 @@ const createUser = async (req, res) => {
 const getUser = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate("writtenReviews");
     if (user) return res.status(200).json(user);
     res.status(404).json({ message: `User ${userId} not found` });
   } catch (err) {
@@ -31,7 +33,9 @@ const getUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find(req.query).select("-password");
+    const users = await User.find(req.query)
+      .select("-password")
+      .populate("writtenReviews");
     res.status(200).json(users);
   } catch (err) {
     res.status(400).json({ message: err.message });

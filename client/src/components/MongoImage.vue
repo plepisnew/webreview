@@ -5,6 +5,7 @@
     :width="this.width || '100%'"
     :height="this.height || '100%'"
     :class="this.rounded ? 'rounded-circle' : ''"
+    :style="`border-radius: ${radius}`"
   />
 </template>
 
@@ -24,6 +25,7 @@ export default {
     height: {
       value: [Number, String]
     },
+    radius: [Number, String],
     rounded: Boolean
   },
   data() {
@@ -33,6 +35,7 @@ export default {
   },
   // removes `images/` prefix and `.png` suffix
   async mounted() {
+    if (!this.src) return
     const resourceName = this.src
       .split('.png')[0]
       .split('images/')
@@ -49,7 +52,6 @@ export default {
 
 <style scoped>
 img {
-  /* max-width: 100%; */
   max-height: 100%;
 }
 </style>

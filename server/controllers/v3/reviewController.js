@@ -6,7 +6,7 @@ const Website = require("../../model/Website");
 
 const createReview = async (req, res) => {
   try {
-    const username = req.body.writtenBy;
+    const username = req.user.username;
     const user = await User.findOne({ username });
     if (user) {
       const websiteName = req.body.website;
@@ -70,6 +70,13 @@ const getReview = async (req, res) => {
 
 const getAllReviews = async (req, res) => {
   try {
+    if (req.query.username) {
+      const user = await User.findOne({ username: req.query.username });
+      const userReviews = await Review.find({ writtenBy: user._id })
+        .populate("website")
+        .populate("writtenBy");
+      return res.status(200).json(userReviews);
+    }
     const reviews = await Review.find(req.query)
       .populate("writtenBy")
       .populate("website");
