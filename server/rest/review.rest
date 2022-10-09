@@ -4,7 +4,7 @@
 @UserId = 6340983da164024708bbc257
 @WebsiteId = 63388af82731382bd4930413
 @ReviewId = 6340a08fb6bf2a4884c53d29 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlUGljdHVyZVNyYyI6ImltYWdlcy9kZWZhdWx0X3VzZXJfaWNvbi5wbmciLCJkZXNjcmlwdGlvbiI6IkhlbGxvIE1vb24hIiwiZGlzYWJsZWRGb3IiOjAsIndyaXR0ZW5SZXZpZXdzIjpbXSwiX2lkIjoiNjM0MDk4M2RhMTY0MDI0NzA4YmJjMjU3IiwidXNlcm5hbWUiOiJ1c2VyIiwicGFzc3dvcmQiOiIkMmIkMTAkem0uakQudHZVcHZOQjdNT3V0bVVqdUxOamtOb2h2a3R4d28ydlZESTZUMzQ1Q09qeWFibDIiLCJjcmVhdGVkQXQiOiIyMDIyLTEwLTA3VDIxOjIxOjAxLjkzMloiLCJ1cGRhdGVkQXQiOiIyMDIyLTEwLTA3VDIxOjIxOjAxLjkzMloiLCJfX3YiOjAsImlhdCI6MTY2NTE3NzY2M30.NtupY86vQeSp6uSWaoEQ6cVNc5ewBMl-WcIhG3EU_lI
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlUGljdHVyZVNyYyI6ImltYWdlcy9kZWZhdWx0X3VzZXJfaWNvbi5wbmciLCJkZXNjcmlwdGlvbiI6IkkgbGlrZSB0cnV0bGVzIiwiZGlzYWJsZWRGb3IiOjAsIndyaXR0ZW5SZXZpZXdzIjpbXSwiX2lkIjoiNjM0MGM5MjY4YzhhMjExMjYwMThlYzQ5IiwidXNlcm5hbWUiOiJhbnNpc2hpaGkiLCJwYXNzd29yZCI6IiQyYiQxMCQxZ1YzMG91SUZiWHBXb2tSdThwNTFPRTl4blI4Q0xQV1NYYzdyUVVMeUJDdml1OVRQV3lTVyIsImNyZWF0ZWRBdCI6IjIwMjItMTAtMDhUMDA6NDk6NDIuMDA5WiIsInVwZGF0ZWRBdCI6IjIwMjItMTAtMDhUMDA6NDk6NDIuMDA5WiIsIl9fdiI6MCwiaWF0IjoxNjY1MTkwMjI0fQ.a3XEw-N8EK-xRx_gn_eEG7pDJNAWnyGRK4Y9NMeD3bk
 
 #################################
 ############## GET ##############
@@ -18,6 +18,10 @@ Authorization: Bearer {{token}}
 GET {{url}}/{{ReviewId}} HTTP/1.1
 Authorization: Bearer {{token}}
 
+### Get all user reviews
+GET {{url}}/?username=ansishihi HTTP/1.1
+Authorization: Bearer {{token}}
+
 #################################
 ############# POST ##############
 #################################
@@ -28,10 +32,9 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "content": "Google is based and redpilled",
-    "rating": 5,
-    "website": "Google",
-    "writtenBy": "updatedUsername"
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus dolorum sequi velit ipsam veniam perspiciatis corrupti, delectus sit, magni consectetur sapiente, aliquam laborum nihil quae ut? Repudiandae cumque eveniet sed. Optio laudantium neque dolorem enim quaerat delectus fuga, nam amet at assumenda praesentium qui ipsa laborum beatae exercitationem excepturi et, vel possimus sapiente quo consequuntur soluta ullam. Ratione obcaecati neque impedit sit omnis, molestiae cupiditate? Error voluptatibus ipsam non provident unde! Eaque, harum consequuntur. Recusandae aliquam nesciunt perferendis tempora ipsa. Porro cupiditate, corrupti omnis praesentium vero aliquam fuga, maxime enim accusamus eveniet iusto quas. Dolores soluta voluptates ut. Quisquam, praesentium.",
+    "rating": 4,
+    "website": "Facebook"
 }
 
 ### Create a review for a non-existent user

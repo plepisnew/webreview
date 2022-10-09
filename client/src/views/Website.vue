@@ -5,9 +5,10 @@
         <h2 class="websites-title">
           Website
         </h2>
-      <WebsiteCard :website="website" />
+      <WebsiteDisplay :website="website" />
     </div>
       <div class="lighthouse-container">lighthouse</div>
+      <LighthouseDisplay/>
     </div>
     <div class="review-container">
       <h2 class="reviews-title p-2">User Reviews:</h2>
@@ -21,29 +22,30 @@
 <script>
 import { Api } from '@/Api'
 import ReviewCards from '../components/reviews/ReviewCards.vue'
-import WebsiteCard from '../components/websites/WebsiteCard.vue'
+import WebsiteDisplay from '../components/WebsiteDisplay.vue'
+import LighthouseDisplay from '../components/LighthouseDisplay.vue'
 
 export default {
   name: 'Website',
   data() {
     return {
-      website: {},
-      reviews: [],
-      averageRating: 0
+      website: undefined,
+      reviews: []
     }
   },
-  async created() {
+  async beforeCreate() {
     const websiteName = this.$route.params.name
     const res1 = await Api.get(`/websites?name=${websiteName}`)
     const { website, averageRating } = res1.data[0]
     const res2 = await Api.get(`/websites/${website._id}/reviews`)
     const reviews = res2.data
-    console.log(reviews)
-    this.averageRating = averageRating
-    this.website = website
+    this.website = {
+      ...website,
+      averageRating
+    }
     this.reviews = reviews
   },
-  components: { ReviewCards, WebsiteCard }
+  components: { ReviewCards, WebsiteDisplay, LighthouseDisplay }
 }
 </script>
 
@@ -56,15 +58,19 @@ export default {
 .website-panel,
 .review-panel {
   flex: 1;
-  /* height: 100%; */
 }
 
-.review-container {
+.website-panel {
   height: 100%;
+}
+
+.review-container,
+.review-scrollbar {
+  height: max-content;
 }
 
 .review-scrollbar {
-  height: 100%;
+  /* height: auto; */
 }
 
 .websites-title {

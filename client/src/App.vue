@@ -53,7 +53,6 @@ a {
 }
 
 .page {
-  padding: 20px;
   width: 100%;
   height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
@@ -66,8 +65,34 @@ a {
 }
 
 .auth {
+  padding: 20px;
   margin-top: 80px;
   height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
+}
+
+html {
+  font-size: 1rem;
+}
+
+@media (min-width: 500px) {
+  html {
+    font-size: 0.8rem;
+  }
+}
+@media (min-width: 800px) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+@media (min-width: 1000px) {
+  html {
+    font-size: 0.95rem;
+  }
+}
+@media (min-width: 1200px) {
+  html {
+    font-size: 1rem;
+  }
 }
 </style>

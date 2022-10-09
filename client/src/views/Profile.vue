@@ -61,11 +61,9 @@
       </b-button>
     </div>
     <div class="review-container">
-      <div class="review-container">
-        <h2 class="reviews-title">{{ username }}'s reviews</h2>
-        <div class="review-scrollbar">
-          <ReviewCards :reviews="reviews" />
-        </div>
+      <h2 class="reviews-title">{{ username }}'s reviews</h2>
+      <div class="review-scrollbar">
+        <ReviewCards :reviews="reviews" />
       </div>
     </div>
   </div>
@@ -105,16 +103,16 @@ export default {
     },
     saveImage() {},
     async recentReviews() {
-      const res = await Api.get('/reviews/inflate')
-      this.reviews = res.data.payload
-        .sort((r1, r2) => {
-          const firstDate = new Date(r1.createdAt)
-          const secondDate = new Date(r2.createdAt)
-          if (firstDate > secondDate) return -1
-          if (firstDate < secondDate) return 1
-          return 0
-        })
-        .slice(0, this.recentReviewCount)
+      console.log(this.username)
+      const res = await Api.get(`/reviews/?username=${this.username}`)
+      console.log(res.data)
+      this.reviews = res.data.sort((r1, r2) => {
+        const firstDate = new Date(r1.createdAt)
+        const secondDate = new Date(r2.createdAt)
+        if (firstDate > secondDate) return -1
+        if (firstDate < secondDate) return 1
+        return 0
+      })
     },
     saveDescription() {
       Api.patch(`/users/${this.id}`, { description: this.description })
@@ -132,7 +130,7 @@ export default {
           console.error(error)
         })
     },
-    loadData() {
+    async loadData() {
       const user = parseJWT(localStorage.getItem('token'))
       this.id = user._id
       if (
@@ -141,12 +139,18 @@ export default {
       ) {
         Api.get(`/users/${this.id}`)
           .then(response => {
-            console.log(response)
-            this.username = response.data.payload.username
-            this.description = response.data.payload.description
-            this.profilePictureSrc = response.data.payload.profilePictureSrc
+            const {
+              username,
+              description,
+              profilePictureSrc,
+              createdAt
+            } = response.data
+            this.username = username
+            this.description = description
+            this.profilePictureSrc = profilePictureSrc
             this.ownPage = true
-            this.createdAt = response.data.payload.createdAt
+            this.createdAt = createdAt
+            this.recentReviews()
           })
           .catch(error => {
             console.log(error)
@@ -156,7 +160,7 @@ export default {
           this.id = this.$route.params.username
           Api.get(`/users/?username=${this.id}`)
             .then(response => {
-              if (response.data.payload.length === 0) {
+              if (response.data.length === 0) {
                 Swal.fire({
                   title: 'Page not found',
                   text: 'No user with that name',
@@ -165,11 +169,18 @@ export default {
                 })
                 this.$router.push('/')
               } else {
-                this.username = response.data.payload[0].username
-                this.description = response.data.payload[0].description
-                this.profilePictureSrc =
-                  response.data.payload[0].profilePictureSrc
-                this.createdAt = response.data.payload[0].createdAt
+                const {
+                  username,
+                  description,
+                  profilePictureSrc,
+                  createdAt
+                } = response.data[0]
+                console.log(response)
+                this.username = username
+                this.description = description
+                this.profilePictureSrc = profilePictureSrc
+                this.createdAt = createdAt
+                this.recentReviews()
               }
             })
             .catch(error => {
@@ -179,12 +190,9 @@ export default {
       }
     }
   },
-  mounted() {
-    this.loadData()
-    this.recentReviews()
-  },
   async created() {
-    this.loadData()
+    await this.loadData()
+    // await this.recentReviews()
     this.$watch(() => this.$route.params, this.loadData)
   }
 }
