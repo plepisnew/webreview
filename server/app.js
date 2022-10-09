@@ -15,7 +15,11 @@ const connectDatabase = () => {
     "mongodb+srv://root:admin@cluster0.wzi4h06.mongodb.net/?retryWrites=true&w=majority";
   mongoose.connect(
     mongoURI,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    },
     (err) => {
       console.log(
         `${

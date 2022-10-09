@@ -36,8 +36,6 @@ const getSpecificImage = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
   try {
     const image = await Image.create({
       name: req.body.name,

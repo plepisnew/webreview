@@ -46,9 +46,6 @@ const getSpecificImage = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-  console.log("KEK");
   try {
     const image = await Image.create({
       name: req.body.name,
@@ -67,6 +64,30 @@ const uploadImage = async (req, res) => {
   }
 };
 
+const uploadProfilePicture = async (req, res) => {
+  const imageName = req.body.name;
+  try {
+    const imageExists = await Image.findOneAndReplace(
+      { name: imageName },
+      {
+        name: req.body.name,
+        image: {
+          data: fs.readFileSync(
+            path.join(__dirname, "..", "..", "uploads", req.file.filename)
+          ),
+          contentType: "image/png",
+        },
+      }
+    );
+    if (imageExists) {
+      return res.status(200).json(imageExists);
+    }
+    res.status(404).json({ message: `Image ${imageName} not found` });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 const clearImages = async (req, res) => {
   const { deletedCount } = await Image.deleteMany({});
   res.status(200).json({ message: `Deleted ${deletedCount} images` });
@@ -77,6 +98,7 @@ module.exports = {
   getImageNames,
   getSpecificImage,
   uploadImage,
+  uploadProfilePicture,
   clearImages,
   upload,
 };

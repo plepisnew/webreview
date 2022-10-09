@@ -12,10 +12,10 @@
     <b-navbar-nav class="navigation">
       <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
       <b-nav-item class="my-auto" to="/profile/me">
-        <MongoImage
+        <ProfilePicture
           :src="pfp"
-          :width="50"
-          style="border-radius: 50%; border: 1px solid black;"
+          :dimensions="50"
+          style="border-radius: 50%; "
         />
       </b-nav-item>
       <i
@@ -30,6 +30,7 @@
 <script>
 import MongoImage from './MongoImage.vue'
 import parseJWT from '@/utils/parseJWT.js'
+import ProfilePicture from './ProfilePicture.vue'
 
 export default {
   name: 'navbar',
@@ -51,7 +52,7 @@ export default {
     this.username = user.username
     this.pfp = user.profilePictureSrc
   },
-  components: { MongoImage }
+  components: { MongoImage, ProfilePicture }
 }
 </script>
 

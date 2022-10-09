@@ -6,7 +6,6 @@ const Website = require("../../model/Website");
 
 const createReview = async (req, res) => {
   try {
-    console.log(req.user);
     const username = req.user.username;
     const user = await User.findOne({ username });
     if (user) {
@@ -126,7 +125,6 @@ const deleteReview = async (req, res) => {
     if (review) {
       const user = await User.findById(review.writtenBy);
       user.writtenReviews = user.writtenReviews.filter((review) => {
-        console.log(`Comparing ${review} with ${reviewId}`);
         return review != reviewId;
       });
       await user.save();

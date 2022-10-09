@@ -1,12 +1,11 @@
 <template>
   <div class="profile auth">
-    <div class="profile-container">
+    <div v-if="profilePictureSrc" class="profile-container">
       <h5 class="font-weight-bold">{{ username }}</h5>
-      <MongoImage
+      <ProfilePicture
         class="rounded-circle"
         :src="profilePictureSrc"
-        :height="200"
-        width="auto"
+        :dimensions="200"
       />
       <b-form-file
         accept=".jpg, .png"
@@ -64,23 +63,25 @@
     <div class="review-container">
       <h2 class="reviews-title">{{ username }}'s reviews</h2>
       <div class="review-scrollbar">
-        <ReviewCards :reviews="reviews" />
+        <!-- <ReviewCards :reviews="reviews" /> -->
+        <ReviewCards :reviews="[]" />
       </div>
     </div>
   </div>
 </template>
 <script>
 import { Api } from '@/Api'
+import { ascending } from '@/utils/sortChrono'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import Swal from 'sweetalert2'
 import parseJWT from '@/utils/parseJWT.js'
-import MongoImage from '@/components/MongoImage'
+import ProfilePicture from '../components/ProfilePicture.vue'
 
 export default {
   name: 'profile',
   components: {
     ReviewCards,
-    MongoImage
+    ProfilePicture
   },
   data() {
     return {
@@ -104,47 +105,36 @@ export default {
           console.error(error)
         })
     },
-    saveImage() {
-      const formData = new FormData()
-      console.log(this.file)
-      formData.append('uploadImage', this.file)
-      formData.append('name', this.username)
-      Api.post('/images/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        data: {
-          name: this.username
-        }
-      })
-        .then(response => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Image saved',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-        .catch(error => {
-          console.error(error)
-        })
+    async saveImage() {
       try {
-        Api.patch(`/users/${this.id}`, {
+        const formData = new FormData()
+        formData.append('uploadImage', this.file)
+        formData.append('name', this.username)
+        await Api.post('/images/pfp', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          data: {
+            name: this.username
+          }
+        })
+        await Swal.fire({
+          icon: 'success',
+          title: 'Image saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await Api.patch(`/users/${this.id}`, {
           profilePictureSrc: this.username
         })
+        window.location.reload()
       } catch (err) {
         console.error(err)
       }
     },
     async recentReviews() {
       const res = await Api.get(`/reviews/?username=${this.username}`)
-      this.reviews = res.data.sort((r1, r2) => {
-        const firstDate = new Date(r1.createdAt)
-        const secondDate = new Date(r2.createdAt)
-        if (firstDate > secondDate) return -1
-        if (firstDate < secondDate) return 1
-        return 0
-      })
+      this.reviews = ascending(res.data)
     },
     saveDescription() {
       Api.patch(`/users/${this.id}`, { description: this.description })
@@ -207,7 +197,6 @@ export default {
                   createdAt,
                   profilePictureSrc
                 } = response.data[0]
-                console.log(response)
                 this.username = username
                 this.description = description
                 this.createdAt = createdAt

@@ -12,12 +12,10 @@ const getAllReviews = async (req, res) => {
 };
 
 const getAllReviewsPopulated = async (req, res) => {
-  console.log("testing");
   try {
     const reviews = await Review.find({ ...req.query })
       .populate("writtenBy")
       .populate("website");
-    console.log(reviews);
     res.status(200).json(response({ payload: reviews }));
   } catch (err) {
     res.status(400).json({ message: err.message });

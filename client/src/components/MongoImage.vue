@@ -46,7 +46,8 @@ export default {
       image.data
     ).toString('base64')}`
     this.imageBuffer = source
-  }
+  },
+  created() {}
 }
 </script>
 

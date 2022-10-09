@@ -8,11 +8,10 @@
     </router-link>
     <div class="review-info">
       <p class="review-meta">
-        <MongoImage
+        <ProfilePicture
           class="rounded-circle"
           :src="writtenBy.profilePictureSrc"
-          :height="20"
-          width="auto"
+          :dimensions="20"
         />&nbsp;<router-link :to="`/profile/${writtenBy.username}`">
           <span class="username-span">{{ writtenBy.username }}</span>
         </router-link>
@@ -37,6 +36,7 @@
 <script>
 import MongoImage from '../MongoImage.vue'
 import { timePassed } from '@/utils/parseTime'
+import ProfilePicture from '../ProfilePicture.vue'
 
 export default {
   name: 'ReviewCard',
@@ -62,7 +62,7 @@ export default {
       required: true
     }
   },
-  components: { MongoImage },
+  components: { MongoImage, ProfilePicture },
   methods: {
     getTime(time) {
       return timePassed(time)

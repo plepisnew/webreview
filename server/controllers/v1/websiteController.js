@@ -31,7 +31,7 @@ const putSpecificWebsite = async (req, res) => {
 const patchSpecificWebsite = async (req, res) => {
   const websiteId = req.params.id;
   try {
-    const website = await Website.findOneAndUpdate(
+    const website = await Website.findOneAndReplace(
       { _id: websiteId },
       req.body
     );
