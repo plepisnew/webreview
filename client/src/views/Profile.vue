@@ -4,7 +4,7 @@
       <h5 class="font-weight-bold">{{ username }}</h5>
       <MongoImage
         class="rounded-circle"
-        :src="'123'"
+        :src="profilePictureSrc"
         :height="200"
         width="auto"
       />
@@ -128,6 +128,13 @@ export default {
         .catch(error => {
           console.error(error)
         })
+      try {
+        Api.patch(`/users/${this.id}`, {
+          profilePictureSrc: this.username
+        })
+      } catch (err) {
+        console.error(err)
+      }
     },
     async recentReviews() {
       const res = await Api.get(`/reviews/?username=${this.username}`)
@@ -167,13 +174,14 @@ export default {
             const {
               username,
               description,
-              createdAt
+              createdAt,
+              profilePictureSrc
             } = response.data
             this.username = username
             this.description = description
             this.ownPage = true
             this.createdAt = createdAt
-            this.profilePictureSrc = this.username
+            this.profilePictureSrc = profilePictureSrc
             this.recentReviews()
           })
           .catch(error => {
@@ -196,13 +204,14 @@ export default {
                 const {
                   username,
                   description,
-                  createdAt
+                  createdAt,
+                  profilePictureSrc
                 } = response.data[0]
                 console.log(response)
                 this.username = username
                 this.description = description
                 this.createdAt = createdAt
-                this.profilePictureSrc = this.username
+                this.profilePictureSrc = profilePictureSrc
                 this.recentReviews()
               }
             })
