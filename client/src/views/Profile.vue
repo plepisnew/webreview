@@ -63,8 +63,8 @@
     <div class="review-container">
       <h2 class="reviews-title">{{ username }}'s reviews</h2>
       <div class="review-scrollbar">
-        <!-- <ReviewCards :reviews="reviews" /> -->
-        <ReviewCards :reviews="[]" />
+        <ReviewCards :reviews="reviews" />
+        <!-- <ReviewCards :reviews="[]" /> -->
       </div>
     </div>
   </div>

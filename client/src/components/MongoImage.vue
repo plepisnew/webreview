@@ -1,16 +1,17 @@
 <template>
   <img
-    alt="mongodb-image"
+    :alt="src"
     :src="imageBuffer"
-    :width="this.width || '100%'"
-    :height="this.height || '100%'"
-    :class="this.rounded ? 'rounded-circle' : ''"
+    :width="width || '100%'"
+    :height="height || '100%'"
+    :class="rounded ? 'rounded-circle' : ''"
     :style="`border-radius: ${radius}`"
   />
 </template>
 
 <script>
 import { Api } from '@/Api'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'MongoImage',
@@ -33,6 +34,7 @@ export default {
       imageBuffer: ''
     }
   },
+  methods: mapActions(['addImage']),
   // removes `images/` prefix and `.png` suffix
   async mounted() {
     if (!this.src) return
@@ -40,14 +42,23 @@ export default {
       .split('.png')[0]
       .split('images/')
       .at(-1)
-    const res = await Api.get(`/images/${resourceName}`)
-    const image = res.data.image
-    const source = `data:${image.contentType};base64, ${Buffer.from(
-      image.data
-    ).toString('base64')}`
-    this.imageBuffer = source
-  },
-  created() {}
+    const value = this.$store.state.images[resourceName]
+    // const value = null
+    if (value) {
+      this.imageBuffer = value
+      this.addImage({ src: resourceName, data: value })
+      console.log('fetching store')
+    } else {
+      console.log('fetching mongodb')
+      const res = await Api.get(`/images/${resourceName}`)
+      const image = res.data.image
+      const source = `data:${image.contentType};base64, ${Buffer.from(
+        image.data
+      ).toString('base64')}`
+      this.imageBuffer = source
+      this.addImage({ src: resourceName, data: source })
+    }
+  }
 }
 </script>
 

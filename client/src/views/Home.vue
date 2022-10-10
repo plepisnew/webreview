@@ -92,7 +92,7 @@ export default {
     },
     async getRecentReviews() {
       const res = await Api.get('/reviews')
-      this.recentReviews = descending(res.data)
+      this.recentReviews = descending(res.data).splice(0, this.recentReviewCount)
     },
     async getTopWebsites() {
       const res = await Api.get('/websites')
