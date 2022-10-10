@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema(
       required: false,
       default: 0,
     },
+    isAdmin: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     writtenReviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Review" }],
   },
   {

@@ -1,10 +1,10 @@
 <template>
   <div class="review-card">
     <router-link
-      class="website-link"
+      class="website-link mr-1"
       :to="`/websites/${website.name}`.toLowerCase()"
     >
-      <MongoImage :src="website.logoSrc" width="auto" rounded />
+      <MongoImage :src="website.logoSrc" rounded />
     </router-link>
     <div class="review-info">
       <p class="review-meta">
@@ -74,16 +74,25 @@ export default {
 <style>
 .review-card {
   background: rgb(20, 20, 20);
-  border-radius: 2000px;
+  border-radius: 100px 15px 15px 100px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   display: flex;
-  height: 100px;
-  align-items: flex-start;
+  min-height: 80px;
+  height: 6vw;
 }
 
-.review-card a {
+.website-link {
   height: 100%;
+}
+
+.website-link img {
+  height: 100%;
+  width: auto;
+}
+
+.date-span {
+  display: none;
 }
 
 .review-info {

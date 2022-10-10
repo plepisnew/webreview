@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000/api/v3
 
 ### Register a User
-POST {{baseUrl}}/register
+POST {{baseUrl}}/register HTTP/1.1
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### Login a User
-POST {{baseUrl}}/login
+POST {{baseUrl}}/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Login a User that doesn't exist
-POST {{baseUrl}}/login
+POST {{baseUrl}}/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -28,10 +28,30 @@ Content-Type: application/json
 }
 
 ### Login a User with invalid password
-POST {{baseUrl}}/login
+POST {{baseUrl}}/login HTTP/1.1
 Content-Type: application/json
 
 {
     "username": "user",
     "password": "password2"
+}
+
+### Register an Admin
+POST {{baseUrl}}/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "gus",
+    "password": "password",
+    "description": "mr whait, we must coke the methamfetamine",
+    "isAdmin": true
+}
+
+### Login an Admin
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "gus",
+    "password": "password"
 }

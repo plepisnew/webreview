@@ -71,6 +71,10 @@ a {
   background: rgb(200, 200, 200);
 }
 
+.fragment {
+  display: inline-block;
+}
+
 html {
   font-size: 1rem;
 }

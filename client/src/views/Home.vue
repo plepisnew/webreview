@@ -70,29 +70,33 @@ export default {
     }
   },
   methods: {
+    /* eslint-disable indent */
     async searchByTags(tags) {
       const res = await Api.get('/reviews')
       this.filteredReviews = tags.includes('all')
         ? res.data
         : res.data.filter(review => {
-          const reviewData = [
-            review.content,
-            review.createdAt,
+            const reviewData = [
+              review.content,
+              review.createdAt,
               `${review.rating} stars`,
               JSON.stringify(review.website),
               review.writtenBy.username
-          ]
-            .join(' ')
-            .toLowerCase()
-          for (let i = 0; i < tags.length; i++) {
-            if (reviewData.includes(tags[i])) return true
-          }
-          return false
-        })
+            ]
+              .join(' ')
+              .toLowerCase()
+            for (let i = 0; i < tags.length; i++) {
+              if (reviewData.includes(tags[i])) return true
+            }
+            return false
+          })
     },
     async getRecentReviews() {
       const res = await Api.get('/reviews')
-      this.recentReviews = descending(res.data).splice(0, this.recentReviewCount)
+      this.recentReviews = descending(res.data).splice(
+        0,
+        this.recentReviewCount
+      )
     },
     async getTopWebsites() {
       const res = await Api.get('/websites')
@@ -107,7 +111,8 @@ export default {
           if (w1.rating > w2.rating) return -1
           if (w1.rating < w2.rating) return 1
           return 0
-        }).splice(0, this.topWebsiteCount)
+        })
+        .splice(0, this.topWebsiteCount)
     }
   },
   created() {
@@ -133,32 +138,57 @@ export default {
 .review-scrollbar {
   /* max-height: 80%; */
   height: 90%;
-  padding: 15px;
+  padding: 8px;
   overflow-y: scroll;
   background: white;
   border-radius: 0 0 15px 15px;
-}</style>
+}
+</style>
 
 <style>
+.website-cards {
+  grid-template-columns: repeat(2, 1fr);
+}
 
-@media screen and (max-width: 3000px) {
+@media screen and (max-width: 699px) {
   .website-cards {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .home-container {
+    flex-direction: column;
+  }
+  .left-panel,
+  .right-panel {
+    width: 100% !important;
+  }
+  .review-info {
+    padding: 4px;
   }
 }
-@media screen and (max-width: 1400px) {
+
+@media screen and (min-width: 700px) {
   .website-cards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
-@media screen and (max-width: 1200px) {
+
+@media screen and (min-width: 800px) {
   .website-cards {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media screen and (max-width: 800px) {
+
+@media screen and (min-width: 1100px) {
   .website-cards {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .date-span {
+    display: inline;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .website-cards {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -177,10 +207,6 @@ export default {
   flex-direction: column;
 }
 
-.review-container {
-  flex: 1;
-}
-
 .websites-title,
 .reviews-title {
   padding: 5px;
@@ -194,11 +220,9 @@ export default {
 .search-review-container {
   background: rgb(50, 50, 50);
   padding: 10px;
-  /* flex: 1; */
-  /* display: flex; */
-  max-height: calc(100% - 150px);
   border-radius: 15px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  max-height: calc(100% - 150px);
 }
 
 .search-review-container:empty {
