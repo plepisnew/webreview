@@ -23,6 +23,7 @@
     "url": "git+https://gitlab.com/dit341/group-00-web.git"
   },
   "dependencies": {
+    "backend-frontend": "file:..",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "connect-history-api-fallback": "^1.6.0",
