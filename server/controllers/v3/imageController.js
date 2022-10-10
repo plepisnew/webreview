@@ -82,7 +82,18 @@ const uploadProfilePicture = async (req, res) => {
     if (imageExists) {
       return res.status(200).json(imageExists);
     }
-    res.status(404).json({ message: `Image ${imageName} not found` });
+    const image = await Image.create({
+      name: req.body.name,
+      image: {
+        data: fs.readFileSync(
+          path.join(__dirname, "..", "..", "uploads", req.file.filename)
+        ),
+        contentType: "image/png",
+      },
+    });
+    res
+      .status(201)
+      .json({ message: `Successfully uploaded image ${image.name} ` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

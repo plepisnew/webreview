@@ -127,6 +127,7 @@ export default {
         await Api.patch(`/users/${this.id}`, {
           profilePictureSrc: this.username
         })
+        // TODO: navbar pfp is based on token which is static, so navbar pfp doesnt change. Reload the token after image upload
         window.location.reload()
       } catch (err) {
         console.error(err)
