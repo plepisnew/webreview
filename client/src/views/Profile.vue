@@ -96,15 +96,6 @@ export default {
     }
   },
   methods: {
-    removeUser() {
-      Api.delete(`/users/${this.id}`)
-        .then(response => {
-          this.$router.push('/login')
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
     async saveImage() {
       try {
         const formData = new FormData()
