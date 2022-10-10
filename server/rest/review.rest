@@ -1,43 +1,74 @@
-@baseUrl = http://localhost:3000
-@resource = api/reviews
-@objectId = 6317c106c7a50d1da0a09a34
-
+@baseUrl = http://localhost:3000/api/v3
+@resource = reviews
+@url = {{baseUrl}}/{{resource}}
+@UserId = 6340983da164024708bbc257
+@WebsiteId = 63388af82731382bd4930413
+@ReviewId = 6340a08fb6bf2a4884c53d29 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlUGljdHVyZVNyYyI6ImltYWdlcy9kZWZhdWx0X3VzZXJfaWNvbi5wbmciLCJkZXNjcmlwdGlvbiI6IkkgbGlrZSB0cnV0bGVzIiwiZGlzYWJsZWRGb3IiOjAsIndyaXR0ZW5SZXZpZXdzIjpbXSwiX2lkIjoiNjM0MGM5MjY4YzhhMjExMjYwMThlYzQ5IiwidXNlcm5hbWUiOiJhbnNpc2hpaGkiLCJwYXNzd29yZCI6IiQyYiQxMCQxZ1YzMG91SUZiWHBXb2tSdThwNTFPRTl4blI4Q0xQV1NYYzdyUVVMeUJDdml1OVRQV3lTVyIsImNyZWF0ZWRBdCI6IjIwMjItMTAtMDhUMDA6NDk6NDIuMDA5WiIsInVwZGF0ZWRBdCI6IjIwMjItMTAtMDhUMDA6NDk6NDIuMDA5WiIsIl9fdiI6MCwiaWF0IjoxNjY1MTkwMjI0fQ.a3XEw-N8EK-xRx_gn_eEG7pDJNAWnyGRK4Y9NMeD3bk
 
 #################################
 ############## GET ##############
 #################################
 
-### Get a list of all reviews: 200
-GET {{baseUrl}}/{{resource}} HTTP/1.1
+### Get all reviews
+GET {{url}} HTTP/1.1
+Authorization: Bearer {{token}}
 
-### Get a review by its id: 200
-GET {{baseUrl}}/{{resource}}/{{objectId}} HTTP/1.1
+### Get a review by its id
+GET {{url}}/{{ReviewId}} HTTP/1.1
+Authorization: Bearer {{token}}
 
-### Get a review by its rating: 200
-GET {{baseUrl}}/{{resource}}?rating=5 HTTP/1.1
+### Get all user reviews
+GET {{url}}/?username=ansishihi HTTP/1.1
+Authorization: Bearer {{token}}
 
-### Get a review by its id which doesn't exist: 400
-GET {{baseUrl}}/{{resource}}/63178eff73a9885d248f9b76 HTTP/1.1
+#################################
+############# POST ##############
+#################################
 
-### Get a review by its id which isn't a valid ObjectId: 400
-GET {{baseUrl}}/{{resource}}/1337 HTTP/1.1
-
-### Get a review's administrator: 200
-GET {{baseUrl}}/{{resource}}/{{objectId}}/writtenBy HTTP/1.1
-
-### (!) Same ObjectId error handling applies to all other HTTP methods
-
-##################################
-############## POST ##############
-##################################
-
-### Create a post: 200
-POST {{baseUrl}}/{{resource}} HTTP/1.1
+### Create a review for a user
+POST {{url}} HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "rating": 1,
-    "content": "Absolute nincompoopery",
-    "writtenBy": "6317bb727589b131e438fa38",
-    "monitoredBy": "6317bb727589b131e438fa38"
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus dolorum sequi velit ipsam veniam perspiciatis corrupti, delectus sit, magni consectetur sapiente, aliquam laborum nihil quae ut? Repudiandae cumque eveniet sed. Optio laudantium neque dolorem enim quaerat delectus fuga, nam amet at assumenda praesentium qui ipsa laborum beatae exercitationem excepturi et, vel possimus sapiente quo consequuntur soluta ullam. Ratione obcaecati neque impedit sit omnis, molestiae cupiditate? Error voluptatibus ipsam non provident unde! Eaque, harum consequuntur. Recusandae aliquam nesciunt perferendis tempora ipsa. Porro cupiditate, corrupti omnis praesentium vero aliquam fuga, maxime enim accusamus eveniet iusto quas. Dolores soluta voluptates ut. Quisquam, praesentium.",
+    "rating": 4,
+    "website": "Facebook"
 }
+
+### Create a review for a non-existent user
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "It's alright",
+    "rating": 3,
+    "website": "YouTube",
+    "writtenBy": "nonexistentuser"
+}
+
+### Create a review for a non-existent website
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "It's alright",
+    "rating": 3,
+    "website": "SkylarWhiteYo",
+    "writtenBy": "updatedUsername"
+}
+
+#################################
+############ DELETE #############
+#################################
+
+### Delete a review
+DELETE {{url}}/63409c44f7b8dc5a388bd870 HTTP/1.1
+Authorization: Bearer {{token}}
+
+### Delete all reviews
+DELETE {{url}} HTTP/1.1
+Authorization: Bearer {{token}}

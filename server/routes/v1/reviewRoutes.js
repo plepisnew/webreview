@@ -8,7 +8,7 @@ const {
   getSpecificReview,
   deleteSpecificReview,
   getReviewAdmin,
-} = require("../controllers/reviewController");
+} = require("../../controllers/v1/reviewController");
 
 router.get("/:id", getSpecificReview);
 

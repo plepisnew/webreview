@@ -1,10 +1,10 @@
-const Admin = require("../model/Admin");
+const Admin = require("../../model/Admin");
 
 // TODO: add filtering with query params
 
 const getAllAdmins = async (req, res) => {
   const admins = await Admin.find({ ...req.query });
-  res.status(admins.length === 0 ? 204 : 200).json(admins);
+  res.status(200).json(admins);
 };
 
 const createAdmin = async (req, res) => {

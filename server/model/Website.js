@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const websiteSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     logoSrc: {
       type: String,
       default: "images/default_website_icon.png",
@@ -13,7 +17,7 @@ const websiteSchema = new mongoose.Schema(
     },
     url: {
       type: String,
-      required: true,
+      required: false, // TODO: remove if test fails
       unique: true,
     },
     launchDate: {

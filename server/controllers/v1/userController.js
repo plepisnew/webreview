@@ -1,5 +1,5 @@
-const User = require("../model/User");
-const Review = require("../model/Review");
+const User = require("../../model/User");
+const Review = require("../../model/Review");
 
 // TODO: add filtering with query params
 
@@ -17,14 +17,14 @@ const getSpecificUser = async (req, res) => {
       .status(400)
       .json({ message: `Can't find User with ObjectId ${userId}` }); // Valid and non-existent id
   } catch (err) {
-    res.status(404).json({ message: err.message }); // Invalid id
+    res.status(400).json({ message: err.message }); // Invalid id
   }
 };
 
 const createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    res.status(201).json(user);
+    res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -78,10 +78,10 @@ const getAllUserReviews = async (req, res) => {
       return res.status(200).json(user.writtenReviews);
     }
     res
-      .status(404)
+      .status(400)
       .json({ message: `Can't find User with ObjectId ${userId}` });
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
 };
 
@@ -119,20 +119,21 @@ const getSpecificUserReview = async (req, res) => {
     });
     res.status(200).json(review);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
 };
 
 const deleteSpecificUserReview = async (req, res) => {
   const reviewId = req.params.review_id;
-try{
-  const review = await Review.findByIdAndDelete(reviewId);
-  if (review) return res.status(200).json(review); 
-  res
-  .status(404)
-  .json({ message: `Can't find Review by User with ObjectId ${userId}` });} catch (err){
-  res.status(404).json({ message: err.message })
-}
+  try {
+    const review = await Review.findByIdAndDelete(reviewId);
+    if (review) return res.status(200).json(review);
+    res
+        .status(400)
+        .json({ message: `Can't find Review by User with ObjectId ${userId}` });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "60bf0bef-7b8f-475d-824d-4f0b39319e45",
-		"name": "New Collection",
+		"_postman_id": "fc2ab490-1859-4337-9f1f-2a4fb08fa2ff",
+		"name": "sever.postman_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22970072"
 	},
@@ -13,8 +13,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -32,11 +32,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/v1/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
 					]
 				}
@@ -84,11 +88,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/admins",
+					"raw": "http://localhost:3001/api/v1/admins",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"admins"
 					],
 					"query": [
@@ -135,7 +143,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.google.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.google.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -143,11 +151,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/v1/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
 					],
 					"query": [
@@ -168,7 +180,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
+							"pm.test(\"Successful GET request\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
@@ -193,13 +205,58 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites",
 						"{{websiteId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific website by id (which doesn't exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/websites{{websiteId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"websites{{websiteId}}"
 					]
 				}
 			},
@@ -212,7 +269,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
+							"pm.test(\"Successful GET request\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
@@ -231,11 +288,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}/createdBy/",
+					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}/createdBy/",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites",
 						"{{websiteId}}",
 						"createdBy",
@@ -254,9 +315,7 @@
 						"exec": [
 							"pm.test(\"Successful POST request\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							"const website = pm.response.json();\r",
-							"pm.environment.set(\"websiteId\", website);"
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -276,7 +335,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"testing, testing\",\r\n    \"url\": \"www.google.com\",\r\n    \"launch_date\": \"2015-01-01\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.google.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -284,11 +343,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/v1/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
 					],
 					"query": [
@@ -296,49 +359,6 @@
 							"key": "id",
 							"value": "",
 							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get specific website by query (which doesn't exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{base_url}}api/websites?url=www.yahoo.com",
-					"host": [
-						"{{base_url}}api"
-					],
-					"path": [
-						"websites"
-					],
-					"query": [
-						{
-							"key": "url",
-							"value": "www.yahoo.com"
 						}
 					]
 				}
@@ -354,10 +374,7 @@
 						"exec": [
 							"pm.test(\"Successful POST request\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"const jsonData = pm.response.json();\r",
-							"const website = jsonData._id;\r",
-							"pm.environment.set(\"websiteId\", website);"
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -377,7 +394,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"yahoo is a search engine\",\r\n    \"url\": \"www.yahoo.com\",\r\n    \"launch_date\": \"2015-01-01\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"url\": \"www.yahoo.com\",\r\n    \"launch_date\": \"2015-01-01\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -385,11 +402,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/v1/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
 					],
 					"query": [
@@ -410,7 +431,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
+							"pm.test(\"Successful GET request\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
@@ -435,11 +456,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites?url=www.yahoo.com",
+					"raw": "http://localhost:3001/api/v1/websites?url=www.yahoo.com",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
 					],
 					"query": [
@@ -459,7 +484,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
+							"pm.test(\"Successful GET request\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
@@ -478,11 +503,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/v1/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
 					]
 				}
@@ -496,11 +525,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
+							"pm.test(\"Successful PUT request\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.environment.get(\"websiteId\");\r",
-							"pm.environment.get(\"adminId\");"
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -520,7 +547,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"logo_src\": \"images/updated.png\",\r\n    \"description\": \"testy testy\",\r\n    \"url\": \"www.yahoo.com\",\r\n    \"launch_date\": \"2022-01-01\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"raw": "{\r\n    \"name\": \"hehe\",\r\n    \"logo_src\": \"images/updated.png\",\r\n    \"description\": \"testy testy\",\r\n    \"url\": \"www.google.com\",\r\n    \"launch_date\": \"2022-01-01\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -528,68 +555,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
-						"websites",
-						"{{websiteId}}"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Put website without all fields",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"logo_src\": \"images/updated.png\",\r\n    \"description\": \"testy testy\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
-					"host": [
-						"{{base_url}}api"
-					],
-					"path": [
+						"api",
+						"v1",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -611,7 +585,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
+							"pm.test(\"Successful PATCH request\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							""
@@ -634,7 +608,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"logo_src\": \"images/updated.png\",\r\n    \"description\": \"testy testy\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"raw": "{\r\n    \"name\": \"hehe\",\r\n    \"logo_src\": \"images/updated.png\",\r\n    \"description\": \"testy testy\",\r\n    \"createdBy\": \"6317c106c7a50d1da0a09a34\",\r\n    \"url\": \"lol\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -642,11 +616,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites",
 						"{{websiteId}}"
 					],
@@ -690,11 +668,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites",
 						"{{websiteId}}"
 					]
@@ -725,50 +707,16 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites",
+					"raw": "http://localhost:3001/api/v1/websites",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get specific website by id (which doesn't exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
-					"host": [
-						"{{base_url}}api"
-					],
-					"path": [
-						"websites",
-						"{{websiteId}}"
 					]
 				}
 			},
@@ -797,11 +745,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/admins",
+					"raw": "http://localhost:3001/api/v1/admins",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"admins"
 					]
 				}
@@ -831,44 +783,674 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}api/websites/{{websiteId}}",
+					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}api"
+						"localhost"
 					],
+					"port": "3001",
 					"path": [
+						"api",
+						"v1",
 						"websites",
 						"{{websiteId}}"
 					]
 				}
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		},
 		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
+			"name": "Get specific user by Id (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
 		{
-			"key": "base_url",
-			"value": "http://localhost:3001/",
-			"type": "string"
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const user = jsonData._id;\r",
+							"pm.environment.set(\"userId\", user);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific user by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user (missing mandatory fields)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"www.yahoo.com\",\r\n    \"rating\": 1,\r\n    \"content\": \"it was alright\", \r\n    \"writtenBy\": \"{{userId}}\",\r\n    \"monitoredBy\": \"{{adminId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user review (missing mandatory fields)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rating\": \"1\",\r\n    \"content\": \"it was alright\", \r\n    \"writtenBy\": \"{{userId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all of users reviews",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users review by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.environment.get(\"userId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all of users reviews (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const user = jsonData._id;\r",
+							"pm.environment.set(\"userId\", user);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"dnsishihi\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all users (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user review (none exist)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/123/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"123",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all admins Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/admins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"admins"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

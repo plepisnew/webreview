@@ -1,22 +1,31 @@
+@baseUrl = http://localhost:3000/api/v3
+@resource = websites
+@url = {{baseUrl}}/{{resource}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlUGljdHVyZVNyYyI6ImltYWdlcy9kZWZhdWx0X3VzZXJfaWNvbi5wbmciLCJkZXNjcmlwdGlvbiI6IkhlbGxvIE1vb24hIiwiZGlzYWJsZWRGb3IiOjAsIndyaXR0ZW5SZXZpZXdzIjpbXSwiX2lkIjoiNjM0MDk4M2RhMTY0MDI0NzA4YmJjMjU3IiwidXNlcm5hbWUiOiJ1c2VyIiwicGFzc3dvcmQiOiIkMmIkMTAkem0uakQudHZVcHZOQjdNT3V0bVVqdUxOamtOb2h2a3R4d28ydlZESTZUMzQ1Q09qeWFibDIiLCJjcmVhdGVkQXQiOiIyMDIyLTEwLTA3VDIxOjIxOjAxLjkzMloiLCJ1cGRhdGVkQXQiOiIyMDIyLTEwLTA3VDIxOjIxOjAxLjkzMloiLCJfX3YiOjAsImlhdCI6MTY2NTE3NzY2M30.NtupY86vQeSp6uSWaoEQ6cVNc5ewBMl-WcIhG3EU_lI
 
 ### POST a specific website
-POST http://localhost:3000/api/websites/
+POST {{url}} HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "logo_src": "images/wow.png",
-    "description": "testing, testing",
-    "url": "www.google.com",
-    "launch_date": "2015-01-01"
+    "name": "WebReview",
+    "logoSrc": "webreview",
+    "description": "Group 22's Web Application for reviewing other Websites using the MEVN stack.",
+    "url": "https://letswebreview.herokuapp.com/"
 }
+
 ### GET all websites
-GET http://localhost:3000/api/websites
+GET {{url}} HTTP/1.1
+Authorization: Bearer {{token}}
 
 ### GET specific website
-GET http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+GET {{url}}/6318b32e6b2e394bcc0202ba HTTP/1.1
+Authorization: Bearer {{token}}
 
 ### PUT specific website
-PUT http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+PUT {{url}}/6318b32e6b2e394bcc0202ba HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -27,7 +36,8 @@ Content-Type: application/json
 }
 
 ### PATCH specific website
-PUT http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+PUT {{url}}/6318b32e6b2e394bcc0202ba HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -38,10 +48,13 @@ Content-Type: application/json
 }
 
 ### DELETE specific website
-DELETE http://localhost:3000/api/websites/6318b32e6b2e394bcc0202ba
+DELETE {{url}}/6340bc5934f94f62a085932e HTTP/1.1
+Authorization: Bearer {{token}}
 
 ### DELETE all websites
-DELETE http://localhost:3000/api/websites
+DELETE {{url}} HTTP/1.1
+Authorization: Bearer {{token}}
 
 ### GET website creator
-GET http://localhost:3000/api/websites/{{id}}/createdBy
+GET {{url}}/6318b32e6b2e394bcc0202ba/createdBy HTTP/1.1
+Authorization: Bearer {{token}}

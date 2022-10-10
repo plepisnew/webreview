@@ -4,7 +4,11 @@ const reviewSchema = new mongoose.Schema(
   {
     url: {
       type: String,
-      required: true,
+      required: false, // TODO: remove if tests fail
+    },
+    website: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Website",
     },
     rating: {
       type: Number,
@@ -24,6 +28,7 @@ const reviewSchema = new mongoose.Schema(
     },
     writtenBy: {
       type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
       required: true,
     },
     monitoredBy: {

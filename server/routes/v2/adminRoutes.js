@@ -9,7 +9,7 @@ const {
   putSpecificAdmin,
   patchSpecificAdmin,
   deleteSpecificAdmin,
-} = require("../controllers/adminController");
+} = require("../../controllers/v2/adminController");
 
 router.get("/:id", getSpecificAdmin);
 

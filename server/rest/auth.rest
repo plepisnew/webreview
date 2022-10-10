@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:3000/api/v3
+
+### Register a User
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password" : "password"
+}
+
+### Login a User
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password": "password"
+}
+
+### Login a User that doesn't exist
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "username": "usern't",
+    "password": "password"
+}
+
+### Login a User with invalid password
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password": "password2"
+}
