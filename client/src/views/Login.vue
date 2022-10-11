@@ -30,23 +30,8 @@
       <div class="button-container">
         <Button text="Sign Up" variant="red" :onClick="registerUser" />
         <Button text="Log in" variant="blue" :onClick="loginUser" />
-
-        <!-- <b-button
-              v-on:click="registerUser()"
-              type="submit"
-              class="pink-btn mr-2 shadow"
-              size="sm"
-              >Sign up</b-button
-            >
-            <b-button
-              v-on:click="loginUser()"
-              type="submit"
-              variant="primary"
-              class="shadow"
-              size="sm"
-              >Log in</b-button
-            > -->
       </div>
+      <p class="error-message mt-3">{{ error }}</p>
       <div class="footer">
         <p>Random corporate bullcrap inc. trademark</p>
         <p>Sponsored by canvas</p>
@@ -64,7 +49,8 @@ export default {
       form: {
         username: '',
         password: ''
-      }
+      },
+      error: ''
     }
   },
   components: {
@@ -81,10 +67,19 @@ export default {
           username,
           password
         })
-        const { accessToken } = res.data
-        localStorage.token = accessToken
-        this.$router.push('/')
+        const { accessToken, user } = res.data
+        const dt = new Date(user.disabledUntil) - new Date()
+        const isDisabled = dt > 0
+        if (isDisabled) {
+          this.error = `Your account is disabled for another ${Math.floor(
+            dt / 1000
+          )} seconds`
+        } else {
+          localStorage.token = accessToken
+          this.$router.push('/')
+        }
       } catch (err) {
+        this.error = 'Invalid credentials!'
         console.log(err)
       }
     }
@@ -165,5 +160,10 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.error-message {
+  color: rgb(183, 28, 28);
+  text-align: right;
 }
 </style>

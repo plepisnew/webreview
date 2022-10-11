@@ -14,6 +14,10 @@
 GET {{url}} HTTP/1.1
 Authorization: Bearer {{token}}
 
+### Get approved reviews
+GET {{url}}?isPending=false HTTP/1.1
+Authorization: Bearer {{token}}
+
 ### Get a review by its id
 GET {{url}}/{{ReviewId}} HTTP/1.1
 Authorization: Bearer {{token}}

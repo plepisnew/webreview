@@ -39,7 +39,7 @@ export default {
     const res1 = await Api.get(`/websites?name=${websiteName}`)
     const { website, averageRating } = res1.data[0]
     const res2 = await Api.get(`/websites/${website._id}/reviews`)
-    const reviews = res2.data
+    const reviews = res2.data.filter(review => !review.isPending)
     this.website = {
       ...website,
       averageRating

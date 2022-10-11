@@ -72,7 +72,7 @@ export default {
   methods: {
     /* eslint-disable indent */
     async searchByTags(tags) {
-      const res = await Api.get('/reviews')
+      const res = await Api.get('/reviews?isPending=false')
       this.filteredReviews = tags.includes('all')
         ? res.data
         : res.data.filter(review => {
@@ -92,7 +92,7 @@ export default {
           })
     },
     async getRecentReviews() {
-      const res = await Api.get('/reviews')
+      const res = await Api.get('/reviews?isPending=false')
       this.recentReviews = descending(res.data).splice(
         0,
         this.recentReviewCount

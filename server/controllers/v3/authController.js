@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 const login = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
+    const currentTime = Date.now();
+    const disabledTime = new Date(user.disabledUntil).getTime();
+    console.log(currentTime, disabledTime);
     if (await bcrypt.compare(req.body.password, user.password)) {
       const accessToken = jwt.sign(
         user.toJSON(),

@@ -4,7 +4,6 @@ import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Website from '@/views/Website'
 import Websites from '@/views/Websites'
-import Review from '@/views/Review'
 import Home from '@/views/Home'
 import Profile from '@/views/Profile'
 import Management from '@/views/Management'
@@ -34,11 +33,6 @@ const router = new Router({
       path: '/websites/:name',
       name: 'website',
       component: Website
-    },
-    {
-      path: '/reviews/:id',
-      name: 'review',
-      component: Review
     },
     {
       path: '/',

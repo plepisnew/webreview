@@ -59,7 +59,8 @@ const date = isoString => {
 const dt = (isoString1, isoString2, unit = 'second') => {
   const millis1 = new Date(isoString1).getTime()
   const millis2 = new Date(isoString2).getTime()
-  const dtMillis = Math.abs(millis1 - millis2)
+  const dtMillis = millis1 - millis2
+  //   const dtMillis = Math.abs(millis1 - millis2)
   const dtSeconds = dtMillis / 1000
   const dtMinutes = dtSeconds / 60
   const dtHours = dtMinutes / 60
@@ -81,7 +82,18 @@ const dt = (isoString1, isoString2, unit = 'second') => {
 }
 
 const timeUntil = isoString => {
-  const secondsLeft = dt(isoString, new Date().toISOString())
+  const currentTime = new Date().toISOString()
+  //   console.log(currentTime, isoString)
+  const secondsLeft = dt(isoString, currentTime)
+  //   console.log(secondsLeft)
+  if (secondsLeft < 0) {
+    return {
+      seconds: 0,
+      minutes: 0,
+      hours: 0,
+      days: 0
+    }
+  }
   const days = Math.floor(secondsLeft / 86400)
   const hours = Math.floor(secondsLeft / 3600 - days * 24)
   const minutes = Math.floor(secondsLeft / 60 - days * 1440 - hours * 60)

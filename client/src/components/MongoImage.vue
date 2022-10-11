@@ -8,7 +8,7 @@
     :style="`border-radius: ${radius}`"
   />
 </template>
-
+<!-- TODO: save images to public -->
 <script>
 import { Api } from '@/Api'
 import { mapActions } from 'vuex'
@@ -36,7 +36,7 @@ export default {
   },
   methods: mapActions(['addImage']),
   // removes `images/` prefix and `.png` suffix
-  async mounted() {
+  async created() {
     if (!this.src) return
     const resourceName = this.src
       .split('.png')[0]

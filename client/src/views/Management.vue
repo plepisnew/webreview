@@ -44,14 +44,14 @@
     </div>
     <div class="review-panel panel">
       <div class="title-container">
-        <p class="panel-title d-inline mr-2">Manage Reviews:</p>
-        <span class="key-text"
-          >(Only pending Reviews
-          <input type="checkbox" @input="togglePending" />)</span
-        >
+        <p class="panel-title d-inline mr-2">Pending Reviews:</p>
       </div>
       <div class="content-container review-container">
-        <ReviewCards :reviews="filteredReviews" />
+        <ReviewCards
+          :reviews="reviews"
+          :deleteReview="deleteReview"
+          :approveReview="approveReview"
+        />
       </div>
     </div>
   </div>
@@ -73,9 +73,7 @@ export default {
       adminCount: 0,
       websiteCount: 0,
       reviewCount: [0, 0, 0, 0, 0, 0],
-      showOnlyPending: false,
       reviews: [],
-      filteredReviews: [],
       users: [],
       lastReview: '',
       firstReview: '',
@@ -83,12 +81,13 @@ export default {
     }
   },
   methods: {
-    togglePending() {
-      this.showOnlyPending = !this.showOnlyPending
-      console.log(this.reviews)
-      this.filteredReviews = this.reviews.filter(review =>
-        this.showOnlyPending ? review.isPending : true
-      )
+    async deleteReview(id) {
+      this.reviews = this.reviews.filter(review => review._id !== id)
+      await Api.delete(`/reviews/${id}`)
+    },
+    async approveReview(id) {
+      this.reviews = this.reviews.filter(review => review._id !== id)
+      await Api.patch(`/reviews/${id}`, { isPending: false })
     }
   },
   async created() {
@@ -99,20 +98,25 @@ export default {
     this.userCount = users.length
     this.adminCount = adminCount
     this.users = descending(users)
+
     const websites = (await Api.get('/websites')).data
     this.websiteCount = websites.length
+
     const reviews = (await Api.get('/reviews')).data
     const reviewCount = [reviews.length, 0, 0, 0, 0, 0]
-    reviews.forEach(review => {
-      reviewCount[review.rating] += 1
-    })
+
+    this.reviews = descending(
+      reviews.filter(review => {
+        reviewCount[review.rating] += 1
+        return review.isPending
+      })
+    )
     this.reviewCount = reviewCount
-    this.filteredReviews = descending(reviews)
-    this.reviews = descending(reviews)
     const [lastDate, firstDate] = [
       reviews[0].createdAt,
       reviews[reviews.length - 1].createdAt
     ]
+
     this.lastReview = timePassed(lastDate)
     this.firstReview = timePassed(firstDate)
     const reviewDt = dt(lastDate, firstDate, 'day')

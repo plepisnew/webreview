@@ -71,7 +71,7 @@
 </template>
 <script>
 import { Api } from '@/Api'
-import { ascending } from '@/utils/sortChrono'
+import { descending } from '@/utils/sortChrono'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import Swal from 'sweetalert2'
 import parseJWT from '@/utils/parseJWT.js'
@@ -134,8 +134,10 @@ export default {
       }
     },
     async recentReviews() {
-      const res = await Api.get(`/reviews/?username=${this.username}`)
-      this.reviews = ascending(res.data)
+      const res = await Api.get(
+        `/reviews/?username=${this.username}&isPending=false`
+      )
+      this.reviews = descending(res.data)
     },
     saveDescription() {
       Api.patch(`/users/${this.id}`, { description: this.description })

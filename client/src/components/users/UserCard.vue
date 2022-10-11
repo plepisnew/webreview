@@ -17,6 +17,7 @@
         minutes
       </p>
       <Button
+        v-if="!user.isAdmin"
         class="disabler"
         :onClick="setDisabled"
         text="Save"
