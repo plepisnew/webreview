@@ -72,3 +72,16 @@ Authorization: Bearer {{token}}
 ### Delete all reviews
 DELETE {{url}} HTTP/1.1
 Authorization: Bearer {{token}}
+
+#################################
+############# PATCH #############
+#################################
+
+### Approve a specific review
+PATCH {{url}}/6340a2d9daa0494d0474fc24
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "isPending": true
+}

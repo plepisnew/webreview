@@ -1,5 +1,10 @@
 <template>
-  <MongoImage :src="src" :width="dimensions" :height="dimensions" />
+  <MongoImage
+    class="profile-picture"
+    :src="src"
+    :width="dimensions"
+    :height="dimensions"
+  />
 </template>
 
 <script>

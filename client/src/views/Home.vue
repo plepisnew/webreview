@@ -58,7 +58,7 @@ export default {
     },
     topWebsiteCount: {
       type: Number,
-      default: 8
+      default: 6
     }
   },
   data() {

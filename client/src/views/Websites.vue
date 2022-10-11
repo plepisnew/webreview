@@ -51,24 +51,30 @@ h1 {
   border-radius: 15px;
 }
 
-@media screen and (max-width: 3000px) {
+@media screen and (max-width: 499px) {
   .website-cards {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
-@media screen and (max-width: 1400px) {
-  .website-cards {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 500px) {
   .website-cards {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (min-width: 800px) {
   .website-cards {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .website-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (min-width: 1500px) {
+  .website-cards {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 </style>

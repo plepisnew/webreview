@@ -10,6 +10,9 @@
     </b-navbar-brand>
     <b-nav-text class="m-auto h4">Welcome, {{ username }}!</b-nav-text>
     <b-navbar-nav class="navigation">
+      <b-nav-item v-if="isAdmin" class="my-auto" to="/management"
+        >Management</b-nav-item
+      >
       <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
       <b-nav-item class="my-auto" to="/profile/me">
         <ProfilePicture
@@ -49,6 +52,7 @@ export default {
   },
   created() {
     const user = parseJWT(localStorage.token)
+    this.isAdmin = user.isAdmin
     this.username = user.username
     this.pfp = user.profilePictureSrc
   },

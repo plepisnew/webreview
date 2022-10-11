@@ -47,9 +47,7 @@ export default {
     if (value) {
       this.imageBuffer = value
       this.addImage({ src: resourceName, data: value })
-      console.log('fetching store')
     } else {
-      console.log('fetching mongodb')
       const res = await Api.get(`/images/${resourceName}`)
       const image = res.data.image
       const source = `data:${image.contentType};base64, ${Buffer.from(

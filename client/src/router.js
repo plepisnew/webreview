@@ -7,6 +7,7 @@ import Websites from '@/views/Websites'
 import Review from '@/views/Review'
 import Home from '@/views/Home'
 import Profile from '@/views/Profile'
+import Management from '@/views/Management'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ const router = new Router({
       path: '/profile/:username',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/management',
+      name: 'management',
+      component: Management
     }
   ]
 })

@@ -21,10 +21,10 @@ const userSchema = new mongoose.Schema(
       required: false,
       default: "Hello Moon!",
     },
-    disabledFor: {
-      type: Number,
+    disabledUntil: {
+      type: String,
       required: false,
-      default: 0,
+      default: () => new Date().toISOString(),
     },
     isAdmin: {
       type: Boolean,
