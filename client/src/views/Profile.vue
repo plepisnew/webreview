@@ -13,7 +13,7 @@
         v-model="file"
         :state="Boolean(file)"
         class="mt-2 w-75"
-      ></b-form-file>
+      />
       <b-button
         variant="primary"
         v-if="ownPage && file"
@@ -238,6 +238,7 @@ export default {
 }
 
 .profile-container {
+  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -268,7 +269,6 @@ export default {
   margin: 5px;
   border-radius: 15px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
 }
 
 .textarea {
