@@ -83,9 +83,7 @@ const dt = (isoString1, isoString2, unit = 'second') => {
 
 const timeUntil = isoString => {
   const currentTime = new Date().toISOString()
-  //   console.log(currentTime, isoString)
   const secondsLeft = dt(isoString, currentTime)
-  //   console.log(secondsLeft)
   if (secondsLeft < 0) {
     return {
       seconds: 0,

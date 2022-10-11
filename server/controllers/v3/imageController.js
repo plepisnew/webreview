@@ -3,16 +3,77 @@ const path = require("path");
 const fs = require("fs");
 const Image = require("../../model/Image");
 
+const usePublicDir = false;
+
+const UPLOAD_URL = usePublicDir
+  ? path.join(__dirname, "..", "..", "..", "client", "public", "images")
+  : path.join(__dirname, "..", "..", "uploads");
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "..", "..", "uploads"));
+    cb(null, UPLOAD_URL);
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+    cb(
+      null,
+      (usePublicDir ? "" : new Date().toISOString().replace(/:/g, "-")) +
+        file.originalname
+    );
   },
 });
 
 const upload = multer({ storage, limits: { fieldSize: 1024 * 1024 * 3 } });
+
+const uploadImage = async (req, res) => {
+  try {
+    const image = await Image.create({
+      name: req.body.name,
+      image: {
+        data: fs.readFileSync(path.join(UPLOAD_URL, req.file.filename)),
+        contentType: "image/png",
+      },
+    });
+    res
+      .status(201)
+      .json({ message: `Successfully uploaded image ${image.name} ` });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+};
+
+const uploadProfilePicture = async (req, res) => {
+  const imageName = req.body.name;
+  try {
+    const imageExists = await Image.findOneAndReplace(
+      { name: imageName },
+      {
+        name: req.body.name,
+        image: {
+          data: fs.readFileSync(path.join(UPLOAD_URL, req.file.filename)),
+          contentType: "image/png",
+        },
+      }
+    );
+    if (imageExists) {
+      return res.status(200).json(imageExists);
+    }
+    const image = await Image.create({
+      name: req.body.name,
+      image: {
+        data: fs.readFileSync(
+          path.join(__dirname, "..", "..", "uploads", req.file.filename)
+        ),
+        contentType: "image/png",
+      },
+    });
+    res
+      .status(201)
+      .json({ message: `Successfully uploaded image ${image.name} ` });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
 
 const getAllImages = async (req, res) => {
   try {
@@ -40,60 +101,6 @@ const getSpecificImage = async (req, res) => {
     res
       .status(400)
       .json({ message: `Image with name ${req.params.name} does not exist` });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
-const uploadImage = async (req, res) => {
-  try {
-    const image = await Image.create({
-      name: req.body.name,
-      image: {
-        data: fs.readFileSync(
-          path.join(__dirname, "..", "..", "uploads", req.file.filename)
-        ),
-        contentType: "image/png",
-      },
-    });
-    res
-      .status(201)
-      .json({ message: `Successfully uploaded image ${image.name} ` });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
-const uploadProfilePicture = async (req, res) => {
-  const imageName = req.body.name;
-  try {
-    const imageExists = await Image.findOneAndReplace(
-      { name: imageName },
-      {
-        name: req.body.name,
-        image: {
-          data: fs.readFileSync(
-            path.join(__dirname, "..", "..", "uploads", req.file.filename)
-          ),
-          contentType: "image/png",
-        },
-      }
-    );
-    if (imageExists) {
-      return res.status(200).json(imageExists);
-    }
-    const image = await Image.create({
-      name: req.body.name,
-      image: {
-        data: fs.readFileSync(
-          path.join(__dirname, "..", "..", "uploads", req.file.filename)
-        ),
-        contentType: "image/png",
-      },
-    });
-    res
-      .status(201)
-      .json({ message: `Successfully uploaded image ${image.name} ` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

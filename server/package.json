@@ -16,7 +16,8 @@
     "newman-server": "cross-env-shell PORT=3001 \"npm run dropdb && run-p --race start newman-wait\"",
     "newman-wait": "wait-on http://localhost:3001/api && npm run newman",
     "newman": "newman run ./tests/server.postman_collection.json --env-var host=http://localhost:3001",
-    "dropdb": "node ./tests/dropdb.js"
+    "dropdb": "node ./tests/dropdb.js",
+    "fetch-images": "node ./utils/fetchImages"
   },
   "repository": {
     "type": "git",
@@ -37,9 +38,9 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "newman": "^5.2.4",
+    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
     "wait-on": "^5.3.0"
   }
 }
-

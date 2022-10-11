@@ -22,4 +22,8 @@ router.post("/images/pfp", upload.single("uploadImage"), uploadProfilePicture);
 
 router.post("/images", upload.single("uploadImage"), uploadImage);
 
+// router.post("/images/pfp", upload.single("uploadImage"), uploadProfilePicture);
+
+// router.post("/images", upload.single("uploadImage"), uploadImage);
+
 module.exports = router;

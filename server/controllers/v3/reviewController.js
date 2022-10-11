@@ -83,7 +83,6 @@ const getAllReviews = async (req, res) => {
         })
         .populate("website")
         .populate("writtenBy");
-      console.log(userReviews);
       return res.status(200).json(userReviews);
     }
     const reviews = await Review.find(req.query)

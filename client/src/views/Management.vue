@@ -38,8 +38,13 @@
       <div class="title-container">
         <p class="panel-title">Manage Users:</p>
       </div>
+      <TextField
+        placeholder="Filter Users"
+        class="mb-2"
+        :input="e => filterUsers(e)"
+      />
       <div class="content-container user-container">
-        <UserCards :users="users" />
+        <UserCards :users="filteredUsers" />
       </div>
     </div>
     <div class="review-panel panel">
@@ -64,6 +69,7 @@ import { timePassed, dt } from '@/utils/parseTime'
 import roundFloat from '@/utils/roundFloat'
 import UserCards from '../components/users/UserCards.vue'
 import ReviewCards from '../components/reviews/ReviewCards.vue'
+import TextField from '../components/TextField.vue'
 
 export default {
   name: 'Management',
@@ -75,6 +81,7 @@ export default {
       reviewCount: [0, 0, 0, 0, 0, 0],
       reviews: [],
       users: [],
+      filteredUsers: [],
       lastReview: '',
       firstReview: '',
       averageReviews: ''
@@ -88,6 +95,11 @@ export default {
     async approveReview(id) {
       this.reviews = this.reviews.filter(review => review._id !== id)
       await Api.patch(`/reviews/${id}`, { isPending: false })
+    },
+    filterUsers(e) {
+      this.filteredUsers = this.users.filter(user =>
+        user.username.includes(e.target.value)
+      )
     }
   },
   async created() {
@@ -98,6 +110,7 @@ export default {
     this.userCount = users.length
     this.adminCount = adminCount
     this.users = descending(users)
+    this.filteredUsers = this.users
 
     const websites = (await Api.get('/websites')).data
     this.websiteCount = websites.length
@@ -125,7 +138,7 @@ export default {
       1
     )} reviews/day`
   },
-  components: { UserCards, ReviewCards }
+  components: { UserCards, ReviewCards, TextField }
 }
 </script>
 

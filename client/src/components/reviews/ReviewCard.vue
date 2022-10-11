@@ -105,9 +105,6 @@ export default {
   methods: {
     getTime(time) {
       return timePassed(time)
-    },
-    testSomething() {
-      console.log('keks')
     }
   }
 }

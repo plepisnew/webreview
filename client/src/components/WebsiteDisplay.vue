@@ -117,11 +117,11 @@ export default {
         this.$bvModal.hide('review-form-modal')
         await Swal.fire({
           title: 'Review Created',
-          text: 'Your Review has been successfully created!',
+          text:
+            'Your Review has been successfully created! Please wait for an admin to approve it.',
           icon: 'success',
           confirmButtonText: 'Ok'
         })
-        window.location.reload()
       } catch (err) {
         console.log(err)
       }

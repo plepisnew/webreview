@@ -4,6 +4,7 @@
     type="text"
     :placeholder="this.placeholder"
     @keydown="handle"
+    @input="input"
   />
 </template>
 
@@ -24,7 +25,12 @@ export default {
       default: '',
       type: String
     },
-    handler: Function
+    handler: Function,
+    input: {
+      type: Function,
+      required: false,
+      default: () => {}
+    }
   }
 }
 </script>
