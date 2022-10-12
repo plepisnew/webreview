@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="img-container">
+    <div class="img-container hide-img">
       <span class="webreview-title">WebReview</span>
       <b-img src="images/login-image.jpg" fluid alt="Responsive image"> </b-img>
     </div>
@@ -165,5 +165,53 @@ img {
 .error-message {
   color: rgb(183, 28, 28);
   text-align: right;
+}
+
+@media screen and (max-width: 1108px) {
+  .login-container {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-content: center;
+  }
+  .sign-in {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-content: center;
+  }
+  .hide-img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login-container {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-content: center;
+  }
+  .sign-in {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-content: center;
+  }
+  .hide-img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .sign-in {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-content: center;
+  }
+  .hide-img {
+    display: none;
+  }
 }
 </style>
