@@ -1,8 +1,9 @@
 <template>
   <div class="specific-website" v-if="website">
     <div class="website-panel">
+      <div class="website-display">
       <WebsiteDisplay :website="website" :reviewCount="reviews.length" />
-      <LighthouseDisplay />
+      </div>
     </div>
     <div class="review-container">
       <h2 class="reviews-title p-2">
@@ -13,8 +14,11 @@
         }}
       </h2>
       <div class="review-scrollbar">
+      <div>
         <ReviewCards v-if="reviews.length !== 0" :reviews="reviews" />
       </div>
+      </div>
+      <LighthouseDisplay class="lighthouse" />
     </div>
   </div>
 </template>
@@ -53,35 +57,50 @@ export default {
 <style scoped>
 .specific-website {
   display: flex;
-  height: 100%;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
-.website-panel,
-.review-panel {
-  flex: 1;
-}
-
-.website-panel {
-  height: 100%;
+.website-display {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  height: 30vh;
+  align-items: center;
 }
 
 .review-container {
-  height: max-content;
-  max-height: 100%;
+  margin-top: 10vh;
+  flex: 1;
+  width: 75vw;
+  height: 40vh;
   background: rgb(50, 50, 50);
-  margin: 5px;
   border-radius: 15px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
-  overflow-y: scroll;
 }
+
 .review-scrollbar {
+  height: 60%;
   padding: 15px;
   overflow-y: scroll;
   background: white;
   border-radius: 0 0 15px 15px;
 }
 
+.lighthouse {
+}
 .review-scrollbar:empty {
   padding: 0;
+}
+
+@media screen and (max-width: 510px) {
+  .specific-website {
+    display: flex;
+    flex-direction: column;
+  }
+  .review-container {
+    margin-top: 50vh;
+  }
 }
 </style>
