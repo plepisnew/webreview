@@ -1,5 +1,6 @@
 <template>
   <div class="profile auth">
+    <div class="profile-and-about">
     <div v-if="profilePictureSrc" class="profile-container">
       <h5 class="font-weight-bold">{{ username }}</h5>
       <ProfilePicture
@@ -9,7 +10,7 @@
       />
       <b-form-file
         accept=".jpg, .png"
-        v-if="ownPage"
+        v-visible="ownPage"
         v-model="file"
         :state="Boolean(file)"
         class="mt-2 w-75"
@@ -23,7 +24,7 @@
         <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
       </b-button>
     </div>
-    <div class="about-container mt-3">
+    <div class="about-container mt-2">
       <h5 class="font-weight-bold">
         Member since: {{ createdAt.substring(0, 10) }}
       </h5>
@@ -43,6 +44,7 @@
       <b-form-textarea
         rows="3"
         max-rows="6"
+        style="resize: none"
         v-if="!ownPage"
         id="textarea"
         v-model="description"
@@ -57,8 +59,9 @@
         v-on:click="saveDescription()"
         class="mt-2"
       >
-        <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
+        <b-icon icon="check-square" class="" aria-hidden="true"></b-icon> Save
       </b-button>
+    </div>
     </div>
     <div class="review-container">
       <h2 class="reviews-title">{{ username }}'s reviews</h2>
@@ -96,15 +99,6 @@ export default {
     }
   },
   methods: {
-    removeUser() {
-      Api.delete(`/users/${this.id}`)
-        .then(response => {
-          this.$router.push('/login')
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
     async saveImage() {
       try {
         const formData = new FormData()
@@ -237,17 +231,17 @@ export default {
   align-items: center;
   height: auto;
   width: auto;
+  margin-top: 0;
 }
 
 .profile-container {
-  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .review-scrollbar {
   /* max-height: 80%; */
-  height: 90%;
+  height: 100%;
   padding: 15px;
   overflow-y: scroll;
   background: white;
@@ -262,11 +256,16 @@ export default {
   justify-content: center;
 }
 
+.profile-and-about {
+  display: flex;
+  justify-content: start;
+  align-content: space-evenly;
+}
+
 .review-container {
   flex: 1;
   width: 75vw;
-  height: 100vh;
-  height: 25vh;
+  height: 10vh;
   background: rgb(50, 50, 50);
   margin: 5px;
   border-radius: 15px;
@@ -276,5 +275,18 @@ export default {
 .textarea {
   height: 500px;
   margin: 1rem;
+}
+
+@media screen and (max-width: 576px) {
+  .profile-container {
+    margin-top: 2rem;
+  }
+  .profile-and-about {
+    display: flex;
+    flex-direction: column;
+  }
+  .review-scrollbar {
+    height: 190px;
+  }
 }
 </style>
