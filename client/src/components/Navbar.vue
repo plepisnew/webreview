@@ -3,21 +3,22 @@
     <b-navbar-brand to="/">
       <MongoImage
         src="webreview_landscape"
-        :height="50"
-        width="auto"
         style="border-radius: 15px"
+        class="header-img"
       />
     </b-navbar-brand>
-    <b-nav-text class="m-auto h4">Welcome, {{ username }}!</b-nav-text>
+    <b-nav-text class="m-auto h4 d-none d-sm-block">Welcome, {{ username }}!</b-nav-text>
     <b-navbar-nav class="navigation">
-      <b-nav-item v-if="isAdmin" class="my-auto" to="/management"
+      <div class="header-links">
+        <b-nav-item v-if="isAdmin" class="my-auto" to="/management"
         >Management</b-nav-item
-      >
-      <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
+        >
+        <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
+      </div>
       <b-nav-item class="my-auto" to="/profile/me">
         <ProfilePicture
           :src="pfp"
-          :dimensions="50"
+          :dimensions="40"
           style="border-radius: 50%; "
         />
       </b-nav-item>
@@ -72,4 +73,27 @@ export default {
 .navbar-light .navbar-nav .nav-link {
   color: black;
 }
+
+.header-img {
+  height: 60px;
+  width: 170px;
+}
+
+.header-links {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 510px) {
+
+  .header-img {
+    height: 40px;
+    width: 120px;
+  }
+  .header-links {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 </style>
