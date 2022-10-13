@@ -63,7 +63,7 @@
       </b-button>
     </div>
     </div>
-    <div class="review-container">
+    <div class="review-container mt-4">
       <h2 class="reviews-title">{{ username }}'s reviews</h2>
       <div class="review-scrollbar">
         <ReviewCards :reviews="reviews" />
@@ -220,7 +220,6 @@ export default {
 .profile {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
   margin-top: 0;
 }
@@ -286,7 +285,7 @@ export default {
     flex-direction: column;
   }
   .review-scrollbar {
-    height: 190px;
+    height: 550px;
   }
 }
 </style>
