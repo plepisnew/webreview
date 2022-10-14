@@ -1,5 +1,5 @@
 <template>
-  <b-navbar type="dark" fixed="top" variant="dark">
+  <b-navbar class="lol" type="dark" fixed="top" variant="dark">
     <b-navbar-brand to="/">
       <MongoImage
         src="webreview_landscape"
@@ -7,7 +7,7 @@
         class="header-img"
       />
     </b-navbar-brand>
-    <b-nav-text class="m-auto h4 d-none d-sm-block">Welcome, {{ username }}!</b-nav-text>
+    <b-nav-text class="m-auto h4 username-hidden">Welcome, {{ username }}!</b-nav-text>
     <b-navbar-nav class="navigation">
       <div class="header-links">
         <b-nav-item v-if="isAdmin" class="my-auto" to="/management"
@@ -84,15 +84,22 @@ export default {
   flex-direction: row;
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (max-width: 526px) {
 
   .header-img {
     height: 40px;
-    width: 120px;
+    width: auto;
   }
   .header-links {
     display: flex;
     flex-direction: column;
+    align-self: flex-end;
+  }
+  .navigation {
+    margin-left: auto;
+  }
+  .username-hidden {
+    display: none !important;
   }
 }
 
