@@ -136,7 +136,6 @@ export default {
 
 .website-scrollbar,
 .review-scrollbar {
-  /* max-height: 80%; */
   height: 90%;
   padding: 8px;
   overflow-y: scroll;

@@ -5,20 +5,24 @@
         src="webreview_landscape"
         style="border-radius: 15px"
         class="header-img"
+        height="60px"
+        width="auto"
       />
     </b-navbar-brand>
-    <b-nav-text class="m-auto h4 username-hidden">Welcome, {{ username }}!</b-nav-text>
-    <b-navbar-nav class="navigation">
+    <b-nav-text class="m-auto h4 username-hidden"
+      >Welcome, {{ username }}!</b-nav-text
+    >
+    <b-navbar-nav class="navigation ml-auto">
       <div class="header-links">
         <b-nav-item v-if="isAdmin" class="my-auto" to="/management"
-        >Management</b-nav-item
+          >Management</b-nav-item
         >
         <b-nav-item class="my-auto" to="/websites">Websites</b-nav-item>
       </div>
       <b-nav-item class="my-auto" to="/profile/me">
         <ProfilePicture
           :src="pfp"
-          :dimensions="40"
+          :dimensions="50"
           style="border-radius: 50%; "
         />
       </b-nav-item>
@@ -74,33 +78,17 @@ export default {
   color: black;
 }
 
-.header-img {
-  height: 60px;
-  width: 170px;
-}
-
 .header-links {
   display: flex;
   flex-direction: row;
 }
 
-@media screen and (max-width: 526px) {
-
-  .header-img {
-    height: 40px;
-    width: auto;
-  }
-  .header-links {
-    display: flex;
-    flex-direction: column;
-    align-self: flex-end;
-  }
-  .navigation {
-    margin-left: auto;
-  }
+@media screen and (max-width: 600px) {
   .username-hidden {
     display: none !important;
   }
+  .header-img {
+    height: 30px;
+  }
 }
-
 </style>

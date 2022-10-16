@@ -71,6 +71,12 @@ a {
   background: rgb(200, 200, 200);
 }
 
+@media screen and (max-width: 500px) {
+  .auth {
+    padding: 10px;
+  }
+}
+
 .fragment {
   display: inline-block;
 }
