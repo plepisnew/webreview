@@ -1,37 +1,79 @@
 <template>
   <div class="management">
-    <div class="data-panel panel">
-      <div class="title-container">
-        <p class="panel-title">WebReview Analytics:</p>
+    <div class="data-panel">
+      <div class="panel" style="height: max-content;">
+        <div class="title-container">
+          <p class="panel-title">WebReview Analytics:</p>
+        </div>
+        <div class="content-container">
+          <p class="panel-text">
+            <span class="key-text">Registered Users:</span> {{ userCount }}
+          </p>
+          <p class="panel-text">
+            <span class="key-text">Regsitered Admins: </span> {{ adminCount }}
+          </p>
+          <p class="panel-text">
+            <span class="key-text">Registered Websites:</span>
+            {{ websiteCount }}
+          </p>
+          <p class="panel-text">
+            <span class="key-text">Written Reviews:</span>
+            {{ reviewCount[0] }}
+            <span v-for="rating in 5" :key="rating" :class="`star-${rating}`">
+              {{ reviewCount[rating] }}
+            </span>
+          </p>
+          <p class="panel-text">
+            <span class="key-text">Last Review: </span> {{ lastReview }}
+          </p>
+          <p class="panel-text">
+            <span class="key-text">First Review: </span> {{ firstReview }}
+          </p>
+          <p class="panel-text">
+            <span class="key-text">Average Review Rate: </span>
+            {{ averageReviews }}
+          </p>
+        </div>
       </div>
-      <div class="content-container">
-        <p class="panel-text">
-          <span class="key-text">Registered Users:</span> {{ userCount }}
-        </p>
-        <p class="panel-text">
-          <span class="key-text">Regsitered Admins: </span> {{ adminCount }}
-        </p>
-        <p class="panel-text">
-          <span class="key-text">Registered Websites:</span> {{ websiteCount }}
-        </p>
-        <p class="panel-text">
-          <span class="key-text">Written Reviews:</span>
-          {{ reviewCount[0] }}
-          <span v-for="rating in 5" :key="rating" :class="`star-${rating}`">
-            {{ reviewCount[rating] }}
-          </span>
-        </p>
-        <!-- TODO: display more analytics/statistics -->
-        <p class="panel-text">
-          <span class="key-text">Last Review: </span> {{ lastReview }}
-        </p>
-        <p class="panel-text">
-          <span class="key-text">First Review: </span> {{ firstReview }}
-        </p>
-        <p class="panel-text">
-          <span class="key-text">Average Review Rate: </span>
-          {{ averageReviews }}
-        </p>
+      <div class="panel">
+        <div class="title-container">
+          <p class="panel-title">Create Website:</p>
+        </div>
+        <div class="content-container">
+          <div class="website-container">
+            <div class="image-container">
+              <!-- <img :src="URL.createObjectURL(website)" /> -->
+              <b-form-file
+                accept=".jpg, .png"
+                v-model="website.image"
+                :state="Boolean(website.image)"
+                class="w-75"
+              />
+              <Button v-if="website.image" text="hi" :onClick="() => {}" />
+            </div>
+            <div class="text-container">
+              <TextField
+                placeholder="Name"
+                :input="e => updateName(e.target.value)"
+              />
+              <textarea
+                class="text-field"
+                placeholder="Description"
+                rows="4"
+                @input="e => updateDescription(e.target.value)"
+              ></textarea>
+              <TextField
+                placeholder="URL"
+                :input="e => updateUrl(e.target.value)"
+              />
+              <Button
+                text="Add Wesbite"
+                :onClick="createWebsite"
+                variant="green"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="user-panel panel">
@@ -70,6 +112,7 @@ import roundFloat from '@/utils/roundFloat'
 import UserCards from '../components/users/UserCards.vue'
 import ReviewCards from '../components/reviews/ReviewCards.vue'
 import TextField from '../components/TextField.vue'
+import Button from '../components/Button.vue'
 
 export default {
   name: 'Management',
@@ -84,7 +127,13 @@ export default {
       filteredUsers: [],
       lastReview: '',
       firstReview: '',
-      averageReviews: ''
+      averageReviews: '',
+      website: {
+        name: '',
+        description: '',
+        url: '',
+        image: null
+      }
     }
   },
   methods: {
@@ -100,6 +149,38 @@ export default {
       this.filteredUsers = this.users.filter(user =>
         user.username.includes(e.target.value)
       )
+    },
+    async createWebsite() {
+      console.log(this.website)
+      /* eslint-disable-next-line */
+      //   const { name, url, description, image } = this.website
+
+      //   const formData = new FormData()
+      //   formData.append('uploadImage', image)
+      //   formData.append('name', name)
+      //   const res = await Api.post('/images/pfp', formData, {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data'
+      //     }
+      //   })
+      //   console.log(res)
+
+      //   const res2 = await Api.post('/websites', {
+      //     name,
+      //     url,
+      //     description,
+      //     logoSrc: name.toLowerCase()
+      //   })
+      //   console.log(res2)
+    },
+    updateName(name) {
+      this.website.name = name
+    },
+    updateDescription(description) {
+      this.website.description = description
+    },
+    updateUrl(url) {
+      this.website.url = url
     }
   },
   async created() {
@@ -138,19 +219,38 @@ export default {
       1
     )} reviews/day`
   },
-  components: { UserCards, ReviewCards, TextField }
+  components: { UserCards, ReviewCards, TextField, Button }
 }
 </script>
 
 <style scoped>
 @media screen and (max-width: 1100px) {
-  .data-panel,
-  .user-panel,
-  .review-panel {
-  }
   .management {
     flex-direction: column;
   }
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.website-container {
+  display: flex;
+}
+
+.data-panel {
+  display: flex;
+  flex-direction: column;
 }
 
 .star-1::before {
@@ -183,7 +283,6 @@ export default {
 
 .panel {
   background: rgb(30, 30, 30);
-  height: 100%;
   margin: 10px;
   padding: 10px;
   border-radius: 15px;

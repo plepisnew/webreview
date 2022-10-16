@@ -7,6 +7,7 @@ import Websites from '@/views/Websites'
 import Home from '@/views/Home'
 import Profile from '@/views/Profile'
 import Management from '@/views/Management'
+import parseJWT from '@/utils/parseJWT'
 
 Vue.use(Router)
 
@@ -53,6 +54,10 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   const token = localStorage.token
+  if (to.name === 'management') {
+    const user = parseJWT(token)
+    if (!user.isAdmin) next({ name: 'home' })
+  }
   if (token && ['register', 'login'].includes(to.name)) {
     next({ name: 'home' })
   }

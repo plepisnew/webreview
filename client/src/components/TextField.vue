@@ -30,6 +30,11 @@ export default {
       type: Function,
       required: false,
       default: () => {}
+    },
+    variant: {
+      type: String,
+      required: false,
+      default: 'input'
     }
   }
 }
