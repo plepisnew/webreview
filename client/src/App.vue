@@ -8,7 +8,7 @@
           : 'auth page'
       "
     >
-      <router-view />
+      <router-view :key="$route.params"/>
     </div>
   </div>
 </template>
