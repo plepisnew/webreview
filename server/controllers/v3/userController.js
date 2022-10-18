@@ -75,7 +75,11 @@ const replaceUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await User.findByIdAndDelete(userId).select("-password");
+    const user = await User.findOneAndDelete({
+      _id: userId,
+      ...req.query,
+    }).select("-password");
+    // const user = await User.findByIdAndDelete(userId).select("-password");
     if (user) return res.status(200).json(user);
     res.status(404).json({ message: `User ${userId} not found` });
   } catch (err) {

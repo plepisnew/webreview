@@ -24,14 +24,16 @@
             </span>
           </p>
           <p class="panel-text">
-            <span class="key-text">Last Review: </span> {{ lastReview }}
+            <span class="key-text">Last Review: </span>
+            {{ lastReview || 'never' }}
           </p>
           <p class="panel-text">
-            <span class="key-text">First Review: </span> {{ firstReview }}
+            <span class="key-text">First Review: </span>
+            {{ firstReview || 'never' }}
           </p>
           <p class="panel-text">
             <span class="key-text">Average Review Rate: </span>
-            {{ averageReviews }}
+            {{ averageReviews || '0 reviews/day' }}
           </p>
         </div>
       </div>
@@ -40,16 +42,19 @@
           <p class="panel-title">Create Website:</p>
         </div>
         <div class="content-container">
-          <div class="website-container">
-            <div class="image-container">
-              <!-- <img :src="URL.createObjectURL(website)" /> -->
+          <div class="d-flex">
+            <div
+              class="d-flex flex-column align-items-center justify-content-start"
+              style="gap: 0.7rem;"
+            >
+              <img class="website-logo" :src="websiteLogo" />
               <b-form-file
                 accept=".jpg, .png"
                 v-model="website.image"
                 :state="Boolean(website.image)"
                 class="w-75"
+                @change="e => setWebsiteLogo(e)"
               />
-              <Button v-if="website.image" text="hi" :onClick="() => {}" />
             </div>
             <div class="text-container">
               <TextField
@@ -70,6 +75,14 @@
                 text="Add Wesbite"
                 :onClick="createWebsite"
                 variant="green"
+                :disabled="
+                  !(
+                    website.name &&
+                    website.description &&
+                    website.url &&
+                    website.image
+                  )
+                "
               />
             </div>
           </div>
@@ -113,6 +126,7 @@ import UserCards from '../components/users/UserCards.vue'
 import ReviewCards from '../components/reviews/ReviewCards.vue'
 import TextField from '../components/TextField.vue'
 import Button from '../components/Button.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'Management',
@@ -133,10 +147,15 @@ export default {
         description: '',
         url: '',
         image: null
-      }
+      },
+      websiteLogo: null
     }
   },
   methods: {
+    setWebsiteLogo(e) {
+      console.log(e.target.files)
+      this.websiteLogo = URL.createObjectURL(e.target.files[0])
+    },
     async deleteReview(id) {
       this.reviews = this.reviews.filter(review => review._id !== id)
       await Api.delete(`/reviews/${id}`)
@@ -151,27 +170,31 @@ export default {
       )
     },
     async createWebsite() {
-      console.log(this.website)
-      /* eslint-disable-next-line */
-      //   const { name, url, description, image } = this.website
+      try {
+        const { name, url, description, image } = this.website
+        const formData = new FormData()
+        formData.append('uploadImage', image)
+        formData.append('name', name.toLowerCase())
+        await Api.post('/images/pfp', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
 
-      //   const formData = new FormData()
-      //   formData.append('uploadImage', image)
-      //   formData.append('name', name)
-      //   const res = await Api.post('/images/pfp', formData, {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data'
-      //     }
-      //   })
-      //   console.log(res)
-
-      //   const res2 = await Api.post('/websites', {
-      //     name,
-      //     url,
-      //     description,
-      //     logoSrc: name.toLowerCase()
-      //   })
-      //   console.log(res2)
+        await Api.post('/websites', {
+          name,
+          url,
+          description,
+          logoSrc: name.toLowerCase()
+        })
+        await Swal.fire({
+          icon: 'success',
+          title: 'Website created!',
+          showConfirmButton: false
+        })
+      } catch (err) {
+        console.log(err)
+      }
     },
     updateName(name) {
       this.website.name = name
@@ -206,18 +229,21 @@ export default {
       })
     )
     this.reviewCount = reviewCount
-    const [lastDate, firstDate] = [
-      reviews[0].createdAt,
-      reviews[reviews.length - 1].createdAt
-    ]
 
-    this.lastReview = timePassed(lastDate)
-    this.firstReview = timePassed(firstDate)
-    const reviewDt = dt(lastDate, firstDate, 'day')
-    this.averageReviews = `${roundFloat(
-      reviewCount[0] / reviewDt,
-      1
-    )} reviews/day`
+    if (reviews.length !== 0) {
+      const [lastDate, firstDate] = [
+        reviews[0].createdAt,
+        reviews[reviews.length - 1].createdAt
+      ]
+
+      this.lastReview = timePassed(lastDate)
+      this.firstReview = timePassed(firstDate)
+      const reviewDt = dt(lastDate, firstDate, 'day')
+      this.averageReviews = `${roundFloat(
+        reviewCount[0] / reviewDt,
+        1
+      )} reviews/day`
+    }
   },
   components: { UserCards, ReviewCards, TextField, Button }
 }
@@ -230,11 +256,9 @@ export default {
   }
 }
 
-.image-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.website-logo {
+  border-radius: 15px;
+  width: 75%;
 }
 
 .text-container {
@@ -242,10 +266,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.website-container {
-  display: flex;
 }
 
 .data-panel {
