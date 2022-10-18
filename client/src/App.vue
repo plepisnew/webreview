@@ -9,6 +9,7 @@
       "
     >
       <router-view />
+      <!-- <router-view :key="$route.params"/> -->
     </div>
   </div>
 </template>
@@ -69,6 +70,16 @@ a {
   margin-top: 80px;
   height: calc(100vh - 80px);
   background: rgb(200, 200, 200);
+}
+
+@media screen and (max-width: 500px) {
+  .auth {
+    padding: 10px;
+  }
+}
+
+.fragment {
+  display: inline-block;
 }
 
 html {

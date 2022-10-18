@@ -19,9 +19,9 @@ router.get("/:id/author", getReviewAuthor);
 
 router.get("/:id/website", getReviewWebsite);
 
-router.get("/:id", getReview);
-
 router.get("/", getAllReviews);
+
+router.get("/:id", getReview);
 
 router.patch("/:id", updateReview);
 

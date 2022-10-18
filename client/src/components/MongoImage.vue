@@ -8,7 +8,7 @@
     :style="`border-radius: ${radius}`"
   />
 </template>
-
+<!-- TODO: save images to public -->
 <script>
 import { Api } from '@/Api'
 import { mapActions } from 'vuex'
@@ -36,7 +36,7 @@ export default {
   },
   methods: mapActions(['addImage']),
   // removes `images/` prefix and `.png` suffix
-  async mounted() {
+  async created() {
     if (!this.src) return
     const resourceName = this.src
       .split('.png')[0]
@@ -47,9 +47,7 @@ export default {
     if (value) {
       this.imageBuffer = value
       this.addImage({ src: resourceName, data: value })
-      console.log('fetching store')
     } else {
-      console.log('fetching mongodb')
       const res = await Api.get(`/images/${resourceName}`)
       const image = res.data.image
       const source = `data:${image.contentType};base64, ${Buffer.from(

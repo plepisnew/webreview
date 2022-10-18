@@ -4,9 +4,10 @@ import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Website from '@/views/Website'
 import Websites from '@/views/Websites'
-import Review from '@/views/Review'
 import Home from '@/views/Home'
 import Profile from '@/views/Profile'
+import Management from '@/views/Management'
+import parseJWT from '@/utils/parseJWT'
 
 Vue.use(Router)
 
@@ -35,11 +36,6 @@ const router = new Router({
       component: Website
     },
     {
-      path: '/reviews/:id',
-      name: 'review',
-      component: Review
-    },
-    {
       path: '/',
       name: 'home',
       component: Home
@@ -48,11 +44,20 @@ const router = new Router({
       path: '/profile/:username',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/management',
+      name: 'management',
+      component: Management
     }
   ]
 })
 router.beforeEach((to, from, next) => {
   const token = localStorage.token
+  if (to.name === 'management') {
+    const user = parseJWT(token)
+    if (!user.isAdmin) next({ name: 'home' })
+  }
   if (token && ['register', 'login'].includes(to.name)) {
     next({ name: 'home' })
   }

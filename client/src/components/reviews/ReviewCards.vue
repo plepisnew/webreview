@@ -2,11 +2,9 @@
   <div class="review-cards">
     <div v-for="review in reviews" :key="review.createdAt">
       <ReviewCard
-        :content="review.content"
-        :rating="review.rating"
-        :createdAt="review.createdAt"
-        :writtenBy="review.writtenBy"
-        :website="review.website"
+        :review="review"
+        :deleteReview="deleteReview"
+        :approveReview="approveReview"
       />
     </div>
   </div>
@@ -21,6 +19,14 @@ export default {
     reviews: {
       type: Array,
       required: true
+    },
+    deleteReview: {
+      type: Function,
+      required: false
+    },
+    approveReview: {
+      type: Function,
+      required: false
     }
   }
 }

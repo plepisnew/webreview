@@ -1,81 +1,84 @@
 <template>
-  <div class="profile auth">
-    <div v-if="profilePictureSrc" class="profile-container">
-      <h5 class="font-weight-bold">{{ username }}</h5>
-      <ProfilePicture
-        class="rounded-circle"
-        :src="profilePictureSrc"
-        :dimensions="200"
-      />
-      <b-form-file
-        accept=".jpg, .png"
-        v-if="ownPage"
-        v-model="file"
-        :state="Boolean(file)"
-        class="mt-2 w-75"
-      ></b-form-file>
-      <b-button
-        variant="primary"
-        v-if="ownPage && file"
-        v-on:click="saveImage()"
-        class="mt-3"
-      >
-        <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
-      </b-button>
+  <div class="profile">
+    <div class="profile-and-about">
+      <div v-if="profilePictureSrc" class="profile-container">
+        <h5 class="font-weight-bold">{{ username }}</h5>
+        <ProfilePicture
+          class="rounded-circle"
+          :src="profilePictureSrc"
+          :dimensions="200"
+        />
+        <b-form-file
+          v-if="ownPage"
+          accept=".jpg, .png"
+          v-visible="ownPage"
+          v-model="file"
+          :state="Boolean(file)"
+          class="mt-2 w-75"
+        />
+        <b-button
+          variant="primary"
+          v-if="ownPage && file"
+          v-on:click="saveImage()"
+          class="mt-3"
+        >
+          <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
+        </b-button>
+      </div>
+      <div class="about-container">
+        <h5 class="font-weight-bold">
+          Member since: {{ getSince(createdAt) }}
+        </h5>
+        <h5 class="font-weight-bold">About {{ ownPage ? 'me' : username }}</h5>
+        <b-form-textarea
+          rows="3"
+          max-rows="6"
+          style="resize: none"
+          v-if="ownPage"
+          id="textarea"
+          v-model="description"
+          class="textarea"
+        >
+          {{ description }}
+        </b-form-textarea>
+        <b-form-textarea
+          rows="3"
+          max-rows="6"
+          style="resize: none"
+          v-if="!ownPage"
+          id="textarea"
+          v-model="description"
+          readonly="readonly"
+          class="textarea"
+        >
+          {{ description }}
+        </b-form-textarea>
+        <b-button
+          variant="primary"
+          v-if="ownPage"
+          v-on:click="saveDescription()"
+          class="mt-2 ml-auto"
+        >
+          <b-icon icon="check-square" class="" aria-hidden="true"></b-icon> Save
+        </b-button>
+      </div>
     </div>
-    <div class="about-container mt-3">
-      <h5 class="font-weight-bold">
-        Member since: {{ createdAt.substring(0, 10) }}
-      </h5>
-      <h5 v-if="ownPage" class="font-weight-bold">About me</h5>
-      <h5 v-if="!ownPage" class="font-weight-bold">About {{ username }}</h5>
-      <b-form-textarea
-        rows="3"
-        max-rows="6"
-        style="resize: none"
-        v-if="ownPage"
-        id="textarea"
-        v-model="description"
-        class="textarea"
-      >
-        {{ description }}
-      </b-form-textarea>
-      <b-form-textarea
-        rows="3"
-        max-rows="6"
-        v-if="!ownPage"
-        id="textarea"
-        v-model="description"
-        readonly="readonly"
-        class="textarea"
-      >
-        {{ description }}
-      </b-form-textarea>
-      <b-button
-        variant="primary"
-        v-if="ownPage"
-        v-on:click="saveDescription()"
-        class="mt-2"
-      >
-        <b-icon icon="check-square" aria-hidden="true"></b-icon> Save
-      </b-button>
-    </div>
-    <div class="review-container">
+    <div class="review-container mt-4">
       <h2 class="reviews-title">{{ username }}'s reviews</h2>
       <div class="review-scrollbar">
         <ReviewCards :reviews="reviews" />
-        <!-- <ReviewCards :reviews="[]" /> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import { Api } from '@/Api'
-import { ascending } from '@/utils/sortChrono'
+import { descending } from '@/utils/sortChrono'
 import ReviewCards from '@/components/reviews/ReviewCards.vue'
 import Swal from 'sweetalert2'
 import parseJWT from '@/utils/parseJWT.js'
 import ProfilePicture from '../components/ProfilePicture.vue'
+import { date } from '@/utils/parseTime'
 
 export default {
   name: 'profile',
@@ -118,14 +121,17 @@ export default {
         await Api.patch(`/users/${this.id}`, {
           profilePictureSrc: this.username
         })
+        // TODO: navbar pfp is based on token which is static, so navbar pfp doesnt change. Reload the token after image upload
         window.location.reload()
       } catch (err) {
         console.error(err)
       }
     },
     async recentReviews() {
-      const res = await Api.get(`/reviews/?username=${this.username}`)
-      this.reviews = ascending(res.data)
+      const res = await Api.get(
+        `/reviews/?username=${this.username}&isPending=false`
+      )
+      this.reviews = descending(res.data)
     },
     saveDescription() {
       Api.patch(`/users/${this.id}`, { description: this.description })
@@ -200,6 +206,9 @@ export default {
             })
         }
       }
+    },
+    getSince(createdAt) {
+      return date(createdAt)
     }
   },
   async created() {
@@ -211,20 +220,22 @@ export default {
 </script>
 
 <style scoped>
+h5 {
+  font-size: 1.1rem;
+}
+
 .profile {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-top: 0;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .about-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: auto;
-  width: auto;
 }
 
 .profile-container {
@@ -232,37 +243,58 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.review-scrollbar {
-  /* max-height: 80%; */
-  height: 90%;
-  padding: 15px;
-  overflow-y: scroll;
-  background: white;
-  border-radius: 0 0 15px 15px;
-}
+
 .reviews-title {
-  padding: 5px;
+  height: 35px;
   margin: 0;
-  font-size: 20px;
+  font-size: 1.2rem;
   color: white;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.profile-and-about {
+  display: flex;
+  align-items: center;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.review-scrollbar {
+  max-height: 465px;
+  padding: 15px;
+  background: white;
+  overflow-y: scroll;
+  border-radius: 0 0 15px 15px;
 }
 
 .review-container {
-  flex: 1;
-  width: 75vw;
-  height: 100vh;
-  height: 25vh;
+  align-self: center;
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
   background: rgb(50, 50, 50);
-  margin: 5px;
   border-radius: 15px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
 }
 
 .textarea {
-  height: 500px;
-  margin: 1rem;
+  flex: 1;
+  margin: 0.5rem;
+}
+
+@media screen and (max-width: 576px) {
+  .profile-container {
+    margin-top: 2rem;
+  }
+  .profile-and-about {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-container {
+    width: 100%;
+  }
 }
 </style>

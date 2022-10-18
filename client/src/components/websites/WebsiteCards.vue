@@ -1,14 +1,16 @@
 <template>
   <div class="website-cards">
-    <div v-for="website in websites" :key="website.name">
-      <WebsiteCard
-        :name="website.name"
-        :description="website.description"
-        :url="website.url"
-        :logoSrc="website.logoSrc"
-        :rating="website.rating"
-      />
-    </div>
+    <!-- <div v-for="website in websites" :key="website.name"> -->
+    <WebsiteCard
+      v-for="website in websites"
+      :key="website.name"
+      :name="website.name"
+      :description="website.description"
+      :url="website.url"
+      :logoSrc="website.logoSrc"
+      :rating="website.rating"
+    />
+    <!-- </div> -->
   </div>
 </template>
 
@@ -31,7 +33,7 @@ export default {
 </script>
 
 <!-- set your own width and add responsiveness to change grid templating -->
-<style>
+<style scoped>
 .website-cards {
   /* background: rgb(30, 30, 30); */
   /* padding: 10px; */

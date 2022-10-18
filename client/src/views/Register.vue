@@ -10,7 +10,7 @@
       bg-variant="dark"
       text-variant="white"
     >
-      <b-card-text>
+      <b-card-text class="">
         <b-form-group
           :state="formValidation"
           :valid-feedback="`Looks good to me, ${username}!`"
@@ -20,7 +20,7 @@
             <label class="sr-only" for="input-username">Username</label>
             <b-form-input
               id="input-username"
-              class="mr-sm-2 mb-sm-2"
+              class="mr-sm-2 mb-sm-2 mt-2"
               placeholder="Username"
               v-model="username"
               required
@@ -31,7 +31,7 @@
             <b-form-textarea
               rows="3"
               id="input-description"
-              class="mr-sm-2 mb-sm-2"
+              class="mr-sm-2 mb-sm-2 mt-2"
               v-model="description"
               placeholder="Tell us something about yourself (Optional)"
             />
@@ -39,7 +39,7 @@
             <b-form-input
               type="password"
               id="input-password"
-              class="mr-sm-2 mb-sm-2"
+              class="mr-sm-2 mb-sm-2 mt-2"
               v-model="password"
               placeholder="Password"
               required
@@ -118,6 +118,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2px;
 }
 
 .card-buttons {

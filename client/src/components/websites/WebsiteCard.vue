@@ -1,19 +1,21 @@
 <template>
   <div class="website-card">
     <router-link :to="`/websites/${this.name.toLowerCase()}`">
-      <MongoImage :src="this.logoSrc" />
+      <ProfilePicture width="100%" height="100%" :src="this.logoSrc" />
     </router-link>
     <div class="content-container">
-      <span class="website-title">
+      <span class="website-title mb-0">
         <a :href="this.url" target="_blank" style="color: inherit;">
           <span style="margin-right: 5px;">{{ this.name }}</span>
         </a>
-        <span
-          class="star-span"
-          v-for="star in Math.round(this.rating)"
-          :key="star"
-          >&#11088;</span
-        >
+        <p class="mb-0">
+          <span
+            class="star-span"
+            v-for="star in Math.round(this.rating)"
+            :key="star"
+            >&#11088;</span
+          >
+        </p>
       </span>
       <span class="website-description">{{ this.description }}</span>
     </div>
@@ -21,11 +23,11 @@
 </template>
 
 <script>
-import MongoImage from '@/components/MongoImage.vue'
+import ProfilePicture from '../ProfilePicture.vue'
 export default {
   name: 'WebsiteCard',
   components: {
-    MongoImage
+    ProfilePicture
   },
   props: {
     name: {
@@ -75,13 +77,15 @@ img {
 .website-card:active {
   box-shadow: none;
 }
-
 .website-title {
   font-weight: 700;
   font-size: 20px;
   line-height: normal;
   display: flex;
   align-items: center;
+  display: block;
+  white-space: wrap;
+  word-wrap: break-word;
 }
 
 .website-description {

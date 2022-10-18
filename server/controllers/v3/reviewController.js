@@ -71,23 +71,24 @@ const getReview = async (req, res) => {
 const getAllReviews = async (req, res) => {
   try {
     if (req.query.username) {
-      const user = await User.findOne({ username: req.query.username });
-      const userReviews = await Review.find({ writtenBy: user._id })
+      const user = await User.findOne({
+        username: req.query.username,
+      });
+      const userReviews = await Review.find({
+        isPending: req.query.isPending,
+        writtenBy: user._id,
+      })
+        .sort({
+          createdAt: -1,
+        })
         .populate("website")
         .populate("writtenBy");
       return res.status(200).json(userReviews);
     }
     const reviews = await Review.find(req.query)
+      .sort({ createdAt: -1 })
       .populate("writtenBy")
       .populate("website");
-    if (req.query.author)
-      return res
-        .status(200)
-        .json(
-          reviews.filter(
-            (review) => review.writtenBy.username === req.query.author
-          )
-        );
     res.status(200).json(reviews);
   } catch (err) {
     res.status(400).json({ message: err.message });

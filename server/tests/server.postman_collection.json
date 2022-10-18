@@ -1,11 +1,246 @@
 {
 	"info": {
-		"_postman_id": "fc2ab490-1859-4337-9f1f-2a4fb08fa2ff",
+		"_postman_id": "2334c024-432f-4ee8-bead-a7f222dad25e",
 		"name": "sever.postman_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22970072"
 	},
 	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testtesttest3\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"register"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login wrong password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Unsuccessful POST request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testtesttest1\",\r\n    \"password\": \"password1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"login"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const jwtToken = jsonData.accessToken;\r",
+							"const user = jsonData.user._id;\r",
+							"pm.environment.set(\"jwt\", jwtToken);\r",
+							"pm.environment.set(\"userId\", user);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testtesttest3\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"login"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all websites Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/images",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Get all websites when there are no websites",
 			"event": [
@@ -80,7 +315,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\",\r\n    \"profilePictureSrc\": \"/images/admin.png\",\r\n    \"description\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin123\",\r\n    \"password\": \"password\",\r\n    \"profilePictureSrc\": \"/images/admin.png\",\r\n    \"description\": \"6317c106c7a50d1da0a09a34\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -105,6 +340,289 @@
 							"value": "",
 							"disabled": true
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all admins",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/admins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"admins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/admins/{{adminId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"{{adminId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin123\",\r\n    \"password\": \"password123\",\r\n    \"profilePictureSrc\": \"/images/admin.png\",\r\n    \"description\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/admins/{{adminId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"{{adminId}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PATCH request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin123\",\r\n    \"password\": \"password123\",\r\n    \"description\": \"6317c106c7a50d1da0a09a34\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/admins/{{adminId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"{{adminId}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete specific admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/admins/{{adminId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"{{adminId}}"
 					]
 				}
 			},
@@ -143,7 +661,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test\",\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.google.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.testy.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -174,6 +692,379 @@
 			"response": []
 		},
 		{
+			"name": "Create review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"const review = jsonData._id;\r",
+							"const jwtToken = jsonData.accessToken;\r",
+							"pm.environment.set(\"reviewId\", review);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"www.test.com\",\r\n    \"website\": \"test\",\r\n    \"rating\": 5,\r\n    \"content\": \"great website\",\r\n    \"writtenBy\":\"{{userId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get specific review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReviewAuthor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/{{reviewId}}/author",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						"{{reviewId}}",
+						"author"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all reviews",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"www.test.com\",\r\n    \"website\": \"{{websiteId}}\",\r\n    \"rating\": 4,\r\n    \"content\": \"great website\",\r\n    \"writtenBy\":\"{{userId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						"{{reviewId}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch review without all fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PATCH request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"www.test.com\",\r\n    \"website\": \"{{websiteId}}\",\r\n    \"content\": \"great website\",\r\n    \"writtenBy\":\"{{userId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						"{{reviewId}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get specific website by id",
 			"event": [
 				{
@@ -186,7 +1077,7 @@
 							"\r",
 							"pm.test(\"Correct response\", function () {\r",
 							"    let jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.url).to.eql(\"www.google.com\");\r",
+							"    pm.expect(jsonData.url).to.eql(\"www.testy.com\");\r",
 							"    pm.expect(jsonData.logoSrc).to.eql(\"images/wow.png\");\r",
 							"});"
 						],
@@ -263,50 +1154,6 @@
 			"response": []
 		},
 		{
-			"name": "Get website creator",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:3001/api/v1/websites/{{websiteId}}/createdBy/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"api",
-						"v1",
-						"websites",
-						"{{websiteId}}",
-						"createdBy",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Create website with already existing url",
 			"event": [
 				{
@@ -335,7 +1182,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test\",\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.google.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"logoSrc\": \"images/wow.png\",\r\n    \"description\": \"google is a great search engine\",\r\n    \"url\": \"www.testy.com\",\r\n    \"launchDate\": \"2015-01-01\",\r\n    \"createdBy\": \"{{adminId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -640,6 +1487,96 @@
 			"response": []
 		},
 		{
+			"name": "Delete user review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/{{reviewId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						"{{reviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all reviews",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v3/reviews/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v3",
+						"reviews",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete one website",
 			"event": [
 				{
@@ -800,41 +1737,6 @@
 			"response": []
 		},
 		{
-			"name": "Get specific user by Id (none exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3001/api/v1/users/{{userId}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"{{userId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Create user",
 			"event": [
 				{
@@ -857,7 +1759,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\" : \"ansishihi\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n}",
+					"raw": "{\r\n    \"username\" : \"ansishihi1\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -875,6 +1777,127 @@
 						"api",
 						"v1",
 						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi1\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\",\r\n    \"description\": \"hi, I'm a big nerd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch user without all fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PATCH request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ansishihi123\",\r\n    \"password\": \"lepepi\",\r\n    \"profilePictureSrc\": \"/images/cringeAnime.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -1228,42 +2251,6 @@
 			"response": []
 		},
 		{
-			"name": "Get all of users reviews (none exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3001/api/v1/users/{{userId}}/reviews",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"{{userId}}",
-						"reviews"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Create user Copy",
 			"event": [
 				{
@@ -1372,43 +2359,6 @@
 						"api",
 						"v1",
 						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete user review (none exist)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful DELETE request\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3001/api/v1/users/123/reviews/{{reviewId}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"123",
-						"reviews",
-						"{{reviewId}}"
 					]
 				}
 			},

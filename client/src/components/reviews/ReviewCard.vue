@@ -1,10 +1,10 @@
 <template>
   <div class="review-card">
     <router-link
-      class="website-link"
+      class="website-link mr-1"
       :to="`/websites/${website.name}`.toLowerCase()"
     >
-      <MongoImage :src="website.logoSrc" width="auto" rounded />
+      <MongoImage :src="website.logoSrc" rounded />
     </router-link>
     <div class="review-info">
       <p class="review-meta">
@@ -30,6 +30,15 @@
         </p>
       </div>
     </div>
+    <!-- deleteReview(review.id) -->
+    <div class="admin-controls">
+      <span v-if="deleteReview" @click="() => deleteReview(review._id)">
+        <i class="fa-solid fa-trash"></i
+      ></span>
+      <span v-if="approveReview" @click="() => approveReview(review._id)"
+        ><i class="fa-solid fa-thumbs-up"></i
+      ></span>
+    </div>
   </div>
 </template>
 
@@ -41,26 +50,56 @@ import ProfilePicture from '../ProfilePicture.vue'
 export default {
   name: 'ReviewCard',
   props: {
-    content: {
-      type: String,
-      required: true
-    },
-    rating: {
-      type: Number,
-      required: true
-    },
-    createdAt: {
-      type: String,
-      required: true
-    },
-    writtenBy: {
+    review: {
       type: Object,
       required: true
     },
-    website: {
-      type: Object,
-      required: true
+    deleteReview: {
+      type: Function,
+      required: false
+    },
+    approveReview: {
+      type: Function,
+      requireD: false
     }
+  },
+  data() {
+    return {
+      content: {
+        type: String
+      },
+      isPending: {
+        type: Boolean
+      },
+      rating: {
+        type: Number
+      },
+      createdAt: {
+        type: String
+      },
+      writtenBy: {
+        type: Object
+      },
+      website: {
+        type: Object
+      }
+    }
+  },
+  created() {
+    const {
+      content,
+      isPending,
+      rating,
+      createdAt,
+      writtenBy,
+      website
+    } = this.review
+    this.content = content
+    this.isPending = isPending
+    this.rating = rating
+    this.createdAt = createdAt
+    this.writtenBy = writtenBy
+    this.website = website
   },
   components: { MongoImage, ProfilePicture },
   methods: {
@@ -73,17 +112,27 @@ export default {
 
 <style>
 .review-card {
+  position: relative;
   background: rgb(20, 20, 20);
-  border-radius: 2000px;
+  border-radius: 100px 15px 15px 100px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   display: flex;
-  height: 100px;
-  align-items: flex-start;
+  min-height: 80px;
+  height: 6vw;
 }
 
-.review-card a {
+.website-link {
   height: 100%;
+}
+
+.website-link img {
+  height: 100%;
+  width: auto;
+}
+
+.date-span {
+  display: none;
 }
 
 .review-info {
@@ -129,5 +178,26 @@ export default {
 }
 .star-5 {
   color: green;
+}
+
+.admin-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  /* background: black; */
+}
+
+.fa-thumbs-up {
+  color: green;
+}
+
+.fa-trash {
+  color: red;
+}
+
+.fa-solid {
+  cursor: pointer;
+  margin: 3px 4px;
 }
 </style>

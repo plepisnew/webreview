@@ -9,6 +9,10 @@ import store from './store'
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 
+Vue.directive('visible', function (el, binding) {
+  el.style.visibility = binding.value ? 'visible' : 'hidden'
+})
+
 Vue.config.productionTip = false
 new Vue({
   router,
