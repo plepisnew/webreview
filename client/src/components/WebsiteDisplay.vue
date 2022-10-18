@@ -1,15 +1,13 @@
 <template>
-  <div class="h-50 d-flex justify-content-between align-items-start">
+  <div class="specific-website-container mb-2">
     <MongoImage
-      height="90%"
+      height="100%"
       width="auto"
       radius="10px"
       :src="website.logoSrc"
     />
-    <div class="website-content p-3 mx-2 text-light">
-      <a class="font-weight-bold mr-2" :href="website.url">
-        {{ website.name }}</a
-      >
+    <div class="content-box">
+      <a class="font-weight-bold" :href="website.url"> {{ website.name }}</a>
       <p>{{ website.description }}</p>
       <p>
         Average Rating:
@@ -143,10 +141,14 @@ export default {
 </style>
 
 <style scoped>
-.website-content {
+.content-box {
   border-radius: 15px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   background-color: rgb(50, 50, 50);
+  flex: 1;
+  padding: 1rem;
+  margin: 0 0.5rem;
+  color: white;
 }
 
 .text-area {
@@ -165,15 +167,8 @@ export default {
   font-size: 1.2rem;
   font-weight: 600;
 }
-.website-content {
-}
-
-.website-link {
-}
-
-.website-description {
-}
-
-.website-date {
+.specific-website-container {
+  display: flex;
+  height: 40%;
 }
 </style>

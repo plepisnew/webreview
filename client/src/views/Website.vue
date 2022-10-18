@@ -2,7 +2,6 @@
   <div class="specific-website" v-if="website">
     <div class="website-panel">
       <WebsiteDisplay :website="website" :reviewCount="reviews.length" />
-      <LighthouseDisplay />
     </div>
     <div class="review-container">
       <h2 class="reviews-title p-2">
@@ -23,7 +22,6 @@
 import { Api } from '@/Api'
 import ReviewCards from '../components/reviews/ReviewCards.vue'
 import WebsiteDisplay from '../components/WebsiteDisplay.vue'
-import LighthouseDisplay from '../components/LighthouseDisplay.vue'
 import { descending } from '@/utils/sortChrono'
 
 export default {
@@ -46,23 +44,18 @@ export default {
     }
     this.reviews = descending(reviews)
   },
-  components: { ReviewCards, WebsiteDisplay, LighthouseDisplay }
+  components: { ReviewCards, WebsiteDisplay }
 }
 </script>
 
 <style scoped>
 .specific-website {
   display: flex;
-  height: 100%;
-}
-
-.website-panel,
-.review-panel {
-  flex: 1;
+  flex-direction: column;
 }
 
 .website-panel {
-  height: 100%;
+  height: 50%;
 }
 
 .review-container {
@@ -83,5 +76,28 @@ export default {
 
 .review-scrollbar:empty {
   padding: 0;
+}
+</style>
+
+<style>
+.specific-website-container img {
+  width: 30%;
+  margin: auto 0;
+}
+@media screen and (max-width: 600px) {
+  .specific-website {
+    flex-direction: column;
+  }
+  .specific-website-container {
+    flex-direction: column;
+  }
+  .content-box {
+    flex: auto;
+  }
+  .specific-website-container img {
+    margin: 0 auto;
+    width: 50%;
+    margin-bottom: 2rem;
+  }
 }
 </style>

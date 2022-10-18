@@ -88,7 +88,7 @@ export default {
     display: none !important;
   }
   .header-img {
-    height: 30px;
+    height: 40px;
   }
 }
 </style>

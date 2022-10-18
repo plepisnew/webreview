@@ -41,50 +41,48 @@
         <div class="title-container">
           <p class="panel-title">Create Website:</p>
         </div>
-        <div class="content-container">
-          <div class="d-flex">
-            <div
-              class="d-flex flex-column align-items-center justify-content-start"
-              style="gap: 0.7rem;"
-            >
-              <img class="website-logo" :src="websiteLogo" />
-              <b-form-file
-                accept=".jpg, .png"
-                v-model="website.image"
-                :state="Boolean(website.image)"
-                class="w-75"
-                @change="e => setWebsiteLogo(e)"
-              />
-            </div>
-            <div class="text-container">
-              <TextField
-                placeholder="Name"
-                :input="e => updateName(e.target.value)"
-              />
-              <textarea
-                class="text-field"
-                placeholder="Description"
-                rows="4"
-                @input="e => updateDescription(e.target.value)"
-              ></textarea>
-              <TextField
-                placeholder="URL"
-                :input="e => updateUrl(e.target.value)"
-              />
-              <Button
-                text="Add Wesbite"
-                :onClick="createWebsite"
-                variant="green"
-                :disabled="
-                  !(
-                    website.name &&
-                    website.description &&
-                    website.url &&
-                    website.image
-                  )
-                "
-              />
-            </div>
+        <div class="content-container website-content">
+          <div
+            class="d-flex flex-column align-items-center justify-content-start"
+            style="gap: 0.7rem;"
+          >
+            <img class="website-logo" :src="websiteLogo" />
+            <b-form-file
+              accept=".jpg, .png"
+              v-model="website.image"
+              :state="Boolean(website.image)"
+              class="w-75"
+              @change="e => setWebsiteLogo(e)"
+            />
+          </div>
+          <div class="text-container">
+            <TextField
+              placeholder="Name"
+              :input="e => updateName(e.target.value)"
+            />
+            <textarea
+              class="text-field"
+              placeholder="Description"
+              rows="4"
+              @input="e => updateDescription(e.target.value)"
+            ></textarea>
+            <TextField
+              placeholder="URL"
+              :input="e => updateUrl(e.target.value)"
+            />
+            <Button
+              text="Add Wesbite"
+              :onClick="createWebsite"
+              variant="green"
+              :disabled="
+                !(
+                  website.name &&
+                  website.description &&
+                  website.url &&
+                  website.image
+                )
+              "
+            />
           </div>
         </div>
       </div>
@@ -153,7 +151,6 @@ export default {
   },
   methods: {
     setWebsiteLogo(e) {
-      console.log(e.target.files)
       this.websiteLogo = URL.createObjectURL(e.target.files[0])
     },
     async deleteReview(id) {
@@ -251,7 +248,23 @@ export default {
 
 <style scoped>
 @media screen and (max-width: 1100px) {
+  .data-panel {
+    margin-bottom: 0.5rem;
+  }
   .management {
+    flex-direction: column;
+  }
+}
+.website-content {
+  display: flex;
+  flex-direction: row;
+}
+.b-form-file {
+  margin-bottom: 0.4rem;
+}
+
+@media screen and (max-width: 600px) {
+  .website-content {
     flex-direction: column;
   }
 }

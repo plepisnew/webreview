@@ -1,7 +1,7 @@
 <template>
   <div class="website-card">
     <router-link :to="`/websites/${this.name.toLowerCase()}`">
-      <MongoImage width="100%" :src="this.logoSrc" />
+      <ProfilePicture width="100%" height="100%" :src="this.logoSrc" />
     </router-link>
     <div class="content-container">
       <span class="website-title mb-0">
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import MongoImage from '@/components/MongoImage.vue'
+import ProfilePicture from '../ProfilePicture.vue'
 export default {
   name: 'WebsiteCard',
   components: {
-    MongoImage
+    ProfilePicture
   },
   props: {
     name: {
